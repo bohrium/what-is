@@ -1,0 +1,138 @@
+\documentclass[11pt, justified]{tufte-book}
+\usepackage{amsmath, amssymb, amsthm, bm, moresize}
+\usepackage{euler}
+
+\usepackage{graphicx, epsdice, xcolor, listings, float, wrapfig, caption}
+\geometry{
+  left=1in, % left margin
+  textwidth=5.0in, % main text block
+  marginparsep=0.2in, % gutter between main text block and margin notes
+  marginparwidth=1.8in % width of margin notes
+}
+
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+%
+\newcommand{\Dd}{\mathcal{D}}
+\newcommand{\Ee}{\mathcal{E}}
+\newcommand{\Ff}{\mathcal{F}}
+\newcommand{\Gg}{\mathcal{G}}
+\newcommand{\Hh}{\mathcal{H}}
+\newcommand{\Ii}{\mathcal{I}}
+\newcommand{\Kk}{\mathcal{K}}
+\newcommand{\Ll}{\mathcal{L}}
+\newcommand{\Mm}{\mathcal{M}}
+\newcommand{\Nn}{\mathcal{N}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\Tt}{\mathcal{T}}
+\newcommand{\Uu}{\mathcal{U}}
+\newcommand{\Vv}{\mathcal{V}}
+\newcommand{\Xx}{\mathcal{X}}
+\newcommand{\Yy}{\mathcal{Y}}
+
+\newtheorem*{qst}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{clm}{Claim}
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+\definecolor{mblu}{rgb}{0.05, 0.40, 0.70}
+\newcommand{\mtit}[1]{%
+    {%
+        \noindent
+        \Huge\color{mblu}\bf\textsf{#1}
+        \vspace{0.3cm}
+    }
+}
+\newcommand{\msec}[1]{\section{\color{mblu}\textsf{#1}}}
+
+\begin{document}
+
+    \mtit{The Classification of Surfaces}
+    \msec{Bird's eye view}
+        The classification of manifolds presents a grand challenge.  To begin
+        addressing it, we must decide on a notion of \textit{sameness}.  For
+        smooth manifolds, such notions range in strength from homotopy
+        equivalence to diffeomorphism.  Do these notions coincide?
+        %
+        For instance, we like to distinguish compact (connected, smooth)
+        surfaces by their Euler characteristics.  Does this tool miss anything?
+        That is, are there non-diffeomorphic compact surfaces with the same
+        $\chi$? 
+        %
+        The answer is no: \textit{the Euler characteristic determines compact
+        surfaces up to diffeomorphism}.
+
+        We may establish this result in several ways.  For example, we use
+        smoothness to construct a triangulation, whereupon we reason
+        combinatorially to bring a surface to standard form.  Or, we could use
+        smoothness to construct a metric, whereupon we reason
+        geometrically to bring the surface to a standard form.
+        Just as I regard finite differences to be messier than derivatives, I
+        find the geometric approach more symmetrical than the combinatorial
+        one.  In what follows, we'll describe this approach.
+
+        Any smooth manifold $\Mm$ embeds smoothly into some standard sphere and
+        therefore enjoys a smooth Riemannian metric $g$.\footnote{
+            Intuitively, the metric corresponds to an infinitely fine
+            triangulation; it induces a natural volume form measuring the
+            density of highest-dimensional cells (and likewise on each subspace
+            of each tangent space).  Refining triangulations thus becomes as
+            easy as scaling the metric.
+        }
+        We aim to rescale the metric so that it has constant curvature.  The
+        point is that we may then compare our surface $\Mm$ to a standard
+        surface.  Indeed, constant curvature implies that $\Mm$ is locally
+        isometric to a standard (simply connected) model space $\Ss$.  By
+        patching together these local isometries, we isometrically identify
+        $\Ss$ with the universal cover of $\Mm$.  Since both that isometry and
+        the the deck group act by diffeomorphisms, $\Mm$ itself has the smooth
+        structure of a standard quotient of $\Ss$.  We finish by recalling that
+        such standard surfaces are determined by their Euler characteristic. 
+
+    \msec{Ricci flow}
+
+        So let's focus on the problem of finding a metric of constant
+        curvature.  We'll do this by evolving our initial metric by a sort of
+        diffusion equation.
+        Let's see how to do this in the special case where
+        the initial metric $g$ has (potentially varying) negative
+        curvature everywhere.  We'd like the regions with extreme negative
+        curvature to expand, thus diluting their curvature.  Conversely, we'd
+        like regions that are too flat to contract, thus concentrating their
+        curvature.  So, writing $R$ for the scalar curvature (scaled by
+        $1/8\pi^2$ so that it averages to $\chi$) let us scale the metric
+        according to how much $R$ overestimates its average:\footnote{
+            Intuitively, we split octogonal singularities into pairs of
+            heptagonal singularities so that the graph becomes increasingly
+            regular.
+        }
+        $$
+            \dot{g} = (R - \chi) g
+        $$
+        Note that this equation is non-linear.  Intuitively, the non-linearity
+        indicates the creation of new (positive and negative) curvature due to
+        the non-uniformity of $g$'s scaling.  This ``pair production''
+        complicates our goal of diffusion, but we will see that in $2$
+        dimensions, diffusion prevails.
+
+        It's enough to find a solution $g(t,x)$, defined for all time, that
+        converges to a fixed point.  To show long-term existence, it's enough
+        to bound $R(t,x)$ over all time and space.
+
+
+
+    \msec{The curvature is never too small}
+        
+    \msec{The curvature is never too big}
+        
+
+\end{document}
+
+

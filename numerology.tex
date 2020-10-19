@@ -1,0 +1,189 @@
+\documentclass[11pt, justified]{tufte-book}
+\usepackage{amsmath, amssymb, amsthm, bm, moresize}
+\usepackage{euler, tikz-cd}
+
+\usepackage{graphicx, epsdice, xcolor, listings, float, wrapfig, caption}
+\geometry{
+  left=1in, % left margin
+  textwidth=5.0in, % main text block
+  marginparsep=0.2in, % gutter between main text block and margin notes
+  marginparwidth=1.8in % width of margin notes
+}
+
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+%
+\newcommand{\Dd}{\mathcal{D}}
+\newcommand{\Ee}{\mathcal{E}}
+\newcommand{\Ff}{\mathcal{F}}
+\newcommand{\Gg}{\mathcal{G}}
+\newcommand{\Hh}{\mathcal{H}}
+\newcommand{\Ii}{\mathcal{I}}
+\newcommand{\Kk}{\mathcal{K}}
+\newcommand{\Ll}{\mathcal{L}}
+\newcommand{\Mm}{\mathcal{M}}
+\newcommand{\Nn}{\mathcal{N}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\Tt}{\mathcal{T}}
+\newcommand{\Uu}{\mathcal{U}}
+\newcommand{\Vv}{\mathcal{V}}
+\newcommand{\Xx}{\mathcal{X}}
+\newcommand{\Yy}{\mathcal{Y}}
+
+\newtheorem*{qst}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{clm}{Claim}
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+\definecolor{mblu}{rgb}{0.05, 0.40, 0.70}
+\newcommand{\mtit}[1]{%
+    {%
+        \noindent
+        \Huge\color{mblu}\bf\textsf{#1}
+        \vspace{0.3cm}
+    }
+}
+\newcommand{\msec}[1]{
+    \chapter{\color{mblu}\textsf{#1}}
+}
+\newcommand{\mssec}[1]{\section{\color{mblu}\textsf{#1}}}
+
+\begin{document}
+\renewcommand{\cleardoublepage}{}
+%\renewcommand{\clearpage}{}
+
+    \mtit{Numerology}
+
+        I've long wanted to take a math class where on the $n$th day we learn
+        about the number $n$.\footnote{
+            Looking back, I think I was influenced by John Baez' delightful,
+            fact-dense talks on the numbers five, eight, and twenty-four. 
+        } These notes attempt to give the reader such an
+        experience.  Alas, they are by no means complete.
+
+        In particular, we present one perspective per $n$ while ignoring $n$'s
+        other important aspects.  Any text on numbers must omit something:
+        Guy observes that, since we burden the several small numbers\footnote{
+            $n$ so small, say, that we would recognize $n$ apples by sight alone 
+        } with too many jobs,
+        most small numbers have multiple personalities.  In fact, one of the
+        main lessons I learned while an undergraduate was to spend less time
+        compressing my understanding toward One True viewpoint and more time
+        absorbing Many Clarifying viewpoints.  
+            %
+            The Fourier transform, for instance, is significant both because it
+            diagonalizes translation and because it diagonalizes
+            differentiation.  The former viewpoint leads to the representation
+            theory of groups; the latter, the harmonic theory of metric
+            manifolds.
+            %
+        Some sheaves simply lack global sections.
+
+        With this in mind, the viewpoints I choose to discuss are these:
+        \textbf{Zero} names what we'd like to ignore and hence is an accomplice
+        to abstraction.  \textbf{One} demarcates existence and uniqueness and
+        so highlights the role of coordinates.  Because \textbf{Two} counts the
+        set $\{\text{algebra}, \text{geometry}\}$, quadratic forms pervade
+        mathematics.  \textbf{Three}\footnote{also known as Arnold's constant;
+        we will ignore this thread of thought}
+        is the beginning of complexity, for degree-three graphs are
+        non-trivial. 
+
+            Most of these notes I can trace to conversations with friends and
+            friendly experts,  especially Dean Young and Andrew Snowden.  I
+            hope that these notes provide entertainment despite their
+            un-originality.
+
+
+    \msec{Zero: Analysis through Equality}
+        \mssec{Approximation and Abstraction}
+
+        What do the quotient operations $V/W$ of vector spaces and $S/(\sim)$
+        of sets have in common?  They are both coequalizers; the former, of
+        the two arrows $W\hookrightarrow V$ and $W\to 0\to V$, and the latter,
+        of $(\sim)\hookrightarrow S\times S\to S$ by left or right projection.
+        For sets, we must specify both sides of the equations $a=b$ to make
+        true; for vector spaces, by contrast, we can get away with specifying
+        only one side of $a-b=0$ due to the presence of an initial-and-terminal
+        object, $0$.  Categories with such a \textbf{zero object} include
+        those of groups, based spaces, and Noetherian lattices.
+
+        Naming our ignorance gives us valuable flexibility as we analyze
+        structures into simpler parts.  Indeed, the two grand methods of
+        simplification are \textbf{approximation}, where we posit
+        false-but-useful properties, and \textbf{abstraction}, where we discard
+        true-but-useless distinctions.  The concept of $0$ gives us the language
+        for both activities, as illustrated in the concept of 
+        \textbf{exact sequences} $F\to E\to B$.  These are just solid commuting
+        squares
+        as below with respect to which $F$ is terminal and $B$ is
+        initial.\footnote{
+            To be explicit, for every choice of $X,Y$, and dashed arrows that
+            commute with the solid arrows, there should exist unique dotted
+            arrows to make all commute.
+        }
+        $$
+            \begin{tikzcd}
+                                                                           &  &                         & 0 \arrow[rd] \arrow[rrrd, dashed] &                      &  &   \\
+            X \arrow[rrru, dashed] \arrow[rrrd, dashed] \arrow[rr, dotted] &  & F \arrow[ru] \arrow[rd] &                                   & B \arrow[rr, dotted] &  & Y \\
+                                                                           &  &                         & E \arrow[ru] \arrow[rrru, dashed] &                      &  &  
+            \end{tikzcd}
+        $$
+        Intuitively, each such square analyzes $E$ into conceptually orthogonal
+        parts $F, B$.  The universal properties ask $F, B$ to hug $E$ as
+        tightly as possible despite the orthogonality imposed by $0$.  This was
+        Descartes' great idea: to study Euclid axis-by-axis.
+
+        Studying $F\to E\to B$ in a concrete category, we sense that $F$
+        approximates $E$ and $B$ abstracts $E$.\footnote{
+            For example, consider the groups
+            $$
+                \ZZ \to \RR \to S^1
+            $$
+        } In particular, $F\to E$ represents
+        $F$ as a subset of $E$, and to factor $X\to E$ through $X\to F$ is to
+        ``round'' decimal outputs in $E$ to integer outputs in $F$.  Dually, $E\to
+        B$ presents $B$ as a quotient of $E$, and to factor $E\to Y$ through
+        $E\to B$ is to ``collapse'' the decimal inputs in $E$ to their
+        fractional parts in $B$.
+
+        As another example, consider the category of parameterized
+        distributions $p(Y;X)$ on two real numbers, with maps induced by linear
+        shears $y \mapsto ax + by + c$.  Any $p(Y;X)$ induced by a centered
+        normal joint distribution enjoys an exact decomposition
+        $$
+            p_I \to p\to p_E
+        $$
+        where $p_I(Y;X=x) = p(Y;X=0)$ is an independent approximation to $p$
+        and $p_E(Y=y;X) = \delta(y-\EE_p[Y;X])$ is an abstraction of $p$ in
+        terms of a summary statistic.
+
+        \mssec{Distributivity}
+
+            Multiplication distributes over addition, but not vice versa.  As a
+            consequence we typically have $0\cdot n = 0$ but $1 + n \neq 1$.
+            Thus an ideal (i.e.\ the pre-image of $0$ for some ring map) is
+            closed under both addition and scalar multiplication, but a
+            multiplicative system (i.e.\ the pre-image of $1$ for some ring
+            map) is typically closed only under multiplication and not scalar
+            addition.
+
+        \mssec{Homology}
+
+    \msec{One: Invariance}
+    \msec{Two: the Ghost of Pythagoras}
+    \msec{Three: Encapsulation through Action}
+        \mssec{Homology}
+        blue
+
+\end{document}
+
+
