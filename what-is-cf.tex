@@ -54,44 +54,41 @@
             \begin{tabular}{p{0.06\linewidth}p{0.9\linewidth}}
                 &
                 \begin{flushleft}  \Huge \color{mblu} \bf\textsf{WHAT IS...}    \vspace{0.1cm}\\\hrule  \end{flushleft} \vspace{-1.0\baselineskip}
-                \begin{flushright} \HUGE \color{mblu} \bf the Curvature Form?   \end{flushright} \vspace{-1.0\baselineskip}
+                \begin{flushright} \HUGE \color{mblu} \bf a Curvature Form?   \end{flushright} \vspace{-1.0\baselineskip}
                 \begin{flushright} \Large             \it Samuel C.\ Tenka      \end{flushright}
             \end{tabular}
         \end{@twocolumnfalse}
     ]
 
+    \msec{Pushing against non-abelianness}
+        Some falling animals land always on their hooves.\footnote{Due to dander
+        allergies, we imagine a falling cow.}  The manifold $E$ of their
+        postures in physical space fibers over the manifold
+        $B$ of their internal muscle lengths.  Amazingly, even cows lacking
+        angular momentum may traverse loops in $B$ that lift to non-loops in
+        $E$!
+
     \msec{Connections as Forms}
-        If insanity means redoing actions while expecting new results, then
-        curvature is a local measure of insanity.
+        A \textbf{connection} on a bundle $\pi:E\to B$ is a prescription for
+        how to lift infinitesimal paths through $\pi$.  We may lift finite
+        paths by integrating --- this is \textbf{transport}.  A connection's
+        \textbf{curvature} measures the failure of infinitesimal loops to lift
+        to loops.  Thus, in the presence of curvature, the result of traversing
+        a loop $\gamma$ times depends on $\gamma$; more generally, transport's
+        destination in $E$ depends on one's path in $B$.
 
-        Let us explain this in the differential geometer's ink-saving world
-        where all that can be smooth is smooth and all that can be linear is
-        linear.
-        %
-        A \textbf{connection} on a bundle $\pi:E\to B$ is a
-        prescription for how to lift infinitesimal paths through $\pi$.  We may
-        lift finite paths by integrating --- this is
-        \textbf{transport}.  A connection's \textbf{curvature} measures the
-        failure of infinitesimal loops to lift to loops.  Thus, in the presence
-        of curvature, the result of traversing a loop $n$ times depends on $n$;
-        more generally, transport's destination is path-dependent.
-
-        A connection is a $\tilde\omega: TB \to E \to TE$ where we restrict to
-        inputs whose basepoints match and we insist that the output vector
+        A connection $\tilde\omega$ has type $TB \to E \to TE$ where we restrict
+        to inputs whose basepoints match and we insist that the output vector
         projects to the input vector.
         %
-        Thus, any two connections differ at $v \in T_p B$ by a vector field  
-        on $p$'s fiber.
-        We may locally choose a flat connection $\tilde\omega_0$ by choosing a
-        trivialization of the bundle; relative to $\tilde\omega_0$,
-        $\tilde\omega$ has the data of a bunch of vector fields on fibers, 
-        comparable between different fibers by means of $\tilde\omega_0$.
-        Viewing all those vector fields as living in a Lie algebra $\gG$,
-        we may package the data of $\tilde\omega$ as $\omega:TB \to \gG$.
-        Note that $\omega$ is only defined locally and depends on a local
-        trivialization.
-
-
+        Thus, any two connections differ at $v \in T_p B$ by a vector field  on
+        $p$'s fiber.  We may locally choose a flat connection $\tilde\omega_0$
+        by choosing a trivialization of the bundle; then $\tilde\omega$ differs
+        from $\tilde\omega_0$ at $v\in T_p B$ by some vector field $\omega(v)$
+        on the fiber at $p$, Viewing all those vector fields as living in a Lie
+        algebra $\gG$, we may package the data of $\tilde\omega$ as $\omega:TB
+        \to \gG$.  Note that $\omega$ is only defined locally and depends on a
+        local trivialization.
 
 \newpage
     \msec{Curvature as a Form}
@@ -100,14 +97,14 @@
         expect the curvature $\Omega : \Lambda^2 TB \to \gG$ to be a two-form 
         valued in $\gG$.
 
-        Intuitively, there are two obstructions to path-independence:
+        Intuitively, there are two obstructions to path independence:
         (\textbf{horizontal}) the connection might vary with $p$ and  
         (\textbf{vertical}) the vector fields $\omega(\cdot)$ might not
         commute.
         %
         To isolate the horizontal phenomenon, suppose $\gG$ is
         abelian so that transport is just addition in $\gG$.  We then
-        want for any disk $h: D^2 \to B$ that
+        want for disks $h: D^2 \to B$ that
         $$
             \int_{\partial h} \omega = \int_h \Omega
         $$
@@ -129,10 +126,11 @@
             \Omega(u,v) = d\omega(u,v) + [\omega(u), \omega(v)]
         $$
 
-        For example, a Riemannian manifold $B$ of dimension $d$ has a bundle of
-        orthonormal bases; the relevant algebra is $\oO(d)$.  Then
-        $\Omega:\Lambda^2 TB \to \oO(d)$ has the same data as the Riemann
-        tensor, and it emphasizes the variance and antisymmetry of the indices. 
+        For example, a Riemannian manifold $B$ of dimension $n$ has a bundle of
+        orthonormal bases; the relevant algebra is $\oO(n)$.  Then
+        $\Omega:\Lambda^2 TB \to \oO(n)$ has the same data as the Riemann
+        tensor, and it emphasizes the variance and antisymmetries of the
+        indices. 
 
     \newpage
     \msec{Chern's Gauss-Bonnet}
@@ -158,34 +156,54 @@
         Using double covers, we deduce that G-B also applies to non-orientable
         manifolds.
 
-        \newpage
-    \msec{A Useful Holonomy}
-        It is observed with awe that certain pets, upon falling, land always on
-        their feet.  Due to dander allergies, we will imagine a falling cow.
-
-    \msec{Forms are Fun}
-        There is much beyond this tiny tour.  We will not mention, for
+    \msec{Light}
+        We will not mention, for
         instance, how a connection on a circle bundle elegantly describes
         light, its curvature form containing as components both the electric
-        and magnetic fields.  Nor will we remark that Chern's proof immediately
-        generalizes beyond surfaces, thus relating geometry and topology in all
-        even dimensions. 
+        and magnetic fields. 
+
+    \msec{Forms are Fun}
+        There is much beyond this tiny tour.  All three of our main examples
+        had $\gG$ abelian, so their curvatures' vertical terms vanished.
+
+        We will not mention, for
+        instance, that the nuclear forces arise from sphere
+        bundles, their vertical terms indicating that ``nuclear
+        light'' interacts with itself.  Nor will we remark that Chern's proof
+        immediately generalizes beyond surfaces, thus relating geometry and
+        topology in all even dimensions. 
+
+        Sometimes the journey matters as much as the destination.  Let us
+        explain this in the differential geometer's world where all that can be
+        smooth is smooth and all that can be linear is linear.
+
 
     \msec{References}
-        We thank \textsc{Professor Ralf Spatzier} for teaching us to love
+        We thank Professor Ralf Spatzier for teaching us to love
         pictures.
 
         \hrulefill
-        \vspace{0.4cm}
-            \begin{wrapfigure}{r}{3.3cm}
+        \vspace{0.1cm}
+            \begin{wrapfigure}{r}{2.3cm}
                 \vspace{-0.4cm}
-                    \includegraphics[height=3.3cm]{sam}
-                \caption*{The author, courtesy of Karl Winsor}
+                    \includegraphics[height=2.3cm]{sam}
             \end{wrapfigure}
-            When not thinking about machines that learn, Sam can often be found
-            pretending to be a cow.  Sam enjoys memory over experience, pet
-            snails over pet spinach, left adjoints over right adjoints, and
-            analogies over lists.
+        \normalsize
+        Sam Tenka is a grad student in computer science 
+        at MIT.  Their email address is
+        \texttt{
+            c{\tiny\ }%
+            o{\tiny\ }%
+            l{\tiny\ }%
+            i{\tiny@}%
+            m{\tiny\ }%
+            i{\tiny\ }%
+            t{\tiny\ }%
+            .{\tiny\ }%
+            e{\tiny\ }%
+            d{\tiny\ }%
+            u%
+        }.
 
 
 \end{document}
