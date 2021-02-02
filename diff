@@ -1,0 +1,286 @@
+1,3c1,10
+< \documentclass[twocolumn, 11pt]{article}
+< \usepackage{amsmath, amssymb, amsthm, mathtools, bm, moresize}
+< \usepackage{euler}
+---
+> % author:   sam tenka
+> % create:   2020-06
+> % change:   2020-12
+> 
+> %==============================================================================
+> %=====  0.  DOCUMENT SETTINGS  ================================================
+> %==============================================================================
+> 
+> %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> %~~~~~~~~~~~~~  0.0. About and Beyond this Exposition  ~~~~~~~~~~~~~~~~~~~~~~~~
+5c12,13
+< \usepackage{graphicx, epsdice, xcolor, listings, float, wrapfig, caption}
+---
+> % page geometry: 
+> \documentclass[twocolumn, 11pt]{article}
+7a16,30
+> % math packages:
+> \usepackage{amsmath, amssymb, amsthm, mathtools, bm, moresize, euler}
+> 
+> % graphics packages:
+> \usepackage{graphicx, epsdice, xcolor, float, wrapfig, caption}
+> 
+> 
+> %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> %~~~~~~~~~~~~~  0.1. Header Formatting  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> % section header style:
+> \definecolor{mblu}{rgb}{0.05, 0.40, 0.70}
+> \newcommand{\msec}[1]{\subsection*{\color{mblu}\textsf{#1}}}
+> 
+> % clear the bibliography's header:
+11c34,37
+< \newcommand{\EE}{\mathbb{E}}
+---
+> %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> %~~~~~~~~~~~~~  0.2. Math Symbols and Blocks  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> % fancy letters:
+13,14c39
+< \newcommand{\RR}{\mathbb{R}}
+< %
+---
+> % ...
+16,18d40
+< \newcommand{\Ee}{\mathcal{E}}
+< \newcommand{\Ff}{\mathcal{F}}
+< \newcommand{\Gg}{\mathcal{G}}
+20,21d41
+< \newcommand{\Ii}{\mathcal{I}}
+< \newcommand{\Kk}{\mathcal{K}}
+24,26d43
+< \newcommand{\Tt}{\mathcal{T}}
+< \newcommand{\Uu}{\mathcal{U}}
+< \newcommand{\Vv}{\mathcal{V}}
+28d44
+< \newcommand{\Yy}{\mathcal{Y}}
+30,34c46,51
+< \newcommand{\Ein} {\text{trn}_{\Ss}} %{\Ee_{\text{in},\Uu}}
+< \newcommand{\Einb} {\text{trn}_{\check\Ss}} %{\Ee_{\text{in},\Uu}}
+< \newcommand{\Einc} {\text{trn}_{\Ss\sqcup \check\Ss}} %{\Ee_{\text{in},\Uu}}
+< \newcommand{\Egap}{\text{gap}_{\Ss}}
+< \newcommand{\Eout}{\text{tst}} %{\Ee_{\text{out}}}
+---
+> % losses averaged in various ways: 
+> \newcommand{\Ein}  {\text{trn}_{\Ss}}
+> \newcommand{\Einb} {\text{trn}_{\check\Ss}}
+> \newcommand{\Einc} {\text{trn}_{\Ss\sqcup \check\Ss}}
+> \newcommand{\Egap} {\text{gap}_{\Ss}}
+> \newcommand{\Eout} {\text{tst}}
+35a53
+> % math environment blocks: 
+38a57
+> % ...
+42,43c61,62
+< \definecolor{mblu}{rgb}{0.05, 0.40, 0.70}
+< \newcommand{\msec}[1]{\subsection*{\color{mblu}\textsf{#1}}}
+---
+> %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> %~~~~~~~~~~~~~  0.3. Title  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+52,53c71,72
+<                 \begin{flushright} \HUGE \color{mblu} \bf the VC-Dimension?    \end{flushright} \vspace{-1.0\baselineskip}
+<                 \begin{flushright} \Large             \it Samuel C.\ Tenka      \end{flushright}
+---
+>                 \begin{flushright} \HUGE \color{mblu} \bf the VC-Dimension?                             \end{flushright}\vspace{-1.0\baselineskip}
+>                 \begin{flushright} \Large             \it Samuel C.\ Tenka                              \end{flushright}
+57a77,80
+> %==============================================================================
+> %=====  1.  CAKE PROBLEM  =====================================================
+> %==============================================================================
+> 
+75c98
+<                 Cakes for $n=1,\cdots,6$.
+---
+>                 Cakes for $n=1$ through $6$.
+90,91c113
+<         Patterns do not always generalize.  But then how is learning from 
+<         data
+---
+>         Patterns do not always generalize.  But then, how is learning from data
+94,97c116,123
+<         That is, if from a collection $\Hh$ of possible patterns we find
+<         some $f\in \Hh$ that matches or performs well on $N$ observed data
+<         points, when should we expect that $f$ matches unseen data?  This
+<         question motivates machine learning's theory and guides its practice.
+---
+>         That is, if from a collection $\Hh$ of possible patterns we find some
+>         $f\in \Hh$ that matches or performs well on $N$ observed data points,
+>         when should we expect that $f$ matches unseen data?  This question
+>         motivates machine learning's theory and guides its practice.
+> 
+> %==============================================================================
+> %=====  2.  LEARNING THEORY FORMALISM  ========================================
+> %==============================================================================
+100c126
+<         Let us precisely frame a simple case of the problem.
+---
+>         Let us explicitly frame a simple case of the problem.
+126c152
+<         \newcommand{\minf}[1]{{\inf}_{\Hh}}%\inf_{f^\prime\in#1}}
+---
+>         \newcommand{\minf}[1]{{\inf}_{\Hh}}
+147a174,177
+> %==============================================================================
+> %=====  3.  CONCENTRATION BOUNDS  =============================================
+> %==============================================================================
+> 
+155c185
+< 
+---
+>         \vspace{-0.5cm}
+160c190
+<                 We uniformly at random sample points on $N$
+---
+>                 We sample points uniformly at random on $N$
+168c198
+< 
+---
+>         \vspace{-0.5cm}
+179c209
+<             {%\small 
+---
+>             {%
+182d211
+<             %      = & ~ \PP[\text{$M$ are red and all are boxed}] ~/~ \PP[\text{all are boxed}]  \\
+196c225
+<                 \leq
+---
+>                 =
+203c232
+< 
+---
+>         \vspace{-0.5cm}
+207c236
+<         training error will \textbf{concentrate} near the testing sample error.
+---
+>         training error will \textbf{concentrate} near the testing error.
+227c256
+<         artificial.  Indeed, the $\Hh$s used in practice --- for instance,
+---
+>         artificial.  Indeed, the various $\Hh$ used in practice --- e.g.
+232a262,265
+> %==============================================================================
+> %=====  4.  SYMMETRIZATION  ===================================================
+> %==============================================================================
+> 
+351,354d383
+<         %\begin{align*}
+<         %    \label{eqn:vc}
+<         %    (2N+2)^{\text{dim}(\Hh)} ~\cdot~ 2 \exp(-Ng^2/16)
+<         %\end{align*}
+359d387
+<         %$\Xx^*$ is its dual,
+380c408,410
+< 
+---
+> %==============================================================================
+> %=====  5.  CONCLUSION  =======================================================
+> %==============================================================================
+386,387d415
+<         %The VC theorem, whose ``only if'' direction we've sketched,
+<         %summarizes the VC-dimension's role in learning theory:
+390d417
+<             %data
+393d419
+<             %$N=|\Ss|$ grows.  
+396a423,425
+>         The VC theorem is but one result in \textbf{statistical learning
+>         theory}, which abounds with variations on the theme that $\Egap \leq
+>         \sqrt{\log(|\Hh|/\delta)/N}$.
+398,407c427,430
+< 
+<         The VC theorem is but one result in \textbf{statistical
+<         learning theory}, which abounds with variations on
+<         the theme that $\Egap \leq \sqrt{\log(|\Hh|/\delta)/N}$.
+<         %
+<         For instance, viewing $\log(|\Hh|)$ as the maximum entropy of
+<         $\Ll(\Ss) \in \Hh$, one may seek improvements given
+<         information-theoretic hypotheses.  Recent progress
+<         \cite{abbe} uses the \emph{mutual information} between $\Ss$ and
+<         $\Ll(\Ss)$.
+---
+>         For instance, viewing $\log(|\Hh|)$ as the maximum entropy of $\Ll(\Ss)
+>         \in \Hh$, one may seek improvements given information-theoretic
+>         hypotheses.  Recent progress \cite{abbe} uses the \emph{mutual
+>         information} between $\Ss$ and $\Ll(\Ss)$.
+414,415d436
+<         %\emph{Rademacher complexity}
+< 
+417,428c438,443
+<         bound is
+<         empirically very
+<         loose for nets: though nets
+<         %seem to
+<         have nearly exponential $H(n)$ for typical data sets
+<         \cite{bengio}, they achieve state-of-the-art testing errors
+<         on many real-world tasks \cite{hinton}.
+<         %A large $H(n)$ means that nets are flexible enough to fit arbitrary
+<         %data.
+<         A large $H(n)$
+<         allows nets to model complex patterns yet --- in a phenomenon invisible
+<         to VC theory --- seems not to hinder generalization.
+---
+>         bound is empirically very loose for nets: though nets have nearly
+>         exponential $H(n)$ for typical data sets \cite{bengio}, they achieve
+>         state-of-the-art testing errors on many real-world tasks \cite{hinton}.
+>         A large $H(n)$ allows nets to model complex patterns yet --- in a
+>         phenomenon invisible to VC theory --- seems not to hinder
+>         generalization.
+430,431c445,453
+<         Thus, the mystery of modern learning: with deep neural
+<         networks, may we continually halve our cake and eat it, too?
+---
+>         Thus, the mystery of modern learning: with deep neural networks, may we
+>         continually halve our cake and eat it, too?
+> 
+> %==============================================================================
+> %=====  6.  BACKMATTER  =======================================================
+> %==============================================================================
+> 
+> %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> %~~~~~~~~~~~~~  6.0. About and Beyond this Exposition  ~~~~~~~~~~~~~~~~~~~~~~~~
+434,435c456,457
+<         We thank A.\ Ozga and J.\ Trate for testing this
+<         exposition in a high school class.
+---
+>         We thank Arthur Ozga and Joe Trate for testing
+>         this exposition in a high school class.
+437,439c459,460
+<         The use of three-segment sticks and $\{\blacksquare,
+<         \square\}$-encoding to present the VC bound in elementary terms is, to
+<         our knowledge, new.
+---
+>         We believe the use of three-segment sticks and $\{\blacksquare,
+>         \square\}$-encoding to present the VC bound in elementary terms is new.
+450a472,474
+> %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> %~~~~~~~~~~~~~  6.1. Bibliography  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+498a523,525
+> %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> %~~~~~~~~~~~~~  6.2. Author and Credits  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+504d530
+<                 %\caption*{The author, courtesy of Karl Winsor}
+506d531
+<     %\let\thefootnote\relax\footnotetext{
+508,509c533,534
+<         Sam Tenka is a grad student in computer science 
+<         at MIT.  Their email address is
+---
+>         Sam Tenka is a graduate student in computer science at MIT.  Their
+>         email address is
+522,527c547
+<         }.
+<     %}
+<             %When not thinking about machines that learn, Sam can often be found
+<             %pretending to be a cow.  Sam enjoys memory over experience, pet
+<             %snails over pet spinach, left adjoints over right adjoints, and
+<             %analogies over lists.
+---
+>         }.  This article's graphics are all provided courtesy of the author.

@@ -1,3 +1,7 @@
+jesse:
+	pdflatex jesse.tex
+	evince 	 jesse.pdf
+
 gd:
 	pdflatex what-is-gd.tex
 	evince what-is-gd.pdf

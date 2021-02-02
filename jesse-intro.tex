@@ -1,0 +1,31 @@
+    Sampling-based evaluation of integrals is common and useful, but na\"ive
+    sampling suffers high variances when integrands have small support.  An 
+    extreme instance occurs when we attempt to evaluate:
+    \begin{equation}\label{eqn:paradigm}
+        \parder{}{t} \int_{x\in (-\infty,t]} f(x) dx 
+    \end{equation}
+    The answer is $f(1)$; can we see this by sampling?
+
+    To evaluate (\ref{eqn:paradigm}) by sampling, we re-express it as an
+    integral.  Our strategy is to move the integral sign's $t$-dependency into
+    the integrand and thereupon to swap the derivative and integral.  Indeed,
+    when $f$ is sufficiently smooth and bounded, the physicist's formalism of
+    step ``functions'' $\Theta$ and dirac
+    ``functions'' $\delta$ permits this strategy:
+    \begin{align*}
+        &~\parder{}{t} \int_{x\in (\infty,t]} f(x) dx 
+        \\=
+        &~\parder{}{t} \int_{x\in \RR}
+            \Theta(x-0)\Theta(t-x) f(x) dx 
+        \\=
+        &~\int_{x\in \RR} \parder{}{t}
+            [\Theta(x-0)\Theta(t-x) f(x)] dx 
+        \\=
+        &~\int_{x\in \RR} 
+            \Theta(x-0) \delta(t-x) f(x) dx 
+    \end{align*}
+    Intuitively, $\Theta(x-0) \delta(t-x) f(x)$ is infinite at $x=t$ and $0$
+    elsewhere.  Thus, a na\"ive sampling approach will fail.  We'll show
+    how the same $\delta$ function syntax that helps us translate
+    (\ref{eqn:paradigm}) to a sampling problem also helps us us target our
+    sampler to achieve finite variances.

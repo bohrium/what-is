@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, amsthm, tikz-cd}
+
+\newcommand{\Th}[1]{\Theta^{(#1)}}
+\newcommand{\wrap}[1]{\left(#1\right)}
+
+\begin{document}
+    \begin{center}
+        \Large deltas\\
+        \large a local cow --- 2021-02
+    \end{center}
+
+    Here is an appropriate map from syntax to semantics
+    for Jesse's variational-inference-through-integrals project. 
+    The hope is for automatic differentiation to be correct, i.e.\ for
+    the following cube to commute: 
+    $$\begin{tikzcd}
+                                                               & {\rm Syntax} \arrow[ddd, "D_t"', dotted] \arrow[rrr, "{\rm eval}", dotted] &  &                                        & {\rm Semantics} \arrow[ddd, "D_t"] \\
+    {\rm Syntax} \arrow[ddd, "D_t"'] \arrow[rrr, "{\rm eval}"] \arrow[ru, "\int_X", dotted] &                                          &  & {\rm Semantics} \arrow[ddd, "D_t", dotted] \arrow[ru, "\int_X"'] &                      \\
+                                                               &                                          &  &                                        &                      \\
+                                                               & {\rm Syntax} \arrow[rrr, "{\rm eval}"', dotted]                    &  &                                        & {\rm Semantics}                    \\
+    {\rm Syntax} \arrow[rrr, "{\rm eval}"'] \arrow[ru, "\int_X", dotted]                    &                                          &  & {\rm Semantics} \arrow[ru, "\int_X"']                    &
+    \end{tikzcd}$$
+    Intuitively, $D_t$ differentiates with respect to $t$ and $\int_X$
+    integrates over the cube $(x, y, \cdots z)\in \mathbb{R}^d = X$.  For
+    concision, we assume that $\{t\} \sqcup \{x,y,\cdots z\}$ partitions the
+    set of used variables, that we differentiate always with respect to $t$,
+    and that we integrate always over $X$.  
+    %
+    To focus on applications, we restrict our attention to the non-dotted
+    rectangle.  We shall discuss its nodes, vertices, and faces, i.e.\ define
+    the worlds of syntax and semantics, construct the maps $D_t$ and $\int_X$
+    and $\text{eval}$, and check that the rectangle commutes. 
+    
+\begin{center}\textsc{Syntax}\end{center}
+    
+    Because we focus on the non-dotted rectangle, it suffices to describe the
+    syntax of integrands.
+    %
+    Our integrand language includes arithmetic and (differentiated) step
+    functions.  For concreteness, say we have ring operations, real numbers,
+    real-type variable names, and for each natural $d$ the $d$th derivative
+    $\Th{d}$ of the step function.
+    %
+    The grammar has base types \textsc{var},
+    \textsc{smooth} (for smooth expressions), and \textsc{distr} with
+    natural ``unit inclusions'' $\text{\textsc{var}}\hookrightarrow
+    \text{\textsc{smooth}}$ and $\text{\textsc{smooth}}\hookrightarrow
+    \text{\textsc{distr}}$; we regard the distributions as forming
+    an algebra over the ring of smooth expressions, and we overload the
+    ring operation symbols accordingly.  Syntactically, $\Th{d}$ has the type
+    $\text{\textsc{smooth}}\to \text{\textsc{distr}}$.
+
+    An example smooth expression is $y^2 - t x^3 - t$.  An example distribution
+    is:
+    $$
+        \Th{0}(tx-y)\cdot\Th{0}(1-tx-ty)\cdot\Th{0}(y)\cdot\Th{0}(1-t/2-y)
+        \cdot x^2 y
+    $$
+    Adhering to convention, we also write $[f<g]$ for $\Th{0}(g-f)$ and 
+    $\delta$ for $\Th{1}$.
+    
+    The operator $D_t$ transforms syntax trees to
+    syntax trees by application of the product rule, of linearity,
+    of the relation 
+    $$
+        D_t[{\mathcal V}] = 1~\text{if}~{\mathcal V}=t~\text{else}~0
+    $$
+    for \textsc{var} node $\mathcal V$,
+    and of the chain rule for $\Th{d}$ with \textsc{smooth} tree $\mathcal E$:
+    $$
+        D_t[\Th{d}]({\mathcal E})] = \Th{d+1}({\mathcal E}) \cdot D_t[{\mathcal E}]  
+    $$
+    By induction, $D_t$'s action on integrand syntax trees is thus fully
+    determined. 
+
+\begin{center}\textsc{Semantics}\end{center}
+
+    How are we to interpret our integrand language?  We are familiar with the
+    ring $\frak R$ of smooth functions on variables $t,x,y,\cdots,z$ whose
+    every $d$th derivative ($0\leq d$) is polynomially bounded.  The
+    interpretation of syntax trees of type \textsc{smooth} into $\frak R$ is
+    standard.  We now construct an $\frak R$-module $\frak D$ of
+    \emph{distributions} into which we shall interpret syntax trees of type
+    \textsc{distr}.
+
+    Intuitively, evaluation sends a \textsc{distr} $\mathcal D$ to
+    the integration-over-$X$ operator 
+    $$
+        \text{eval}({\mathcal D}) = \wrap{g \mapsto \int_X \mathcal D \cdot g}
+    $$
+    To make sense of this, we formally define $\frak D$ as the real vector
+    space of continuous $\mathbb{R}$-linear functionals on $\frak G \subseteq
+    \frak R$.  Here, $\frak G$, an ideal of $\frak R$, contains the smooth
+    functions whose every $d$th derivative ($0\leq d$) is sub-gaussian (the
+    specifics of sub-gaussianity are unimportant: we just want to avoid
+    divergent integrals). $$ 
+
+    $\frak D$ is not just a vector space.  The relation $(r\cdot d)(f) =
+    d(r\cdot f)$ for $r,d,g \in {\frak R},\frak{D},\frak{G}$ furnishes $\frak
+    D$ with the additional structure of an $\frak R$-module.  To define how
+    $D_t$ acts on $\frak D$, we demand that integration by parts should hold:
+    $$
+        (D_t d)(g) = -d(D_t(g)) 
+    $$
+    Finally, to define how $\int_X$ acts on $\frak D$, we demand that integrals
+    commute:
+    $$
+        \wrap{\int_X d}(g) =
+        \lim_{v\to\infty} d(\exp(-(x^2+y^2+\cdots+z^2)/v^2))
+    $$
+    The above uses an every-expanding gaussian to model the constant function
+    $1$; unfortunately, $1 \notin \frak G$, so this indirection is necessary.  
+
+\begin{center}\textsc{Evaluation}\end{center}
+
+    Finally, we define evaluation of syntactic integrands. 
+    Up to applications of the ring axioms,
+    the general form of a syntax tree in   
+    $$
+    $$
+
+\end{document}
+
