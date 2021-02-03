@@ -13,19 +13,71 @@
     step ``functions'' $\Theta$ and dirac
     ``functions'' $\delta$ permits this strategy:
     \begin{align*}
-        &~\parder{}{t} \int_{x\in (\infty,t]} f(x) dx 
+        &~\parder{}{t} \int_{x\in (\infty,t]} f(x) \,dx 
         \\=
         &~\parder{}{t} \int_{x\in \RR}
-            \Theta(t-x) f(x) dx 
+            \Theta(t-x) f(x) \,dx 
         \\=
         &~\int_{x\in \RR} \parder{}{t}
-            [\Theta(t-x) f(x)] dx 
+            [\Theta(t-x) f(x)] \,dx 
         \\=
         &~\int_{x\in \RR} 
-            \delta(t-x) f(x) dx 
+            \delta(t-x) f(x) \,dx 
     \end{align*}
     Intuitively, $\delta(t-x) f(x)$ is infinite at $x=t$ and $0$ elsewhere.
     Thus, a na\"ive sampling approach will fail.  We'll show how the same
     $\delta$ function syntax that helps us translate (\ref{eqn:paradigm}) to a
     sampling problem also helps us target our sampler to achieve finite
     variances.
+
+\begin{center}\large\textsc{Overview}\end{center}
+
+    We reserve the letters $t,u\cdots, v$ for real ``temporal'' variables with
+    respect to which we shall differentiate and a disjoint set of letters
+    $x,y,\cdots z$ for real ``spatial'' variables over which we shall
+    integrate.  We write $X$ for the space of all configurations of
+    $(x,y,\cdots,z)$.  We thus aim to evaluate expressions such as
+    $$
+        D_t D_t \int_X \Theta(x)\Theta(y)\Theta(t-x-y) (x^2-ty) \,dx\,dy
+    $$
+    We shall focus on (first and higher) derivatives with respect to $t$.  The
+    other temporal variables $u,\cdots, v$ serve a supporting role in our
+    analysis. 
+
+    %In both cases, the intuition is that $D_t$ differentiates with respect to
+    %$t$ and that $\EE_X$ integrates with respect to some probability
+    %density $\rho$ on $(x, y, \cdots z)\in \mathbb{R}^d = X$.  For concision, we assume
+    %that $\{t\} \sqcup \{x,y,\cdots z\}$ partitions the set of used variables,
+    %that we differentiate always with respect to $t$, and that we integrate
+    %always over $X$.  
+
+    We shall describe a syntax of $\delta$ expressions such as $\delta(x-5)$
+    and $\theta(x^2-1)\delta(x-t)(x+t^2)$.
+    %
+    %Intuitively, these expressions represent \emph{distributions};  
+    Intuitively, a $\delta$ expression $d$ maps to
+    its integration-over-$X$ operator:
+    $$
+        \text{eval}(d) = \wrap{g \mapsto \int_X d \cdot g}
+    $$
+    For example, if $d = \delta(x-5-t)$, then
+    $\text{eval}(d)(g) = g(5-t)$. 
+
+    But what if $d = \delta(x)\delta(x)$?  The coincidence of the two
+    factors would seem to lead $\text{eval}(d)$ to diverge.  We proceed by
+    generalizing the problem: if we instead write $d =
+    \delta(x)\delta(x-u)$, then it is sensible to define
+    $\text{eval}(d)(g) = \delta(u) g(u)$.  Thus,
+    $\text{eval}$ maps into distributions not over space $X$ but over spacetime
+    $X\times T$, where $T$ is the set of configurations of $(t,u, \cdots, v)$.
+
+    We will permit evaluation only of \emph{generic} terms.  We may
+    summarize a term's step and delta factors ($\Theta(f_i)$ for $0\leq i<n_0$,
+    $\delta(f_i)$ for $n_0\leq i<n$)
+    by a map $f:\RR^\to \RR^n$ where $d$ counts the dimension of the hyperplane
+    of $X\times T$ at a fixed $t$.
+    We say that a term is \emph{generic} when $f$ is a submersion,
+    i.e.\ when $Df$ is everywhere surjective.  This seemingly restrictive
+    constraint is actually always attainable: one just adjoins temporal
+    variables as in the previous paragraph.
+

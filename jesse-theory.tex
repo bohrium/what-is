@@ -1,29 +1,22 @@
-    Here is an appropriate map from syntax to semantics for Jesse's
+    We present an appropriate map from syntax to semantics for Jesse's
     variational-inference-through-integrals project.  The hope is for automatic
     differentiation to be correct, i.e.\ for the following cube to commute: 
     $$\begin{tikzcd}
                                                                & {\rm Syntax} \arrow[ddd, "D_t"', dotted] \arrow[rrr, "{\rm eval}", dotted] &  &                                        & {\rm Semantics} \arrow[ddd, "D_t"] \\
-    {\rm Syntax} \arrow[ddd, "D_t"'] \arrow[rrr, "{\rm eval}"] \arrow[ru, "\EE_X", dotted] &                                          &  & {\rm Semantics} \arrow[ddd, "D_t", dotted] \arrow[ru, "\EE_X"'] &                      \\
+    {\rm Syntax} \arrow[ddd, "D_t"'] \arrow[rrr, "{\rm eval}"] \arrow[ru, "\int_X", dotted] &                                          &  & {\rm Semantics} \arrow[ddd, "D_t", dotted] \arrow[ru, "\int_X"'] &                      \\
                                                                &                                          &  &                                        &                      \\
                                                                & {\rm Syntax} \arrow[rrr, "{\rm eval}"', dotted]                    &  &                                        & {\rm Semantics}                    \\
-    {\rm Syntax} \arrow[rrr, "{\rm eval}"'] \arrow[ru, "\EE_X", dotted]                    &                                          &  & {\rm Semantics} \arrow[ru, "\EE_X"']                    &
+    {\rm Syntax} \arrow[rrr, "{\rm eval}"'] \arrow[ru, "\int_X", dotted]                    &                                          &  & {\rm Semantics} \arrow[ru, "\int_X"']                    &
     \end{tikzcd}$$
     In what follows, we will name the set of syntax trees $\mathcal S$ and
     the semantic set (into which those trees are evaluated) $\frak D$.
     The diagram makes clear that symbols such as $D_t$ are overloaded: they
     act both on $\mathcal S$ and on $\frak D$.
     %
-    In both cases, the intuition is that $D_t$ differentiates with respect to
-    $t$ and that $\EE_X$ integrates with respect to some probability
-    density $\rho$ on $(x, y, \cdots z)\in \mathbb{R}^d = X$.  For concision, we assume
-    that $\{t\} \sqcup \{x,y,\cdots z\}$ partitions the set of used variables,
-    that we differentiate always with respect to $t$, and that we integrate
-    always over $X$.  
-    %
     To focus on applications, we restrict our attention to the non-dotted
     rectangle.  We shall discuss its nodes, edges, and faces, i.e.\ define
     the worlds $\mathcal S$ of syntax and $\frak D$ of semantics, construct the
-    maps $D_t$ and $\EE_X$ and $\text{eval}$, and check that the rectangle
+    maps $D_t$ and $\int_X$ and $\text{eval}$, and check that the rectangle
     commutes. 
     
 \begin{center}\large\textsc{Syntax}\end{center}
@@ -67,7 +60,7 @@
 
     \textbf{Differentiation} ---
     The operator $D_t$ transforms syntax trees to
-    syntax trees by application of the product rule, of linearity,
+    syntax trees by application of the product rule, of real linearity,
     of the relation 
     $$
         D_t[{\mathcal V}] \triangleq 1~\text{if}~{\mathcal V}=t~\text{else}~0
@@ -80,32 +73,28 @@
     By induction, $D_t$'s action on integrand syntax trees is thus fully
     determined.  Moreover, it is a standard check (in the algebraic theory of
     \emph{derivations}) that this map is well-defined despite the 
-    aforementioned module structure. 
+    module relations.
 
 \begin{center}\large\textsc{Semantics}\end{center}
 
     \noindent\textbf{Construction} ---
     How are we to interpret our integrand language?  We are familiar with the
-    ring $\frak R$ of smooth functions on variables $t,x,y,\cdots,z$ whose
-    every $d$th derivative ($0\leq d$) is polynomially bounded.  The
+    ring $\frak R$ of smooth functions on variables $t,u,\cdots,v,x,y,\cdots,z$
+    whose every $d$th derivative ($0\leq d$) is polynomially bounded.  The
     interpretation of syntax trees of type \textsc{smooth} into $\frak R$ is
     standard.  We now construct an $\frak R$-module $\frak D$ of
     \emph{distributions} into which we shall interpret syntax trees of type
     \textsc{distr}.
 
-    Intuitively, evaluation sends a \textsc{distr} $\mathcal D$ to
-    the integration-over-$X$ operator 
-    $$
-        \text{eval}({\mathcal D}) = \wrap{g \mapsto \EE_X \mathcal D \cdot g}
-    $$
     To make sense of this, we formally define $\frak D$ as the real vector
     space of continuous $\mathbb{R}$-linear functionals on $\frak G \subseteq
     \frak R$.  Here, $\frak G$ contains the smooth
-    functions of $x,y,\cdots z$ whose every $d$th derivative ($0\leq d$) is
-    sub-gaussian.\footnote{The specifics of sub-gaussianity are unimportant: we
-    just want to avoid divergent integrals.  We topologize $\frak G$ by
-    insisting that every ball $\{g \in G : \sup_X L(g) < r\}$ be open, where
-    $L$ ranges over polynomials of $x,y,\cdots,;d_x,d_y,\cdots,d_z$ and $r$ is
+    functions of $u,\cdots,v,x,y,\cdots z$ whose every $d$th derivative ($0\leq
+    d$) is sub-gaussian.\footnote{The specifics of sub-gaussianity are
+    unimportant: we just want to avoid divergent integrals.  We topologize
+    $\frak G$ by insisting that every ball $\{g \in G : \sup_X L(g) < r\}$ be
+    open, where $L$ ranges over polynomials of
+    $u,\cdots,v,x,y,\cdots,z;d_u,\cdots,d_v,d_x,d_y,\cdots,d_z$ and $r$ is
     positive.}
 
     \textbf{Algebraic Structure} ---
@@ -119,14 +108,15 @@
     $$
         (D_t d)(g) \triangleq \frac{\partial d(g)}{\partial t}
     $$
-    We define $\EE_X$'s action on $\frak D$ by the simple rule:\footnote{
-        An annoying possibility is that $\rho \notin\frak G$, 
-        in which case the previous equation is undefined.  We may treat this
-        general case by convolving with ever-narrowing gaussians and masking
-        by ever-widening gaussians.  We choose not to discuss this case.
-    }
+    We define $\int_X$'s action on $\frak D$ by the simple rule:
+    %\footnote{
+    %    An annoying possibility is that $\rho \notin\frak G$, 
+    %    in which case the previous equation is undefined.  We may treat this
+    %    general case by convolving with ever-narrowing gaussians and masking
+    %    by ever-widening gaussians.  We choose not to discuss this case.
+    %}
     $$
-        (\EE_X d)(g) = d(\rho) \int_X g
+        \wrap{\int_X d}(g) = d(\rho) \int_X g
     $$
 
 \begin{center}\large\textsc{Evaluation}\end{center}
@@ -157,13 +147,13 @@
     below $-1$, equal to $1$ for inputs above $+1$, and symmetrical in
     that $\phi(-x)+\phi(+x)=1$.\footnote{
         The specific choice of $\varphi$ doesn't matter; in fact,
-        if we seek only first derivatives (so $D_t \EE_X \cdots$ instead of
-        $D_t^2 \EE_X \cdots$), $\varphi$ doesn't even have to be smooth: it
+        if we seek only first derivatives (so $D_t \int_X \cdots$ instead of
+        $D_t^2 \int_X \cdots$), $\varphi$ doesn't even have to be smooth: it
         may linearly interpolate between $(-1,0)$ and $(+1,1)$.
         %
         Still, it's important not to mix up $\varphi_\epsilon$ with
-        $\Th{0}$: though $\lim_\epsilon \EE_X \varphi(x/\epsilon)^2 g =
-        \lim_\epsilon \EE_X \varphi(x/\epsilon) g$ for $g\in \frak G$, we
+        $\Th{0}$: though $\lim_\epsilon \int_X \varphi(x/\epsilon)^2 g =
+        \lim_\epsilon \int_X \varphi(x/\epsilon) g$ for $g\in \frak G$, we
         have $\wrap{\Th{0}(x)}^2 \neq \Th{0}(x)$ as syntax trees.
     }
     
@@ -176,7 +166,7 @@
         =
         \wrap{
             g \mapsto
-            \int_X g \cdot \varphi_0(f_0)\varphi_0(f_1)\cdots\varphi_0(f_d)
+            \int_X g \cdot \varphi_0(f_0)\varphi_0(f_1)\varphi_0(f_d)
         }
     $$
     Likewise, for $0\leq d$ one may check that
@@ -185,7 +175,7 @@
         =
         \text{eval}\wrap{\Th{0}(f)} / (d+1)
     $$
-    As a final example, for coprime polynomials $f_0, f_1$ one may check that
+    For coprime polynomials $f_0, f_1$ one may check that
     $$
         \text{eval}\wrap{\Th{1}(f_0\cdot f_1)\Th{0}(f_0)} 
         =
@@ -250,32 +240,33 @@
             \Th{3}(h)
         }(g)
     \end{align*}
-    The middle equality applies integration by parts; the flanking
-    ones are definitions.
+    The middle step applies integration by parts; the flanking
+    steps are definitions.
     
     \textbf{of Switching Limits} ---
-    We check that integration and differentiation commute.
+    We check that integration and differentiation commute on inputs
+    $\text{eval}(d) = \wrap{g \mapsto \int_X g \cdot \prod_i \varphi^{d_i}(f_i)}$.
     This follows formally:\footnote{
-        Remarkably, we need not invoke any theorems of calculus!  In fact, this
+        We need not invoke any theorems of calculus!  In fact, this
         subsection follows for free since all the hard work was dome in
         defining things and in checking that $D_t$ and $\text{eval}$ commute.
     }
     \begin{align*}
-        &~\wrap{D_t \circ \EE_X}(d)(g) 
+        &~\wrap{D_t \circ \int_X}(d)(g) 
         \\
         = 
         &~\frac{\partial}{\partial t} \wrap{
-            \int_X \rho \cdot \prod_i \varphi^{d_i}(f_i)
+            \int_X \prod_i \varphi^{d_i}(f_i)
             \cdot \int_X g
         } 
         \\
         = 
         &~\wrap{
-            \frac{\partial}{\partial t} \int_X \rho \prod_i \varphi^{d_i}(f_i)
+            \frac{\partial}{\partial t} \int_X \prod_i \varphi^{d_i}(f_i)
         } \cdot \int_X g
         \\
         =
-        &~\wrap{\EE_X \circ D_t}(d)(g) 
+        &~\wrap{\int_X \circ D_t}(d)(g) 
     \end{align*}
     We used that $g\in\frak G$ does not depend on $t$.
 
