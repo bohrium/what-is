@@ -1,0 +1,135 @@
+\documentclass[11pt, justified]{tufte-book}
+\usepackage{amsmath, amssymb, amsthm, bm, moresize}
+\usepackage{euler, tikz-cd}
+
+\usepackage{graphicx, epsdice, xcolor, listings, float, wrapfig, caption}
+\geometry{
+  left=1in, % left margin
+  textwidth=5.0in, % main text block
+  marginparsep=0.2in, % gutter between main text block and margin notes
+  marginparwidth=1.8in % width of margin notes
+}
+
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+%
+\newcommand{\Dd}{\mathcal{D}}
+\newcommand{\Ee}{\mathcal{E}}
+\newcommand{\Ff}{\mathcal{F}}
+\newcommand{\Gg}{\mathcal{G}}
+\newcommand{\Hh}{\mathcal{H}}
+\newcommand{\Ii}{\mathcal{I}}
+\newcommand{\Kk}{\mathcal{K}}
+\newcommand{\Ll}{\mathcal{L}}
+\newcommand{\Mm}{\mathcal{M}}
+\newcommand{\Nn}{\mathcal{N}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\Tt}{\mathcal{T}}
+\newcommand{\Uu}{\mathcal{U}}
+\newcommand{\Vv}{\mathcal{V}}
+\newcommand{\Xx}{\mathcal{X}}
+\newcommand{\Yy}{\mathcal{Y}}
+
+\newtheorem*{qst}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{clm}{Claim}
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+\definecolor{mblu}{rgb}{0.05, 0.40, 0.70}
+\newcommand{\mtit}[1]{%
+    {%
+        \noindent
+        \Huge\color{mblu}\bf\textsf{#1}
+        \vspace{0.3cm}
+    }
+}
+\newcommand{\msec}[1]{\chapter{\color{mblu}\textsf{#1}}}
+\newcommand{\mssec}[1]{\section{\color{mblu}\textsf{#1}}}
+\newcommand{\mpar}[1]{\par\textsc{#1} --- }
+
+\begin{document}
+  \renewcommand{\cleardoublepage}{}
+
+  \mtit{Small Oscillations in Finite Dimension}
+
+  \msec{Modes}
+    \mssec{Energy minima} % drums, metronomes, molecules, tensegrity, whistling e string
+        \mpar{Winter}
+        For cosmological reasons, the universe is very cold; for statistical
+        reasons, we expect everyday objects to imperfectly insulated.  We thus
+        encounter many interesting systems near their local energy minima.
+        Think of salt crystals or playground swingsets, for instance.  These
+        notes study the classical physics of such systems.  We restrict
+        ourselves to systems with finitely many degrees of freedom. 
+
+        \mpar{Swingset}
+        For example, let's model a swingset as two pendula hanging from a
+        shared bar and hence weakly coupled.  The pendula have angles
+        $\theta_i$ and angular velocities $\omega_i$ for $i\in \{a,b\}$.  The
+        hamiltonian might look something like 
+        $$
+            \mathcal{H} = 
+            \sum_i m \ell^2 \omega_i^2/2 - m g \ell \cos \theta_i
+            \,+\, m^2 g^2 (\sin \theta_b - \sin \theta_a)^2/2k
+        $$
+
+        \mpar{Crystal}
+        As another example, let's model a (one-dimensional) salt crystal as a
+        line of $N$ ions of equal mass, spaced $\ell$ apart, and with only
+        nearest-neighbor interactions.  The hamiltonian might look something
+        like
+        $$
+            \mathcal{H} = 
+                \sum_{0\leq i<N} p_i^2/2m 
+                +
+                \sum_{0\leq i,i+1<N} k \cdot f(|q_j-q_i|/\ell) 
+        $$
+        where $f$ is smooth and bounded on the positive reals and minimized
+        near $1$.  Perhaps $f$ is Coulomb attraction force plus a repulsive
+        term that models Pauli exclusion classically.
+
+        \mpar{Canonical form}
+        Now we abstract.  We posit a manifold $M$ equipped with a symplectic
+        form $\omega:TM\to T^\star M$ and a smooth hamiltonian $\Hh:M\to\RR$. 
+        The vector field $v:M\to TM$ such that $\omega_p(v_p) = (d \Hh)_p$ 
+        determines evolution through time.  Near a minimum $p$ of $\Hh$, $\Hh$
+        is roughly quadratic.  In fact, we can find a symplectic basis
+        for $T_p M$
+
+    \mssec{Spectral asymptotics}
+    \mssec{Dispersion}
+        \mpar{Waves}
+        \mpar{Group velocity}
+        \mpar{Waves}
+        \mpar{Waves}
+    \mssec{Beats}
+
+  \msec{Interactions}
+    \mssec{Harmonics}
+    \mssec{Catastrophes} % Amplitude dependence
+    \mssec{Diagrammatic expansion}
+    \mssec{Poincare perturbation}
+
+  \msec{Resonance}
+    \mssec{Forcing resonance}
+    \mssec{Parametric resonance}
+    \mssec{Invariant tori}
+    \mssec{Small divisors} % KAM theory
+
+  \msec{Heat}
+    \mssec{Thermal conduction} % \___ together dominate internal friction
+    \mssec{Thermo-elasticity}  % /
+    \mssec{Significance of phase space measure: Boltzmann's law}
+    \mssec{Equipartition of energy}
+
+\end{document}
+
+

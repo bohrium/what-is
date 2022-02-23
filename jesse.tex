@@ -19,6 +19,27 @@
     \input{jesse-theory}
 \section*{Unbiased Evaluation of Distributions}
 \section*{Example}
+    Let us take the first two $t$-derivatives of 
+    $$
+        \int_X
+        \Theta(tx-y)\cdot\Theta(1-tx-ty)\cdot\Theta(y)\cdot\Theta(1-t/2-y)
+        \cdot x^2 y
+        \,dx\,dy
+    $$
+    %We introduce auxilliary variables into the integrand:
+    %$$
+    %    \Theta(tx-y-u_0)\cdot\Theta(1-tx-ty-u_1)\cdot\Theta(y-u_2)\cdot\Theta(1-t/2-y-u_3)
+    %    \cdot x^2 y
+    %$$
+    As three of the five factors depend on $t$,
+    the first derivative has three terms:
+    \begin{align*}
+        &~x\delta(tx-y)\cdot\Theta(1-tx-ty)\cdot\Theta(y)\cdot\Theta(1-t/2-y) \cdot x^2 y\\
+        +
+        &~\Theta(tx-y)\cdot(-x)\delta(1-tx-ty)\cdot\Theta(y)\cdot\Theta(1-t/2-y) \cdot x^2 y\\
+        +
+        &~\Theta(tx-y)\cdot\Theta(1-tx-ty)\cdot\Theta(y)\cdot(-1/2)\delta(1-t/2-y) \cdot x^2 y
+    \end{align*}
 
 \end{document}
 

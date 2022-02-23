@@ -114,12 +114,12 @@
         algorithm of complexity $c$ is a pair $(\Next:\Aa^\star\to \Qq,
         \Read:\Aa^{\times c} \to \Zz)$ that is correct on all inputs:
         \begin{align*}
-          (\Task(x), x) &= ((\Read \times {\rm id}_{\Xx}) \circ \Body^{\circ c}) \, ([\,], x) \\
-          \Body \, (\ell, x) &= (\Push \, \ell \, (\Ask \, (\Next \, \ell) \, x), x)
+          (\Task(x), x) &= ((\Read \times {\rm id}_{\Xx}) \circ \Body^{\circ c}) \,\, ([\,], x) \\
+          \Body \,\, (\ell, x) &= (\Push \,\, \ell \,\, (\Ask \,\, (\Next \,\, \ell) \,\, x), x)
         \end{align*}
         Here, $\Aa^\star = \bigsqcup_n \Aa^{\times n}$ is the type of
-        $\Aa$-valued lists; its constructors are $[\,] \, : \, \Aa^\star$ (the
-        empty list) and $\Push \, : \, \Aa^\star \to \Aa \to \Aa^\star$.
+        $\Aa$-valued lists; its constructors are $[\,] \,\, : \,\, \Aa^\star$ (the
+        empty list) and $\Push \,\, : \,\, \Aa^\star \to \Aa \to \Aa^\star$.
 
         We're interested in lower bounds on $c$ for various problems.  For
         example, we may model comparison sorting as the
@@ -165,7 +165,7 @@
           that $c \gtrsim n \lg(n/k)$ and that this bound is achieved.  For
           example, if $k \sim n/\lg n$, then $c \sim n \lg \lg n / \lg n$ is
           optimal --- strictly better than the ``zip'' or ``search'' strategies! 
-          This prefigures fractional cascading.
+          This win-win prefigures \emph{fractional cascading}.
 
         \mpar{Puzzle (Ballots)}
           Let's sort potentially tied elements.  So $\Xx$ contains the ballots
@@ -178,27 +178,43 @@
           algorithm that for any $x$ makes fewer than $n$ queries answered by
           ``$\text{tied}$''.
 
-      \msub{Beyond Counting}
-        \mpar{equality}
-        \mpar{less than}
+      \msub{Examples in Communication} %Beyond Counting
+        \mpar{Communicating an Equality}
+        \mpar{Communicating a Comparison}
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %~~~~~  3. Certificate-Based Arguments  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     \msec{Convex Cohorts}
       \msub{Distinct Elements}
-        \mpar{all distinct}
-        \mpar{equal coins}
-          Now $\Xx = 2^n$, $\Qq = \sum_{k} {n\choose k}^2$, $\Aa =
-          \{\text{same},\text{different}\}$, and
-          $\Ask \, (a,b) \, x$ indicates whether or not
-          $|x\cap a| = |x \cap b|$.
-          %
+        \mpar{Strictly Orderable}
 
+        \mpar{Counterfeit Coins}
+          We have $n$ coins, some of which may be counterfeit.  Not all of the
+          coins are counterfeit.  The counterfeit coins weigh $1+\epsilon$
+          while the ordinary coins weigh $1$ for $\epsilon < 1/n$.  We have a
+          balance that tells us for any two subsets of the $n$ coins which, if
+          any, is heavier.  In how few comparisons may we determine whether or
+          not there are any counterfeit coins?
+
+          Now $\Xx = 2^n \setminus [n]$ and $\Task \,\, x$ indicates whether or
+          not $\Xx$ is empty.  Now $\Qq = \sum_{k} {n\choose
+          k}^2$ and $\Ask \,\, (a,b) \,\, x$ indicates whether or not $|x\cap
+          a| = |x \cap b|$.
+          %
+          What sorts of lower bounds on $c$ can we come up with? 
+
+          Note: in this case algorithms are in correspondence with query
+          sequences.  Every element must be hit.  In fact, the graph whose
+          edges are "participate in the same weighing, not necessarily on the
+          same side" must be connected.
+
+          Call a set of coins that all experience the same weighing pattern 
+          of left/none/rights a "coinhort".  
 
       \msub{Range}
-        \mpar{min finding}
-        \mpar{range}
+        \mpar{Minimum}
+        \mpar{Range}
 
 
 
@@ -209,6 +225,19 @@
       \msub{Length}
       \msub{Bits}
 
+      \begin{tabular}{lcccc}
+          problem       &       counting        &       lower       &       upper       &       direct      \\
+          \hline
+          Merge         &                       &                   & $n\lg\lg n/\lg n$ &                   \\
+          Ballots       &                       &                   & $n \lg n/2$       &                   \\
+          Strictly      &                       &                   & $n \lg n$         &                   \\
+          Counterfeit   &                       &                   & $2\lg n/\lg\lg n$ &                   \\
+          Minimum       &                       &                   & $n$               &                   \\
+          Range         &                       &                   & $3n/2$            &                   \\
+          Length        &                       &                   & $(\lg n)^2/2$     &                   \\
+          Bits          &                       &                   & $O(n\lg\lg n)$    &                   \\
+      \end{tabular}
+
 %%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %%~~~~~  5. Median Lower Bounds  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %
@@ -217,5 +246,12 @@
 %      \msub{}
 
 \end{document}
+
+
+
+
+
+
+
 
 

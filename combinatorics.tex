@@ -1,0 +1,290 @@
+\documentclass[12pt, justified]{tufte-book}
+\usepackage{amsmath, amssymb, amsthm, bm, moresize}
+\usepackage{euler, tikz-cd}
+
+\usepackage{graphicx, epsdice, xcolor, listings, float, wrapfig, caption}
+\geometry{
+  left=1in, % left margin
+  textwidth=5.5in, % main text block
+  marginparsep=0.2in, % gutter between main text block and margin notes
+  marginparwidth=1.8in % width of margin notes
+}
+
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+%
+\newcommand{\Dd}{\mathcal{D}}
+\newcommand{\Ee}{\mathcal{E}}
+\newcommand{\Ff}{\mathcal{F}}
+\newcommand{\Gg}{\mathcal{G}}
+\newcommand{\Hh}{\mathcal{H}}
+\newcommand{\Ii}{\mathcal{I}}
+\newcommand{\Kk}{\mathcal{K}}
+\newcommand{\Ll}{\mathcal{L}}
+\newcommand{\Mm}{\mathcal{M}}
+\newcommand{\Nn}{\mathcal{N}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\Tt}{\mathcal{T}}
+\newcommand{\Uu}{\mathcal{U}}
+\newcommand{\Vv}{\mathcal{V}}
+\newcommand{\Xx}{\mathcal{X}}
+\newcommand{\Yy}{\mathcal{Y}}
+
+\newcommand{\smallsquare}{\,\text{\scriptsize$\square$}\,}
+\newcommand{\colim}{{\rm colim}}
+
+\newtheorem*{qst}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{clm}{Claim}
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+\newcommand{\mtit}[2]{
+  \begin{center}
+    \LARGE\sc#1\\
+    \Large\rm#2
+  \end{center}
+}
+
+\newcommand{\msec}[1]{
+  \begin{center}\parbox{\textwidth}{\begin{center}
+    \hrule\vspace{0.25cm}
+    \Large\sc#1\vspace{0.25cm}
+    \hrule
+  \end{center}}\end{center}
+}
+
+\newcommand{\mssec}[1]{
+  \begin{center}\parbox{8cm}{\begin{center}
+    \large\sc#1
+  \end{center}}\end{center}
+      \vspace{-0.5cm}
+}
+
+
+
+\newcommand{\mpar}[1]{\vspace{0.5cm}\par\noindent\textsc{#1} --- }
+\newcommand{\abstract}[1]{\begin{center}\parbox{10.5cm}{#1}\end{center}}
+
+\begin{document}
+  \renewcommand{\cleardoublepage}{}
+
+  \mtit{Bijections of Finite Sets}
+
+    \abstract{%
+      We review a small part of basic combinatorics while emphasizing
+      conceptual unity.  For us, combinatorics is the study of bijections
+      between finite sets.  This may seem silly seeing as every finite set is
+      isomorphic to some standard ordinal $[n] \triangleq \{k\in \NN: k<n\}$.
+      But then again, every real space is isomorphic to some free space
+      $\RR^{\oplus I}$, yet linear algebra does not collapse into triviality.
+      In both cases, those isomorphisms are typically \emph{not canonical}, and
+      we find that, while finite sets or vectors spaces
+      by themselves are boring, the maps between them are quite rich.
+    }
+
+  \msec{Natural Structures}
+
+    \mssec{Joyal's Species}
+
+      \mpar{What is a Species?}
+        How may we structure elements into trees, into partitions, etc?  We'll
+        focus on what remains when we ignore the elements' internal
+        structure.  The categorical concept of \emph{naturality} formalizes
+        this focus: we deem a concept significant only when it coheres
+        under renaming of elements.
+
+        Let $\textsf{Fin}$ be the category of functions between finite sets and
+        let $\textsf{FinBij}$ be its core groupoid.  A \emph{combinatorial
+        species} is a functor $:\textsf{FinBij}\to\textsf{Fin}$.  For example,
+        the inclusion $I:\textsf{FinBij}\to\textsf{Fin}$ is a species.  We'll
+        study the category $\textsf{Species} = [\textsf{FinBij}, \textsf{Fin}]$
+        of natural maps between species.
+        It is an orienting exaggeration to say that combinatorics is the
+        study of $\textsf{Species}$.
+
+        Note that post-composition with $I$ gives an eidetic functor
+        $
+            [\textsf{FinBij}, \textsf{FinBij}]
+            \to
+            [\textsf{FinBij}, \textsf{Fin}]
+        $.
+        Thus, we
+        may compose species by composing their corresponding endofunctors.  The
+        inclusion $I$ is this composition's identity.
+
+        A functor is \emph{eidetic} when it surjects on objects, arrows
+        between those objects, and equalities between those arrows.  The three
+        conditions separately we call \emph{esophageal}, \emph{full}, and
+        \emph{faithful}.  Indeed, it is through the esophagus that one 
+        becomes full of objects.
+
+      \mpar{Maps between Species}
+
+      \mpar{Using Finiteness}
+        We restrict attention to \emph{finitary} combinations, since their
+        study admits pidgeon-hole principles (e.g.\ in the presence of a
+        bijection, every injection is a surjection%; multiplication by a
+        %non-empty cardinal is cancelable
+        ).  Transfinite induction fails to prove such principles in general
+        because limits do not preserve those principles.
+
+    \mssec{Beyond Dimension Zero}
+      \mpar{Permutations vs Orders}
+      \mpar{Yoneda Lemma}
+      \mpar{Eidetic Species}% $S_6$'s Exceptional Automorphisms
+        Perhaps the best species are the \emph{eidetic} ones.
+        It turns out there are exactly four
+        eidetic species up to isomorphism!  
+        Two of them swap size-$0$ and size-$1$ sets.
+        One of the non-swapping ones is $I$;
+        the other one, $E$, acts like $I$ except on sets of size $6$.
+
+        Say $S$ has $6$ elements.  Call a size-$3$ subset of $S$ a `face'.
+        $\ZZ/2\ZZ$ acts on the faces by set complement.
+        %
+        A \emph{$q$-structure} on $S$ is a partition of $S$'s $20$ faces into
+        two regular classes interchanged by $\ZZ/2\ZZ$.
+        (A size-$10$ class of faces is \emph{regular} if each singleton $\{s\}$
+        includes into the same number ($5$) of faces and each doublet $\{s,
+        t\}$ includes into the same number ($2$) of faces).  We define $E(S)$
+        to be the set of $q$-structures on $S$.
+
+        \begin{thm}
+          The eidetic species with functor composition form a group canonically
+            isomorphic to $(\ZZ/2\ZZ)^2$.
+        \end{thm}
+
+    \mssec{Composing Species}
+      \mpar{Algebraic Data Types}
+        Since the data of a species is the data of an endofunctor on
+        $\textsf{FinBij}$, we may compose combinatorial species (we use
+        $\smallsquare$ instead of the standard circle).  The identity under
+        composition we have already named ($I$).  Moreover, any $k$-ary
+        operation on $\textsf{Fin}$ that preserves $\textsf{FinBij}$ induces a
+        $k$-ary operation on $\textsf{Species}$.  Thus we have `pointwise'
+        (co)product ($+, \times$) and their identities ($0, 1$).
+
+        For example, 
+        we denote $I\times F$ by $\star F$ --- this is called `pointing';
+        we denote $F\smallsquare (I+1)$ by $F^\prime$ --- this is called `puncturing'.
+        Fans of algebraic data types will recognize these operations as dear
+        friends.
+
+      \mpar{Partitions}
+        Each species $F$ maps canonically to the species ${\rm Part}$ of
+        partitions as follows.  For $t\in F(S)$, let $\pi_t$ be the coarsest
+        partition of $S$ such that every $\pi_t$-preserving automorphism of $S$
+        also preserves $t$.
+
+        This induces a species $\mathring{F}$ that pointwise includes into
+        ${\rm Part}$.   
+
+        As an illustration, we present Joyal's calculation:
+        \begin{align*}
+            {\rm Ord}\times {\rm Endo}
+&\cong
+            {\rm Ord}\times ({\rm Perm} \circ (\star{\rm Tree}))
+\\&\cong        
+            {\rm Ord}\times ({\rm Ord} \circ (\star{\rm Tree}))
+\\&\cong
+            {\rm Ord}\times (\star\star{\rm Tree})
+        \end{align*}
+        %Only the middle isomorphism uses the ${\rm Ord}$ factor.
+        Because this map preserves its first factor, we summarize as follows.
+        \begin{thm}
+          In the presence of a total order, endomorphisms correspond naturally
+          with bipointed trees.
+        \end{thm}
+        An interesting corollary is Cayley's: there are $n^{n-2}$ trees on $n$
+        nodes.
+        
+        An endofunction's core is the categorical limit of $\cdots\to S\to S$.
+        To give a pointed tree is to give an endofunction with size-one core
+        (pidgeonhole).
+
+        To give a permutation is to give an endofunction with full-size core.
+        %Fix $f:S\to S$.  Say $s\sim f(s)$ when $f(s) 
+
+      \mpar{Atomic Decomposition}
+        Each $S_n$-set decomposes canonically as a sum of orbits.  We call such
+        orbits \emph{molecules}.  With coproduct and cauchy product, ${\rm
+        Species}$ is a (class-sized) commutative semiring with multiplicative
+        unit $X_0 = [- , 0]$. 
+        A molecule $p$ is \emph{atomic} when it is irreducible with respect 
+        to the cauchy product.
+
+        \begin{thm}
+            Moo
+        \end{thm}
+
+        There are $0, 1, 1, 2, 6, 6, 27, 20, \cdots$ many atoms on 
+        $0, 1, 2, 3, 4, 5, 6, 7, \cdots$ elements.
+
+      %\mpar{Atomic Decomposition}
+        
+
+    \mssec{Making Choices}
+      \mpar{Products don't Reflect Isomorphisms}
+      \mpar{Finitary Choice Principles}
+        A size-$n$ choice principle on a set $S$ is a simultaneous pointing for
+        each of $S$'s size-$n$ subsets.  Let the species ${\rm Ch}_n$ give a set's
+        size-$n$ choice principles.
+        $$
+            {\rm Ch}_n = E \smallsquare {\rm Subs}_n
+        $$
+        For example, we may visualize $C_2$ as
+        sending $S$ to the set of complete directed graphs on $S$.
+
+        What data can witness a choice principle?  That is, which species map
+        into $C_n$?
+
+        Suppose we have a way to choose an element from each $k$-element
+        set.  Do we then have a canonical way to choose an element from each
+        $K$ element set $S$?  
+
+        For example, say $k=2$ and $K=4$.  The following method works. 
+        Take the set $P$ of two-part partitions of $S$ into size-two subsets.
+        For each of $P$'s three elements, apply the choice function to select
+        an element of $S$.  The image is a multi-set $M$ of three elements in
+        $S$.  If the elements are all distinct, let us output the one missing
+        element.  Otherwise, there is an element that occurs strictly more
+        times in $M$ than any other element occurs; return that element.
+
+        More precisely, we have demonstrated a natural map between
+        species:
+        $$
+            {\rm Ch}_2 \times ({\rm Ch}_2 \smallsquare {\rm Subs}_2) \to [{\rm Part}_{2+2},I] \to {\rm Ch}_4
+        $$
+        Here, ${\rm Subs}_2$ gives a set's size-$2$ subsets; ${\rm Part}_{2+2}$
+        gives a set's partitions of type $2+2$; and $[,]$ is the pointwise
+        exponential.
+
+  \msec{Abstraction and Symmetry}
+    \mssec{}
+    \mssec{Poly\'a Counting}
+    \mssec{}
+
+  \msec{Approximation and Order}
+    \mssec{}
+    \mssec{M\"obius Inversion}
+    \mssec{}
+
+  %\msec{Averages and Eigenmodes}
+  %  \mssec{}
+  %  \mssec{}
+  %  \mssec{}
+  %  \mssec{}
+  %  \mpar{Encoding Septuples of Trees}
+
+\end{document}
+
+

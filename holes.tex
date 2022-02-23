@@ -1,0 +1,77 @@
+\documentclass[justified]{tufte-book}
+\usepackage{amsmath, mathtools, amssymb, pifont}
+\usepackage{graphicx, xcolor, listings}
+\usepackage{tikz-cd}
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\usepackage{wrapfig, tikz-cd, subcaption, multicol, adjustbox, cancel, graphics}
+\renewcommand*{\thefootnote}{\color{red}\fnsymbol{footnote}}
+\newcommand{\incltik}[1]{\scalebox{1.0}{$\begin{array}{l}#1\end{array}$}}
+\newcommand{\jetsquare}{
+{\begin{tikzcd}
+JE \arrow[d] \arrow[r] & TE\otimes T^*B \arrow[d] \\
+B \arrow[r]            & TB\otimes T^*B          
+\end{tikzcd}}
+}
+
+\makeatletter
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+
+\begin{document}
+
+  \title{Two Kinds of Hole}
+  \maketitle
+
+  \setcounter{tocdepth}{1}
+  \tableofcontents
+  \newpage
+  
+  \chapter{Dimensions $0$ and $1$}
+    \section{Homotopy and Cohomology}
+      When is a nice space --- say, a manifold $X$ --- connected?
+      On one hand, $X$ is connected when any two points in $X$
+      may be joined by a path; this has to do with maps \emph{to} $X$.
+      On the other, $X$ is connected when each locally constant
+      function is globally constant; this has to do with maps \emph{from} $X$.
+      We formalize these two notions as follows.
+      We work with based spaces.
+      The $k$th \emph{rational homotopy} of $X$ is the
+      set of formal $\mathbb{Q}$-linear combinations of maps $f:S^k\to X$, 
+      mod homotopies between $f,g:S^k\to X$, and mod addition defined below.
+      The $k$th \emph{rational cohomology} of $X$ is the set of formal 
+      $\mathbb{Q}$-linear combinations of maps $f:X\to S^k$,
+      mod homotopies between $f,g:X\to SP(S^k)$, and mod addition defined below.
+      TODO: are $\mathbb{Q}$-linear combinations of maps $f:X\to S^k$ the same as
+      maps from $f:X\to SP(S^k)$ up to homotopy?
+      (Perhaps assume compactness of $X$ or think only about compactly supported
+      cohomology?)
+      
+    \section{Addition}
+    \section{Multiplication}
+    \section{Graphs and Covers}
+      We might ask for spaces with vanishing $2$nd and higher homotopy
+      and cohomology (not just rational).  Examples are graphs-with-higher-cells
+      Or we might ask for spaces with vanishing $1$st and lower homotopy
+      and cohomology (not just rational).  These are the simply connected
+      spaces.  For any $X$ we have good maps $C\to X\to G$ from a simply
+      connected space to $X$ to a graph-with-higher-cells.
+    
+  \chapter{Dimensions $2$ and higher}
+    \section{Differential forms}
+    \section{Poincare duality}
+    \section{Sullivan models}
+    \section{Sample computations}
+  \chapter{Applications}
+    \section{Extension and lifting}
+    \section{Vector bundles}
+    \section{Fixed points}
+    \section{Intersections}
+    
+  
+\end{document}
+
+

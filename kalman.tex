@@ -1,0 +1,118 @@
+% author:   sam tenka
+% create:   2022-02
+% change:   2022-02
+
+%==============================================================================
+%=====  0.  DOCUMENT SETTINGS  ================================================
+%==============================================================================
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.0. About and Beyond this Exposition  ~~~~~~~~~~~~~~~~~~~~~~~~
+
+% page geometry: 
+\documentclass[twocolumn, 11pt]{article}
+\usepackage[top=1.2in, bottom=1.2in, left=0.6in, right=0.6in]{geometry}
+
+% math packages:
+\usepackage{amsmath, amssymb, amsthm, mathtools, bm, moresize, euler}
+
+% graphics packages:
+\usepackage{graphicx, epsdice, xcolor, float, wrapfig, caption}
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.1. Header Formatting  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+% section header style:
+\definecolor{mblu}{rgb}{0.05, 0.40, 0.70}
+\newcommand{\msec}[1]{\subsection*{\color{mblu}\textsf{#1}}}
+
+% clear the bibliography's header:
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.2. Math Symbols and Blocks  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+% fancy letters:
+\newcommand{\PP}{\mathbb{P}}
+% ...
+\newcommand{\Dd}{\mathcal{D}}
+\newcommand{\Hh}{\mathcal{H}}
+\newcommand{\Ll}{\mathcal{L}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\Xx}{\mathcal{X}}
+
+% losses averaged in various ways: 
+\newcommand{\Ein}  {\text{trn}_{\Ss}}
+\newcommand{\Einb} {\text{trn}_{\check\Ss}}
+\newcommand{\Einc} {\text{trn}_{\Ss\sqcup \check\Ss}}
+\newcommand{\Egap} {\text{gap}_{\Ss}}
+\newcommand{\Eout} {\text{tst}}
+
+% math environment blocks: 
+\newtheorem*{qst}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+% ...
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.3. Title  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\begin{document}
+
+{
+    \centering \Huge \sf \color{mblu} 
+    Kalman Filters
+}
+
+%==============================================================================
+%=====  1.  HMMS  =============================================================
+%==============================================================================
+
+    A fundamental example in statistics is the weighted die.  We may extend it
+    into the continuous domain, most simply by considering Gaussians; and we
+    may extend it toward modelling correlated sequences, most simply enjoying a
+    Markov property.  Doing both extensions gives us the Kalman model of
+    continuous-valued sequences.  Here we review inference and estimation in
+    each of the four models.
+
+    \msec{Weighted Die}
+
+    \msec{Gaussian}
+    \msec{Hidden Markov Models}
+    \msec{Kalman Filtering}
+        Suppose $x_0 = 0 $,  $x_{t+1} \sim U x_t +
+        \mathcal{N}(0, Q)$, and $y_t \sim O x_t + \mathcal{N}(0, R)$, for
+        $0\leq t<T$, with all $2T$ noise values independent.  Based on
+        $U,Q,O,R$ and on a sequence of observations $\mathfrak{y}_\tau = (y_t : 0\leq
+        t<\tau)$, we estimate $\mathfrak{y}_\tau$ by $K(\vec y)$, hoping to minimize the
+        expectation of $\|\mathfrak{y}_\tau - K(\vec y_\tau)\|^2$.
+
+        Well, writing $\mu_\tau, C_\tau$ for the mean and variance of $x_\tau$
+        conditioned on $\mathfrak{y}_\tau$, we have $\mu_0 = 0$, $C_0 = 0$ and
+        \begin{align*}
+            &C_{\tau+1}^{-1}(z - \mu_{\tau+1}, z - \mu_{\tau+1})
+            =\\
+            &(UC_\tau U^{-1} + Q)^{-1}(z - U \mu_\tau, z - U\mu_\tau)  
+            +\\
+            &R^{-1}(z - y_\tau, O z - y_\tau)
+            + \text{const}
+        \end{align*}
+        and
+        $$
+            C_{tau+1} =  
+        $$
+
+    \msec{Estimating Parameters}
+    \msec{Example}
+
+%==============================================================================
+%=====  6.  BACKMATTER  =======================================================
+%==============================================================================
+
+\end{document}
+
+

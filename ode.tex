@@ -1,0 +1,110 @@
+% author: samuel tenka
+% create: 2021-09-13
+% change: 2021-19-13
+% descrp: latex source
+% to use: run `pdflatex ode.tex; evince ode.tex`
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~  0. Style Settings  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%-------------  0.0. packages  ------------------------------------------------
+
+\documentclass[11pt, justified]{tufte-book}
+\usepackage{amsmath, amssymb, amsthm, bm, moresize, euler, scalerel} % math
+\usepackage{graphicx, xcolor, listings, float, wrapfig, caption}     % graphics
+\geometry{
+  left           = 1.0in, % left margin
+  textwidth      = 5.0in, % main text block
+  marginparsep   = 0.2in, % gutter between main text block and margin notes
+  marginparwidth = 1.8in, % width of margin notes
+}
+
+%-------------  0.1. macros  --------------------------------------------------
+\newcommand{\nosp}{{\hspace{-0.067cm}}}
+\newcommand{\wrap}[1]{\left(#1\right)}
+\newcommand{\wrsp}[1]{\,\,#1\,\,}
+\newcommand{\pr}{\prime}
+\newcommand{\lsim}{{\,\scaleobj{0.75}\lesssim\,}}
+\newcommand{\gsim}{{\,\scaleobj{0.75}\gtrsim\,}}
+\newcommand{\lsims}{{\wrsp{\lsim}}}
+\newcommand{\gsims}{{\wrsp{\gsim}}}
+\newcommand{\sims}{{\wrsp{\sim}}}
+
+\newcommand{\from}[1][{}]{\xleftarrow{#1}}
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+%
+\newcommand{\Aa}{\mathcal{A}}
+\newcommand{\Bb}{\mathcal{B}}
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\Ll}{\mathcal{L}}
+\newcommand{\Pp}{\mathcal{P}}
+\newcommand{\Qq}{\mathcal{Q}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\Tt}{\mathcal{T}}
+\newcommand{\Vv}{\mathcal{V}}
+\newcommand{\Xx}{\mathcal{X}}
+\newcommand{\Zz}{\mathcal{Z}}
+%
+\newcommand{\Task}{\textsc{task}}
+\newcommand{\Ask}{\textsc{ask}}
+\newcommand{\Next}{\textsc{next}}
+\newcommand{\Read}{\textsc{read}}
+\newcommand{\Body}{\textsc{body}}
+\newcommand{\Push}{\textsc{push}}
+
+\newcommand{\lt}{\ensuremath <}
+\newcommand{\gt}{\ensuremath >}
+
+\newtheorem*{qst}{Question}
+\newtheorem*{prop}{Proposition}
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+\definecolor{mblu}{rgb}{0.05, 0.40, 0.70}
+\newcommand{\mtit}[1]{\noindent{\Huge\color{mblu}\bf\textsf{#1}}\vspace{1.5cm}}
+\newcommand{\msec}[1]{{\let\clearpage\relax\chapter{\color{mblu}\textsf{#1}}}}
+\newcommand{\msub}[1]{\vspace{0.3cm}\section{\color{mblu}\textsf{#1}}}
+\newcommand{\mpar}[1]{\par\noindent\textbf{#1}.}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~  1. Introduction  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\begin{document}
+
+  \mtit{Some Special Functions in Physics}
+
+    \msec{ODEs in Physics}
+    \msec{The Exponential and Trigonometric Function}
+      \msub{Exp}
+      \msub{Log}
+      \msub{Trigonometric Functions}
+    \msec{The Bessel and Airy Functions}
+      \msub{Bessel}
+
+    \msec{Table of ODE Solutions}
+      \begin{table}
+          \begin{tabular}{cccc}
+            $  \ddot y + b\dot y + y$&
+            $t \ddot y + b\dot y + y$&
+            $  \ddot y +tb\dot y + y$&
+            $  \ddot y + b\dot y +ty$
+        \end{tabular}
+        \caption{%
+          Columns indexed by ... . 
+        }
+      \end{table}
+
+\end{document}
+
+
+
+
+
+
+
+
+

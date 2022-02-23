@@ -1,0 +1,168 @@
+% author:   sam tenka
+% create:   2022-02
+% change:   2022-02
+
+%==============================================================================
+%=====  0.  DOCUMENT SETTINGS  ================================================
+%==============================================================================
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.0. About and Beyond this Exposition  ~~~~~~~~~~~~~~~~~~~~~~~~
+
+%---------------------  0.0.0. page geometry  ---------------------------------
+\documentclass[12pt]{article}
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+
+%---------------------  0.0.1. math packages  ---------------------------------
+\usepackage{amsmath, amssymb, amsthm, mathtools, bm, moresize, euler}
+
+%---------------------  0.0.2. graphics packages  -----------------------------
+\usepackage{graphicx, epsdice, xcolor, float, wrapfig, caption}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.1. Header Formatting  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%---------------------  0.1.0. section header style  --------------------------
+\definecolor{mblu}{rgb}{0.05, 0.40, 0.70}
+\newcommand{\msec}[1]{\subsection*{\color{mblu}\textsf{#1}}}
+
+%---------------------  0.1.1. clear the bibliography's header  ---------------
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.2. Math Symbols and Blocks  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%---------------------  0.2.0. caligraphic letters  ---------------------------
+\newcommand{\Dd}{\mathcal{D}}
+% ...
+\newcommand{\Hh}{\mathcal{H}}
+% ...
+\newcommand{\Ll}{\mathcal{L}}
+\newcommand{\Mm}{\mathcal{M}}
+\newcommand{\Nn}{\mathcal{N}}
+\newcommand{\Oo}{\mathcal{O}}
+\newcommand{\PP}{\mathcal{P}}
+% ...
+\newcommand{\Ss}{\mathcal{S}}
+% ...
+\newcommand{\Xx}{\mathcal{X}}
+
+%---------------------  0.2.1. double struck letters  -------------------------
+\newcommand{\CC}{\mathbb{Z}}
+% ...
+\newcommand{\NN}{\mathbb{N}}
+% ...
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+% ...
+\newcommand{\ZZ}{\mathbb{Z}}
+
+%---------------------  0.2.2. math environments  -----------------------------
+\newtheorem*{qst}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+% ...
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.3. Title  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\begin{document}
+
+{
+    \centering \Huge \sf \color{mblu} 
+    Detailed Local KL Geometry
+    \vspace{0.5cm}
+}
+
+%==============================================================================
+%=====  1.  INTRO  ============================================================
+%==============================================================================
+
+    The local KL geometry of statistical manifolds deviates from euclidean
+    geometry in two ways: its ``metric'' has \emph{superquadratic} terms,
+    most notably cubic (asymmetry) and quartic (barrier); and its quadratic
+    component induces a \emph{curved} connection.
+    %
+    More precisely, we have a divergence $D:\Mm\times \Mm \to [0,\infty]$ 
+    that vanishes on and only on the diagonal; $D$ is smooth on a neighborhood
+    of this diagonal; on this diagonal, the hessian is invariant with respect
+    to interchange of the two $\Mm$ factors and otherwise generic.
+    With $v=(a,b)$, we thus write:
+    $$
+        D(p+a:p+b) = (1/2)H_p(v,v) + (1/6)J_p(v,v,v) + (1/24)Q_p(v,v,v,v) 
+                     + o(v^{\otimes 4})
+    $$
+    Here, $H$ is positive definite and $H,J,Q$ --- as well as the little $o$
+    constant --- vary smoothly with $p$. 
+    %
+    The situation has a hidden symmetry under interchange of $v$ with $\bar v =
+    (b,a)$.  For example, $H(v,v) = H(\bar v, \bar v)$. 
+    %
+    To see how this arises, let us focus on a submanifold $\Mm \subseteq
+    \Delta^o(X)$ of the open simplex on a finite set $X$.  Since $\log(1+z) =
+    z-z^2/2+z^3/3-z^4/4+\cdots$ and
+    $1/(p+b) = (1/p)(1-(b/p)+(b/p)^2-(b/p)^3+\cdots)$,
+    we have
+    \begin{align*}
+          &D(p+a, p+b) \\
+        %= &\sum (p+a) \log\left(\frac{p + a}{p + b}\right)\\ 
+        = &\sum (p+a) \log\left(1 + \frac{a-b}{p + b}\right)\\ 
+        = &\sum (p+a) \left(
+                        \left(\frac{a-b}{p + b}\right)
+            -\frac{1}{2}\left(\frac{a-b}{p + b}\right)^2
+            +\frac{1}{3}\left(\frac{a-b}{p + b}\right)^3
+            -\frac{1}{4}\left(\frac{a-b}{p + b}\right)^4
+        \right)\\
+        = &\sum p(1+\alpha) \left(
+                        \delta   (1 -\beta + \beta^2 - \beta^3)
+            -\frac{1}{2}\delta^2 (1 -2\beta + 3\beta^2)
+            +\frac{1}{3}\delta^3 (1 -3\beta)
+            -\frac{1}{4}\delta^4 
+        \right)
+    \end{align*}
+    Here, $\alpha=a/p$, $\beta=b/p$, $\gamma=\alpha+\beta$, $\delta = \alpha-\beta$.
+    We expand to:
+    \begin{align*}
+        =  \sum p \delta (1+\alpha) (
+              \left(1\right)  
+            +&\left(-\beta-\delta/2\right)\\
+            +&\left(\beta^2 +2\delta\beta/2 +\delta^2/3\right)\\
+            +&\left(-\beta^3-3\delta\beta^2/2-3\delta^2\beta/3-\delta^3/4\right) )
+    \end{align*}
+    The degree one sum vanishes by normalization, as expected. 
+    The degree two term has the familiar $\chi^2$ form:
+    $$
+        p\delta (-\beta-\delta/2 + \alpha) = p \delta^2/2
+    $$
+    The degree three term witnesses asymmetry:
+    $$
+        p\delta (\beta^2 +2\delta\beta/2 +\delta^2/3 -\alpha\beta-\alpha\delta/2)
+        = p(-(5/12)\delta^3  + \gamma\delta^2/4)
+    $$
+    The degree four term is:
+    $$
+        p\delta (-\beta^3-3\delta\beta^2/2-3\delta^2\beta/3-\delta^3/4   
+                 +\alpha\beta^2 +2\alpha\delta\beta/2 +\alpha\delta^2/3)
+        %= p\delta(\delta^3/4 - 2abb + (5/6)aab -(5/6)aaa) 
+        = p(\delta^4/4 - (5/6)\alpha^2\delta^2 - 2\alpha\beta^2\delta) 
+    $$
+
+
+    We now explore the basics of this geometry. 
+    %
+    We especially examine how the new geometry distorts our euclidean picture
+    of a large-$N$ sample as a tight Gaussian on an inner product space.
+
+    \msec{}
+    \msec{}
+
+%==============================================================================
+%=====  6.  BACKMATTER  =======================================================
+%==============================================================================
+
+\end{document}
+
+
