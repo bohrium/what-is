@@ -237,7 +237,7 @@ and handwaive optimality.
     \indent\par
     \mpar{hamming}
     Imagine a simplex on $k$ vertices.  There are ${k \choose d+1}$ cells
-    of dimension $d$.  Take $0\leq D<k$; call cells of dimension $d<D$
+    of dimension $d$.  Take $0\leq D<k/2$; call cells of dimension $d<D$
     \emph{parity cells} and the remaining cells \emph{data cells}.
     For each labeling of data cells by bits, we get a labeling of parity cells
     by bits: we label each p-cell by the mod-2 sum of the labels of the
@@ -252,19 +252,12 @@ and handwaive optimality.
     gives us a \emph{generalized Hamming code}.
 
     For example, with $D=1$, we get the classic Hamming codes with
-    $(N,RN,\delta_\star) = (2^k-1-k,2^k-1,3)$.  That $\delta_\star\geq 3$
-    reflects that if every atom appears in an even number of members of a
-    nonempty set $\Ss$ of sets, then $\Ss$ has size at least $3$.  We may thus
-    correct any single corruption.
-
+    $(N,RN,\delta_\star) = (2^k-1-k,2^k-1,3)$.  Here $R-1 \sim \lg_2 N$. 
+    That $\delta_\star\geq 3$ means we may correct any single corruption.
     Higher $D$s give codes robust to more corruptions.
-    For example, $(k,D)=(5,2)$ gives a $(16,31,6)$ code??????
-    %
-    That $\delta_\star\geq 5$ reflects that if every size-$\leq 2$ set includes
-    into an even number of members of a nonempty set $\Ss$ of sets, then $\Ss$
-    has size at least $5$.
-    %
-    Indeed, $\Ss$ must have size at least $3$ by above. 
+    With $D=2$, we get codes with $\delta_\star=5$.  Here $R-1 \sim (\lg_2 N)^2/2$.
+
+    \mpar{hamming}
 
 %==============================================================================
 %=====  2.  BOUNDS  ===========================================================
@@ -278,6 +271,8 @@ and handwaive optimality.
 % https://www.desmos.com/calculator/das4d1l9pp
 % https://www.desmos.com/calculator/lmoddgzogm
 % https://www.desmos.com/calculator/com1zvnbwl
+% https://www.desmos.com/calculator/fpnosdvvhh
+% https://www.desmos.com/calculator/eq8fbs00zf 
 
     \indent\par
     \mpar{entropy}%
@@ -344,34 +339,20 @@ and handwaive optimality.
     Perhaps most interestingly, the hypercube's metric structure prevents us
     from achieving the volume bound.
     %
-    First, when $2^N \geq 3$ we must have $\delta_\star \leq (2/3) RN$.
+    For instance, when $2^N \geq 3$ we must have $\delta_\star \leq (2/3) RN$.
     This is due to the hypercube's positive curvature; for,
     $\delta(a,z),\delta(b,z)\geq (1/2 + x)RN$ implies $\delta(a,b)\leq
     (1-2x)RN$.
+    %
     Though the volume bound allows $N,RN,\delta_\star=2,7,5$, this curvature
     bound does not.
+    %
+    Thus, $\epsilon \geq p^{r}q^{RN-r}$ where $r=\lfloor RN/3 \rfloor+1$.
 
-    We may extend this idea to slightly smaller $x=\delta_\star/(RN)$.  How
-    many length-$RN$ bitstrings have distance at least $xRN$ from the
-    $RN$-zeros string and from the $(1-x)RN$-ones-then-$xRN$-zeros string?
-    The exact count is:
-    \begin{align*}
-        \sum_{0\leq sRN\leq (1-x)RN} % number of zeros to turn into ones
-        \sum_{0\leq tRN\leq    x RN} % number of ones to turn into zeros 
-        [\![s\geq t]\!]              % don't decrease total number of ones
-        [\![s+t\geq x]\!]            % change enough bits
-        {(1-x)RN \choose sRN}
-        {xRN \choose tRN}
-    \end{align*}
-    The summand is maximized near $s=x/2=t$ at which point
-    it has log roughly:
-    $$
-        N \leq \left(H\left(\frac{1}{2}\frac{x}{1-x}\right)(1-x) + x\right) RN
-    $$
-    Say $y=x/(1-x)=1/(1/x-1)$, $x=1/(1+1/y)=y/(1+y)$, $1-x=1/(1+y)$.
-    Then $1/R \leq (H(y/2)+y)/(1+y) \leq 2/3 + (2-y)^{3/4}/2$,
-    so $2-(2(1/R-2/3))^{4/3} \geq y$, whence we get an upper bound on $x$.
-    
+    \mpar{question}%
+    Can we make $N,NR,\delta_\star=3,9,5$?.  The volume bound allows this.  I
+    haven't found a construction and I suspect it is impossible.
+        
     \mpar{a map}%
 
     %\begin{figure}[H]
@@ -450,7 +431,7 @@ and handwaive optimality.
     This is good plus-minus $0.50$ for $1\leq xT\leq T/4$.
 
     We find it useful to bound binomial sums.  For $x < 1/2$:
-    FIXX
+    %FIXX
     \begin{align*}
         &
         q^{xT} \sum_{0\leq i\leq xT} {T\choose i} (p/q)^{i}
@@ -733,5 +714,27 @@ and handwaive optimality.
 %%    those ones and hence be too close to each other.
 %%    %
 %%    Intuitively, this comes from the hypercube having small diameter.
+
+
+%    We may extend this idea to slightly smaller $x=\delta_\star/(RN)$.  How
+%    many length-$RN$ bitstrings have distance at least $xRN$ from the
+%    $RN$-zeros string and from the $(1-x)RN$-ones-then-$xRN$-zeros string?
+%    The exact count is:
+%    \begin{align*}
+%        \sum_{0\leq sRN\leq (1-x)RN} % number of zeros to turn into ones
+%        \sum_{0\leq tRN\leq    x RN} % number of ones to turn into zeros 
+%        [\![s\geq t]\!]              % don't decrease total number of ones
+%        [\![s+t\geq x]\!]            % change enough bits
+%        {(1-x)RN \choose sRN}
+%        {xRN \choose tRN}
+%    \end{align*}
+%    The summand is maximized near $s=x/2=t$ at which point
+%    it has log roughly:
+%    $$
+%        N \leq \left(H\left(\frac{1}{2}\frac{x}{1-x}\right)(1-x) + x\right) RN
+%    $$
+%    Say $y=x/(1-x)=1/(1/x-1)$, $x=1/(1+1/y)=y/(1+y)$, $1-x=1/(1+y)$.
+%    Then $1/R \leq (H(y/2)+y)/(1+y) \leq 2/3 + (2-y)^{3/4}/2$,
+%    so $2-(2(1/R-2/3))^{4/3} \geq y$, whence we get an upper bound on $x$.
 
 

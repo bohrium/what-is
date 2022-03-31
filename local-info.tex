@@ -33,6 +33,9 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %~~~~~~~~~~~~~  0.2. Math Symbols and Blocks  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+\newcommand{\KL}{\text{KL}}
+\newcommand{\EN}{\text{H}}
+
 %---------------------  0.2.0. caligraphic letters  ---------------------------
 \newcommand{\Dd}{\mathcal{D}}
 % ...
@@ -42,17 +45,20 @@
 \newcommand{\Mm}{\mathcal{M}}
 \newcommand{\Nn}{\mathcal{N}}
 \newcommand{\Oo}{\mathcal{O}}
-\newcommand{\PP}{\mathcal{P}}
+\newcommand{\Pp}{\mathcal{P}}
 % ...
 \newcommand{\Ss}{\mathcal{S}}
 % ...
 \newcommand{\Xx}{\mathcal{X}}
 
 %---------------------  0.2.1. double struck letters  -------------------------
-\newcommand{\CC}{\mathbb{Z}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\DD}{\mathbb{D}}
+\newcommand{\EE}{\mathbb{E}}
 % ...
 \newcommand{\NN}{\mathbb{N}}
-% ...
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\PP}{\mathbb{P}}
 \newcommand{\QQ}{\mathbb{Q}}
 \newcommand{\RR}{\mathbb{R}}
 % ...
@@ -73,7 +79,7 @@
 
 {
     \centering \Huge \sf \color{mblu} 
-    Detailed Local KL Geometry
+    Local KL Geometry
     \vspace{0.5cm}
 }
 
@@ -82,82 +88,93 @@
 %==============================================================================
 
     The local KL geometry of statistical manifolds deviates from euclidean
-    geometry in two ways: its ``metric'' has \emph{superquadratic} terms,
-    most notably cubic (asymmetry) and quartic (barrier); and its quadratic
-    component induces a \emph{curved} connection.
+    geometry in two ways: its quadratic part is curved and it contains data
+    beyond its quadratic part.  
     %
-    More precisely, we have a divergence $D:\Mm\times \Mm \to [0,\infty]$ 
-    that vanishes on and only on the diagonal; $D$ is smooth on a neighborhood
-    of this diagonal; on this diagonal, the hessian is invariant with respect
-    to interchange of the two $\Mm$ factors and otherwise generic.
-    With $v=(a,b)$, we thus write:
+    We examine how the new geometry distorts our euclidean picture of a
+    large-$N$ sample as a tight Gaussian on an inner product space.  We'll
+    focus on the open simplex $\Mm$ with $D$ vertices. 
+
+    The divergence $\KL:\Mm\times \Mm \to [0,\infty]$ given by 
     $$
-        D(p+a:p+b) = (1/2)H_p(v,v) + (1/6)J_p(v,v,v) + (1/24)Q_p(v,v,v,v) 
-                     + o(v^{\otimes 4})
+        \KL(q:p) = \EE_{x \sim q}[\log(q_x/p_x)]
     $$
-    Here, $H$ is positive definite and $H,J,Q$ --- as well as the little $o$
-    constant --- vary smoothly with $p$. 
-    %
-    The situation has a hidden symmetry under interchange of $v$ with $\bar v =
-    (b,a)$.  For example, $H(v,v) = H(\bar v, \bar v)$. 
-    %
-    To see how this arises, let us focus on a submanifold $\Mm \subseteq
-    \Delta^o(X)$ of the open simplex on a finite set $X$.  Since $\log(1+z) =
-    z-z^2/2+z^3/3-z^4/4+\cdots$ and
-    $1/(p+b) = (1/p)(1-(b/p)+(b/p)^2-(b/p)^3+\cdots)$,
-    we have
+    is smooth and vanishes on and only on the diagonal.
+
+    Let's first examine the chance $\PP[\hat p ; p]$ of $N$ i.i.d.\ samples
+    from $p$ yielding the empirical distribution $\hat p$.  Fixing $D$ and allowing
+    proportionality constants to depend on $N$, we 
+    consider $N$ large with respect to $\hat p$; that is, we take the sample
+    granularity
+    $\alpha=\max_x 1/(\hat p_x N)$ toward $0$.
+    Plugging Stirling's formula (here $u$ is uniform) 
+    $$
+        {N \choose \hat p N} \propto
+        \exp(N\EN(\hat p) - (D/2)\KL(u:\hat p) + O(\alpha)) 
+    $$
+    into the lovely and routine formula (think of relative entropy)
+    $$
+        \PP[\hat p ; p] \propto
+        {N \choose \hat p N} \exp(-N\KL(\hat p : p) - N\EN(\hat p)) 
+    $$
+    we see
+    $$
+        \PP[\hat p ; p] \propto
+        \exp(-N\KL(\hat p : p) - (D/2)\KL(u:\hat p) + O(\alpha)) 
+    $$
+    Now let's rescale per the central limit theorem.  With $\KL(p+v:p) =
+    H(v,v)/2 + J(v,v,v)/6 + o(v^3)$ and $\KL(u:p+v) = KL(u:p) + \tilde G(v)
+    + o(v^1)$ we have for $v = u/\sqrt{N}$ and $u$ bounded (so that $\alpha \in
+    O(1/N)$) that
     \begin{align*}
-          &D(p+a, p+b) \\
-        %= &\sum (p+a) \log\left(\frac{p + a}{p + b}\right)\\ 
-        = &\sum (p+a) \log\left(1 + \frac{a-b}{p + b}\right)\\ 
-        = &\sum (p+a) \left(
-                        \left(\frac{a-b}{p + b}\right)
-            -\frac{1}{2}\left(\frac{a-b}{p + b}\right)^2
-            +\frac{1}{3}\left(\frac{a-b}{p + b}\right)^3
-            -\frac{1}{4}\left(\frac{a-b}{p + b}\right)^4
-        \right)\\
-        = &\sum p(1+\alpha) \left(
-                        \delta   (1 -\beta + \beta^2 - \beta^3)
-            -\frac{1}{2}\delta^2 (1 -2\beta + 3\beta^2)
-            +\frac{1}{3}\delta^3 (1 -3\beta)
-            -\frac{1}{4}\delta^4 
-        \right)
+        \PP[p+u/\sqrt{N} ; p] \propto
+        \exp(-NH(u,u)/2 - & N J(u,u,u)/6\sqrt{N}\\
+                        - & D \tilde G(u)/2\sqrt{N} + O(1/N)) 
     \end{align*}
-    Here, $\alpha=a/p$, $\beta=b/p$, $\gamma=\alpha+\beta$, $\delta = \alpha-\beta$.
-    We expand to:
-    \begin{align*}
-        =  \sum p \delta (1+\alpha) (
-              \left(1\right)  
-            +&\left(-\beta-\delta/2\right)\\
-            +&\left(\beta^2 +2\delta\beta/2 +\delta^2/3\right)\\
-            +&\left(-\beta^3-3\delta\beta^2/2-3\delta^2\beta/3-\delta^3/4\right) )
-    \end{align*}
-    The degree one sum vanishes by normalization, as expected. 
-    The degree two term has the familiar $\chi^2$ form:
-    $$
-        p\delta (-\beta-\delta/2 + \alpha) = p \delta^2/2
-    $$
-    The degree three term witnesses asymmetry:
-    $$
-        p\delta (\beta^2 +2\delta\beta/2 +\delta^2/3 -\alpha\beta-\alpha\delta/2)
-        = p(-(5/12)\delta^3  + \gamma\delta^2/4)
-    $$
-    The degree four term is:
-    $$
-        p\delta (-\beta^3-3\delta\beta^2/2-3\delta^2\beta/3-\delta^3/4   
-                 +\alpha\beta^2 +2\alpha\delta\beta/2 +\alpha\delta^2/3)
-        %= p\delta(\delta^3/4 - 2abb + (5/6)aab -(5/6)aaa) 
-        = p(\delta^4/4 - (5/6)\alpha^2\delta^2 - 2\alpha\beta^2\delta) 
-    $$
+    The $\tilde G$ term translates the Gaussian toward $u$; the $J$ term skews
+    it (to have heavier tails) toward close vertices.  For a sense of
+    scale, note that $\hat p$'s true distribution has mean $p$, but this
+    approximation suggests a shift on the order of $u \rightsquigarrow
+    u+1/\sqrt{N}$ or $v \rightsquigarrow v+1/N$.  This is comparable to the
+    resolution of $\hat p$'s support and thus not a contradiction.
+
+    Let's visualize this for $D=3, N=30, p=(2/3,3/12,1/12)$.
+% very nice graph:
+% https://www.desmos.com/calculator/bjpurbct8u
+% https://www.desmos.com/calculator/upu8nz16z5
+% https://www.desmos.com/calculator/yqgpvtmrrp 
 
 
-    We now explore the basics of this geometry. 
-    %
-    We especially examine how the new geometry distorts our euclidean picture
-    of a large-$N$ sample as a tight Gaussian on an inner product space.
+  \msec{Concentration in Graphs}
 
-    \msec{}
-    \msec{}
+    \textbf{Markov.}
+    Suppose we have a width-$W$ depth-$D$ `dense network' where each of $D$
+    layers has $W$ bit-valued nodes and where adjacent nodes have $\leq \delta$
+    mutual information.  How does the total number of `on' bits tend to deviate
+    from the mean?  (We might assume $\mu=WD/2$ and call the deviation
+    $\Delta$).
+
+    First, if $\delta=0$, then we have $D$ independent subgaussians with
+    parameter at most $W$ so we expect concentration like
+    $-D(\Delta/D)^2/2W^2$.  A typical value for $\Delta/D$ is at most
+    $W/\sqrt{D}$.  At another extreme, if $\delta=1$, then each layer can
+    communicate its majority to the next, so we get no concentration.
+
+    Intuitively, if $\delta$ mutual information corresponds to a probability
+    $p$ of corruption, then concentration should be as good as if we had $pD$
+    many layers.  Hmm... what's a lower bound for $p$ in terms of
+    $\delta \leq p \log (1/p) + p$?  Well, $\log(1/p) \leq \sqrt{1/p}$,
+    so $\delta \leq 2\sqrt{p}$.  So we expect concentration to be as good as
+    if we had $(\delta/2)^2 D$ many layers.
+
+    Hmm... first, can we upper bound the mutual information between layers
+    separated by exactly one shared neighbor?  If $\delta=1$, then data-processing
+    is tight, since from layer to layer we can just copy the first bit.
+    But for $delta<1$, we expect degradation.
+
+    Can we prove this?
+
+    TODO: compare to that nice thesis by whats-his-name.
 
 %==============================================================================
 %=====  6.  BACKMATTER  =======================================================
@@ -166,3 +183,79 @@
 \end{document}
 
 
+%    The local KL geometry of statistical manifolds deviates from euclidean
+%    geometry in two ways: its ``metric'' has \emph{superquadratic} terms,
+%    most notably cubic (asymmetry) and quartic (barrier); and its quadratic
+%    component induces a \emph{curved} connection.
+%    %
+%    More precisely, we have a divergence $D:\Mm\times \Mm \to [0,\infty]$ 
+%    that vanishes on and only on the diagonal; $D$ is smooth on a neighborhood
+%    of this diagonal; on this diagonal, the hessian is invariant with respect
+%    to interchange of the two $\Mm$ factors and otherwise generic.
+%    With $v=(a,b)$, we thus write:
+%    $$
+%        \KL(p+a:p+b) = (1/2)H_p(v,v) + (1/6)J_p(v,v,v) + (1/24)Q_p(v,v,v,v) 
+%                     + o(v^{\otimes 4})
+%    $$
+%    Here, $H$ is positive definite and $H,J,Q$ --- as well as the little $o$
+%    constant --- vary smoothly with $p$. 
+%    %
+%    The situation has a hidden symmetry under interchange of $v$ with $\bar v =
+%    (b,a)$.  For example, $H(v,v) = H(\bar v, \bar v)$. 
+%    %
+%    To see how this arises, let us focus on a submanifold $\Mm \subseteq
+%    \Delta^o(X)$ of the open simplex on a finite set $X$.  Since $\log(1+z) =
+%    z-z^2/2+z^3/3-z^4/4+\cdots$ and
+%    $1/(p+b) = (1/p)(1-(b/p)+(b/p)^2-(b/p)^3+\cdots)$,
+%    we have
+%    \begin{align*}
+%          &\KL(p+a, p+b) \\
+%        %= &\sum (p+a) \log\left(\frac{p + a}{p + b}\right)\\ 
+%        = &\sum (p+a) \log\left(1 + \frac{a-b}{p + b}\right)\\ 
+%        = &\sum (p+a) \left(
+%                        \left(\frac{a-b}{p + b}\right)
+%            -\frac{1}{2}\left(\frac{a-b}{p + b}\right)^2
+%            +\frac{1}{3}\left(\frac{a-b}{p + b}\right)^3
+%            -\frac{1}{4}\left(\frac{a-b}{p + b}\right)^4
+%        \right)\\
+%        = &\sum p(1+\alpha) \left(
+%                        \delta   (1 -\beta + \beta^2 - \beta^3)
+%            -\frac{1}{2}\delta^2 (1 -2\beta + 3\beta^2)
+%            +\frac{1}{3}\delta^3 (1 -3\beta)
+%            -\frac{1}{4}\delta^4 
+%        \right)
+%    \end{align*}
+%    Here, $\alpha=a/p$, $\beta=b/p$, $\gamma=\alpha+\beta$, $\delta = \alpha-\beta$.
+%    We expand to:
+%    \begin{align*}
+%        =  \sum p \delta (1+\alpha) (
+%              \left(1\right)  
+%            +&\left(-\beta-\delta/2\right)\\
+%            +&\left(\beta^2 +2\delta\beta/2 +\delta^2/3\right)\\
+%            +&\left(-\beta^3-3\delta\beta^2/2-3\delta^2\beta/3-\delta^3/4\right) )
+%    \end{align*}
+%    The degree one sum vanishes by normalization, as expected. 
+%    The degree two term has the familiar $\chi^2$ form:
+%    $$
+%        p\delta (-\beta-\delta/2 + \alpha) = p \delta^2/2
+%    $$
+%    The degree three term witnesses asymmetry:
+%    $$
+%        p\delta (\beta^2 +2\delta\beta/2 +\delta^2/3 -\alpha\beta-\alpha\delta/2)
+%        = p(-(5/12)\delta^3  + \gamma\delta^2/4)
+%    $$
+%    The degree four term is:
+%    $$
+%        p\delta (-\beta^3-3\delta\beta^2/2-3\delta^2\beta/3-\delta^3/4   
+%                 +\alpha\beta^2 +2\alpha\delta\beta/2 +\alpha\delta^2/3)
+%        %= p\delta(\delta^3/4 - 2abb + (5/6)aab -(5/6)aaa) 
+%        = p(\delta^4/4 - (5/6)\alpha^2\delta^2 - 2\alpha\beta^2\delta) 
+%    $$
+%
+%
+%    We now explore the basics of this geometry. 
+%    %
+%    We especially examine how the new geometry distorts our euclidean picture
+%    of a large-$N$ sample as a tight Gaussian on an inner product space.
+%
+%

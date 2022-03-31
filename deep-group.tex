@@ -1,0 +1,96 @@
+% author:   sam tenka
+% create:   2022-02
+% change:   2022-02
+
+%==============================================================================
+%=====  0.  DOCUMENT SETTINGS  ================================================
+%==============================================================================
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.0. About and Beyond this Exposition  ~~~~~~~~~~~~~~~~~~~~~~~~
+
+%---------------------  0.0.0. page geometry  ---------------------------------
+\documentclass[12pt]{article}
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+
+%---------------------  0.0.1. math packages  ---------------------------------
+\usepackage{amsmath, amssymb, amsthm, mathtools, bm, moresize, euler}
+
+%---------------------  0.0.2. graphics packages  -----------------------------
+\usepackage{graphicx, epsdice, xcolor, float, wrapfig, caption}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.1. Header Formatting  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%---------------------  0.1.0. section header style  --------------------------
+\definecolor{mblu}{rgb}{0.05, 0.40, 0.70}
+\newcommand{\msec}[1]{\subsection*{\color{mblu}\textsf{#1}}}
+
+%---------------------  0.1.1. clear the bibliography's header  ---------------
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.2. Math Symbols and Blocks  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\newcommand{\KL}{\text{KL}}
+\newcommand{\EN}{\text{H}}
+
+%---------------------  0.2.0. caligraphic letters  ---------------------------
+\newcommand{\Dd}{\mathcal{D}}
+% ...
+\newcommand{\Hh}{\mathcal{H}}
+% ...
+\newcommand{\Ll}{\mathcal{L}}
+\newcommand{\Mm}{\mathcal{M}}
+\newcommand{\Nn}{\mathcal{N}}
+\newcommand{\Oo}{\mathcal{O}}
+\newcommand{\Pp}{\mathcal{P}}
+% ...
+\newcommand{\Ss}{\mathcal{S}}
+% ...
+\newcommand{\Xx}{\mathcal{X}}
+
+%---------------------  0.2.1. double struck letters  -------------------------
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\DD}{\mathbb{D}}
+\newcommand{\EE}{\mathbb{E}}
+% ...
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+% ...
+\newcommand{\ZZ}{\mathbb{Z}}
+
+%---------------------  0.2.2. math environments  -----------------------------
+\newtheorem*{qst}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+% ...
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.3. Title  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\begin{document}
+
+{
+    \centering \Huge \sf \color{mblu} 
+    Local KL Geometry
+    \vspace{0.5cm}
+}
+
+%==============================================================================
+%=====  1.  INTRO  ============================================================
+%==============================================================================
+
+%==============================================================================
+%=====  6.  BACKMATTER  =======================================================
+%==============================================================================
+
+\end{document}
+
+

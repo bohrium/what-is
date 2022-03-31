@@ -1,3 +1,15 @@
+snippets:
+	pdflatex snippets.tex
+	evince 	 snippets.pdf
+
+deepgroup:
+	pdflatex deepgroup.tex
+	evince 	 deepgroup.pdf
+
+super-fourier:
+	pdflatex super-fourier.tex
+	evince 	 super-fourier.pdf
+
 polar:
 	pdflatex polar.tex
 	evince 	 polar.pdf
