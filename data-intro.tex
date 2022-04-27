@@ -1,0 +1,412 @@
+% author:   sam tenka
+% create:   2022-04
+% change:   2022-04
+
+%==============================================================================
+%=====  0.  DOCUMENT SETTINGS  ================================================
+%==============================================================================
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.0. About and Beyond this Exposition  ~~~~~~~~~~~~~~~~~~~~~~~~
+
+%---------------------  0.0.0. page geometry  ---------------------------------
+\documentclass[11pt]{article}
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+
+%---------------------  0.0.1. math packages  ---------------------------------
+\usepackage{amsmath, amssymb, amsthm, mathtools, bm, moresize, listings}
+
+%---------------------  0.0.2. graphics packages  -----------------------------
+\usepackage{graphicx, epsdice, xcolor, float, wrapfig, caption}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.1. Header Formatting  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\definecolor{mblu}{rgb}{0.05, 0.35, 0.70}
+\newcommand{\blu}{\color{mblu}}
+
+\definecolor{mbre}{rgb}{0.30, 0.45, 0.60}
+\newcommand{\bre}{\color{mbre}}
+
+\definecolor{mgre}{rgb}{0.55, 0.55, 0.50}
+\newcommand{\gre}{\color{mgre}}
+
+%---------------------  0.1.0. tidbit headers  --------------------------------
+\newcommand{\samtitle} [1]{
+  \par\noindent{\Huge \sf \blu #1}
+  \vspace{0.4cm}
+}
+
+\newcommand{\samquote} [2]{
+    \par\noindent{\begin{flushright}\parbox{10cm}{
+    \begin{flushright}
+    \scriptsize \gre {\it #1} \\ --- #2
+    \end{flushright}
+    }\end{flushright}}
+}
+
+%---------------------  0.1.1. section headers  -------------------------------
+
+\newcommand{\samsection} [1]{
+  \vspace{0.7cm}
+  \par\noindent{\LARGE \sf \blu #1}
+  \vspace{0.3cm}\par
+}
+
+\newcommand{\samsubsection}[1]{
+  \vspace{0.5cm}
+  \par\noindent{\large \sf \bre #1}
+  \vspace{0.2cm}\par
+}
+
+\newcommand{\samsubsubsection}[1]{
+   \vspace{0.1cm}
+   \par\noindent{\hspace{-2cm}\normalsize \sc \gre #1} ---
+%  \vspace{0.3cm}
+%  \par\noindent{\normalsize \sf \gre #1}
+%  \vspace{0.1cm}\par
+}
+
+%---------------------  0.1.2. clear the bibliography's header  ---------------
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.2. Math Symbols and Blocks  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%---------------------  0.2.0. probability symbols  ---------------------------
+
+\newcommand{\KL}{\text{KL}}
+\newcommand{\EN}{\text{H}}
+\newcommand{\note}[1]{{\blu \textsf{#1}}}
+
+\newcommand{\scirc}{\mathrel{\mathsmaller{\mathsmaller{\mathsmaller{\circ}}}}}
+\newcommand{\cmop}[2]{{(#1\!\to\!#2)}}
+
+%---------------------  0.2.1. double-struck and caligraphic letters  ---------
+\newcommand{\Aa}{\mathbb{A}}\newcommand{\aA}{\mathcal{A}}
+\newcommand{\Bb}{\mathbb{B}}\newcommand{\bB}{\mathcal{B}}
+\newcommand{\Cc}{\mathbb{C}}\newcommand{\cC}{\mathcal{C}}
+\newcommand{\Dd}{\mathbb{D}}\newcommand{\dD}{\mathcal{D}}
+\newcommand{\Ee}{\mathbb{E}}\newcommand{\eE}{\mathcal{E}}
+\newcommand{\Ff}{\mathbb{F}}\newcommand{\fF}{\mathcal{F}}
+\newcommand{\Gg}{\mathbb{G}}\newcommand{\gG}{\mathcal{G}}
+\newcommand{\Hh}{\mathbb{H}}\newcommand{\hH}{\mathcal{H}}
+\newcommand{\Ii}{\mathbb{I}}\newcommand{\iI}{\mathcal{I}}
+\newcommand{\Jj}{\mathbb{J}}\newcommand{\jJ}{\mathcal{J}}
+\newcommand{\Kk}{\mathbb{K}}\newcommand{\kK}{\mathcal{K}}
+\newcommand{\Ll}{\mathbb{L}}\newcommand{\lL}{\mathcal{L}}
+\newcommand{\Mm}{\mathbb{M}}\newcommand{\mM}{\mathcal{M}}
+\newcommand{\Nn}{\mathbb{N}}\newcommand{\nN}{\mathcal{N}}
+\newcommand{\Oo}{\mathbb{O}}\newcommand{\oO}{\mathcal{O}}
+\newcommand{\Pp}{\mathbb{P}}\newcommand{\pP}{\mathcal{P}}
+\newcommand{\Qq}{\mathbb{Q}}\newcommand{\qQ}{\mathcal{Q}}
+\newcommand{\Rr}{\mathbb{R}}\newcommand{\rR}{\mathcal{R}}
+\newcommand{\Ss}{\mathbb{S}}\newcommand{\sS}{\mathcal{S}}
+\newcommand{\Tt}{\mathbb{T}}\newcommand{\tT}{\mathcal{T}}
+\newcommand{\Uu}{\mathbb{U}}\newcommand{\uU}{\mathcal{U}}
+\newcommand{\Vv}{\mathbb{V}}\newcommand{\vV}{\mathcal{V}}
+\newcommand{\Ww}{\mathbb{W}}\newcommand{\wW}{\mathcal{W}}
+\newcommand{\Xx}{\mathbb{X}}\newcommand{\xX}{\mathcal{X}}
+\newcommand{\Yy}{\mathbb{Y}}\newcommand{\yY}{\mathcal{Y}}
+\newcommand{\Zz}{\mathbb{Z}}\newcommand{\zZ}{\mathcal{Z}}
+
+\newcommand{\sfa}{\mathsf{a}}\newcommand{\fra}{\mathcal{a}}
+\newcommand{\sfb}{\mathsf{b}}\newcommand{\frb}{\mathcal{b}}
+\newcommand{\sfc}{\mathsf{c}}\newcommand{\frc}{\mathcal{c}}
+\newcommand{\sfd}{\mathsf{d}}\newcommand{\frd}{\mathcal{d}}
+\newcommand{\sfe}{\mathsf{e}}\newcommand{\fre}{\mathcal{e}}
+\newcommand{\sff}{\mathsf{f}}\newcommand{\frf}{\mathcal{f}}
+\newcommand{\sfg}{\mathsf{g}}\newcommand{\frg}{\mathcal{g}}
+\newcommand{\sfh}{\mathsf{h}}\newcommand{\frh}{\mathcal{h}}
+\newcommand{\sfi}{\mathsf{i}}\newcommand{\fri}{\mathcal{i}}
+\newcommand{\sfj}{\mathsf{j}}\newcommand{\frj}{\mathcal{j}}
+\newcommand{\sfk}{\mathsf{k}}\newcommand{\frk}{\mathcal{k}}
+\newcommand{\sfl}{\mathsf{l}}\newcommand{\frl}{\mathcal{l}}
+\newcommand{\sfm}{\mathsf{m}}\newcommand{\frm}{\mathcal{m}}
+\newcommand{\sfn}{\mathsf{n}}\newcommand{\frn}{\mathcal{n}}
+\newcommand{\sfo}{\mathsf{o}}\newcommand{\fro}{\mathcal{o}}
+\newcommand{\sfp}{\mathsf{p}}\newcommand{\frp}{\mathcal{p}}
+\newcommand{\sfq}{\mathsf{q}}\newcommand{\frq}{\mathcal{q}}
+\newcommand{\sfr}{\mathsf{r}}\newcommand{\frr}{\mathcal{r}}
+\newcommand{\sfs}{\mathsf{s}}\newcommand{\frs}{\mathcal{s}}
+\newcommand{\sft}{\mathsf{t}}\newcommand{\frt}{\mathcal{t}}
+\newcommand{\sfu}{\mathsf{u}}\newcommand{\fru}{\mathcal{u}}
+\newcommand{\sfv}{\mathsf{v}}\newcommand{\frv}{\mathcal{v}}
+\newcommand{\sfw}{\mathsf{w}}\newcommand{\frw}{\mathcal{w}}
+\newcommand{\sfx}{\mathsf{x}}\newcommand{\frx}{\mathcal{x}}
+\newcommand{\sfy}{\mathsf{y}}\newcommand{\fry}{\mathcal{y}}
+\newcommand{\sfz}{\mathsf{z}}\newcommand{\frz}{\mathcal{z}}
+
+
+
+%---------------------  0.2.2. math environments  -----------------------------
+\newtheorem*{qst}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+% ...
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.3. Section Headers  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+\begin{document}
+\samtitle{Working with Data (6.419x)}
+
+  What tools might we use to extract, extrapolate, and explain patterns in
+  data? 
+  %
+  We assume enough familiarity with probability that we may leave
+  technical measure-theory hypotheses implicit.
+  %
+  We assume enough familiarity with programming that we may leave the task
+  of implementing pseudocode as an exercise.
+
+  These notes divide into six sections: two essential sections on the
+  statistics of high-dimensional data, then three sections illustrating
+  algorithmic themes in three common domains, then an appendix. 
+
+  \samsection{statistics}
+    \samsubsection{bayesian abduction}%bayesian induction}
+      %\samquote{So little of what could happen does happen.}{salvador dali}
+      \samsubsubsection{an example}
+      An example.  Say we have data on which water faucets in a community are 
+      contaminated. %(John Snow, Flint). 
+      From local records, we have the coordinates of $10^6$ faucets.
+      And from random testing, we've got labels of contamination
+      level (in $[0,1]$) for $10^4$ of those faucets. 
+      We want to predict which unlabeled faucets are contaminated. 
+      %
+      To start off with, let's randomly partition our overall dataset into 
+      portions of relative sizes $(0.8,0.1,0.1)$; we'll call these our
+      \emph{training}, \emph{validation}, and \emph{testing} sets.  Throughout
+      our development, we swear never to look at or touch the testing set, 
+      so that we don't fool ourselves into thinking we found a pattern; we'll
+      later talk much more about this danger of \emph{overfitting}.
+
+      OK, let's take a look at the training set to see what patterns we might
+      exploit.  We already have a mixture model of strong priors (implicitly)
+      in our heads, and looking at the training set helps us focus on one of
+      the components.
+
+      ...
+
+
+
+
+      \samsubsubsection{bayesian formalism}
+      We're confronted with a dataset $\sfo$ that comes from some unknown
+      underlying pattern $\sfh$.  We know how each possible value $h$ for
+      $\sfh$ induces a distribution on $\sfo$ and we have a prior sense of
+      which $h$s are probable.  Bayes' law helps us update this sense to
+      account for the dataset by relating two functions of $h$:
+      $$
+        \underbrace{p_{\sfh|\sfo}(h|o)}_{\text{posterior}}
+        \propto
+        \underbrace{p_{\sfo|\sfh}(o|h)}_{\text{likelihood}}
+        \cdot
+        \underbrace{p_{\sfh}(h)}_{\text{prior}}
+      $$
+
+      Bayes' law underlies our analyses throughout these notes.
+      %
+      Like Newton's $F=ma$, Bayes is by itself inert: to make predictions we'd
+      have to specify our situation's forces or likelihoods.  Continuing the
+      metaphor, we will rarely solve our equations exactly; we'll instead make
+      approximations good enough to build bridges and swingsets.  Still, no one
+      denies that $F=ma$ orients us usefully in the world of physics.  So it is
+      with the law of Bayes.
+
+      %\samsubsubsection{formalism}
+      More formally, we posit a set $\hH$ of \emph{hypotheses}, a set $\oO$ of
+      possible \emph{observations}, and a set $\aA$ of permitted
+      \emph{actions}.  We assume as given a joint probability measure
+      $p_{\sfo,\sfh}$ on $\oO\times \hH$ and a \emph{cost function}
+      $c:\aA\times \hH \to \Rr$.
+      %
+      That cost function says how much it hurts to take the action $a\in \aA$
+      when the truth is $h\in \hH$.
+      %
+      Our primary aim is to construct a map $\pi:\oO\to \aA$ that makes the
+      overall expected cost $\Ee_{\sfh,\sfo} \, c(\pi(\sfa); \sfh)$ small.
+
+      Below are three examples.  In each case, we're designing a robotic vacuum
+      cleaner, $\hH$ is the set of possible floor plans, and $\oO$ consists of
+      possible readings from the robot's sensors.  The examples differ in how
+      they define and interpret $\aA$ and $c$.
+
+      \textbf{A}.  $\aA$ consists of probability distributions over $\hH$. We
+      regard $\pi(o)$ as giving a posterior distribution on $\hH$ upon
+      observation $o$.  Our cost $c(a;h)$ measures the surprise of someone who
+      believes $a$ upon learning that $h$ is true. 
+      %
+      Such \emph{inference problems}, being in a precise sense universal, pose
+      huge computational difficulties; we thus often collapse distributions to
+      points, giving rise to the distinctive challenge of balancing estimation
+      error with structural error.
+
+      \textbf{B}.
+      $\aA$ consists of latitude-longitude pairs, interpreted as a guessed
+      location of the robot's charging station.  The cost $c(a;h)$ measures how
+      distant our guess is from the truth.  
+      %
+      Such \emph{estimation problems} abound in science and engineering; their
+      distinctive challenge of balancing precision with accuracy.
+      %robustness to measurement noise with
+      %centeredness. 
+
+      \textbf{C}.  $\aA$ consists of instructions we may send to the motors,
+      instructions that induce motion through our partially-known room.  The
+      cost $c(a;h)$ incentivizes motion into dusty spaces and penalizes bumping
+      into walls.
+      %
+      We often compose such \emph{decision problems} sequentially; this gives
+      rise to the distinctive challenge of balancing exploration with
+      exploitation.
+
+    \samsubsection{frequentism and choice of prior}
+      \samquote{
+        I am wiser [than he] ... for
+        ... he fancies he knows something 
+        ... whereas I ... do not fancy I do.
+      }{socrates}
+      \samsubsubsection{uniform priors} % jeffries
+        Our engineering culture prizes not just \emph{utility} but also
+        \emph{confidence}, since strong guarantees on our designs allow 
+        composition of our work into larger systems: equality, unlike
+        similarity, is transitive.  For example, we'd often prefer a 99\%
+        guarantee of adequate performance over a 90\% guarantee of ideal
+        performance.  This asymmetry explains our pessimistic obsession with
+        worst-case bounds over best-case bounds, cost functions over fitness
+        functions, and simple models with moderate-but-estimatable errors over
+        rich models with unknownable-but-often-small errors.
+
+        The \emph{frequentist} or \emph{distribution-free} style of statistics
+        continues this risk-averse tradition.  In the fullest instance of this
+        style, we do inference as if the true unknown prior on $\hH$ is chosen
+        adversarially.
+        %
+        That is, we try to find $\pi$ that makes the following error small:
+        $$
+          \max_{p_{\sfh}}
+          \,
+          \Ee_{\sfh \sim p_{\sfh}(\cdot)} \Ee_{\sfo \sim p_{\sfo}(\cdot|\sfh)}
+          \,
+          c(\pi(\sfo); \sfh) 
+        $$
+        %
+        %For example, suppose $\aA=\hH$ and $c(a;h) = [\![a\neq h]\!]$ is the
+        %zero-one cost.
+        %The prior in the minimax pair $(\pi, p_{\sfh})$ tends to be pretty
+        %uniform. 
+        Intuitively, 
+
+        %minimax 
+        %``uniform'' prior
+        %on hypothesis space.
+
+      \samsubsubsection{p-hacking} % likelihoods, confidence intervals 
+      \samsubsubsection{hidden assumptions} % distribution-existence as coherence condition
+
+    \samsubsection{(multiple) hypothesis testing}
+      \samquote{
+        The theory of probabilities is at bottom nothing but common sense
+        reduced to calculus; it enables us to appreciate with exactness
+        [what we] feel with a sort of instinct ...
+      }{pierre simon laplace}
+
+      Let's now consider the case where $\hH$ is a small and finite.  We
+
+    \samsubsection{covariance, correlation, least squares}
+      \samquote{
+        ... [to treat] complicated systems in simple ways[,] probability ...
+        implements two principles[:] [the approximation of parts as
+        independent] and [the abstraction of aspects as their averages].
+    }{michael i. jordan}
+
+    \samsubsection{gradient descent}
+      \samquote{
+        The key to success is failure.
+      }{michael j.\ jordan}
+
+      In what follows, 
+        \texttt{init} returns a point in $\pP$,
+        \texttt{rate} is a small positive real number,
+        \texttt{time} is a large natural number, and
+        \texttt{loss} is a function $:\pP\to\Rr$ amenable to differentiation. 
+      An important hidden input to gradient descent is the choice of transpose
+      function; this function converts row vectors to column vectors and thus
+      biases learning just as a choice of svm kernel does.
+      \begin{lstlisting}[language=Python, mathescape=true, basicstyle=\ttfamily]
+        def gd(init, rate, time, loss):
+          $\theta$ = init()
+          for t in range(time):
+            $\theta$ -= rate * ($\nabla$loss($\theta$))$^\text{transpose}$ 
+          return $\theta$
+      \end{lstlisting}
+
+      \samsubsubsection{smoothness}
+      \samsubsubsection{deep learning}
+      \samsubsubsection{optimizers} % critical points, local vs global minima, momentum, etc 
+      \samsubsubsection{initialization} % expectation maximization 
+
+  \samsection{high dimensions}
+    \samsubsection{what is it like to live in high dimensions?}
+      \samsubsubsection{weird balls}
+      \samsubsubsection{concentration}
+      \samsubsubsection{sparsity, rank, submanifolds}
+      \samsubsubsection{visualization}
+
+    \samsubsection{classification and clustering}
+      \samquote{It is written that animals are divided into (a) those
+        belonging to the emperor; (b) embalmed ones; (c) trained ones; (d)
+        suckling pigs; (e) mermaids; (f) fabled ones; (g) stray dogs; (h) those
+        included in this classification; (i) those that tremble as if they were
+        mad; (j) innumerable ones; (k) those drawn with a very fine camel hair
+        brush; (l) et cetera; (m) those that have just broken the vase; and (n)
+        those that from afar look like flies.}{jorge luis borges}
+      \samsubsection{graphical models}
+
+      \samsubsection{tool of the trade: boosted trees}
+
+  \samsection{networks}
+  \samsection{time series}
+  \samsection{gaussian processes}
+
+  \samsection{appendix}
+    \samsubsection{probability notation}
+      We've tried to use 
+        \vspace{-0.10cm}
+      $$
+        \text{\textsf{sans serif} for the names of random variables,}
+        \vspace{-0.15cm}
+      $$
+      $$
+        \text{\emph{italics} for the values they may take, and}
+      $$
+      $$
+        \text{$\mathcal{CURLY~CAPS}$ for sets of such values.} 
+      $$
+      For example, we write $p_{\sfy|\sfh}(y|h)$ for the probability that the
+      random variable $\sfy$ takes the value $y$ conditioned on the event that
+      the random variable $\sfh$ takes the value $h$.
+      %
+      Likewise, our notation $p_{\hat \sfh|\sfh}(h|h)$ indicates the
+      probability that the random variables $\hat \sfh$ and $\sfh$ agree in
+      value given that $\sfh$ takes a value $h\in \hH$.
+
+    \samsubsection{ensembles}
+      \samquote{
+        Doing ensembles and shows is one thing, but being able to front a
+        feature is totally different.  ...  there's something about ... a
+        feature that's unique. 
+      }{michael b.\ jordan}
+
+
+
+\end{document}
+
+
+

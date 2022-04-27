@@ -1,3 +1,19 @@
+local-features:
+	pdflatex local-features.tex
+	evince 	 local-features.pdf
+
+data-intro:
+	pdflatex data-intro.tex
+	evince 	 data-intro.pdf
+
+analysis:
+	pdflatex analysis.tex
+	evince 	 analysis.pdf
+
+harmony:
+	pdflatex harmony.tex
+	evince 	 harmony.pdf
+
 snippets:
 	pdflatex snippets.tex
 	evince 	 snippets.pdf

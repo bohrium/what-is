@@ -118,23 +118,18 @@
   \samquote{... her mind is a very thin soil, laid an inch or two upon very
   barren rock.}{virginia woolf}
 
-  What's the deal with those function spaces,
-    what with their sometimes non-commuting and absent limits?
-  Those spaces are infinite-dimensional seas with capacity to swallow and
-  disappear whole ships, whether in the infrared (as with $L^\infty - L^1$)
-  or the ultraviolet (as with $L^1-L^\infty$).
-  What tools can tame this charybdis? 
-    %metric spaces,
-    %convergence in function spaces,
-    %(dis-)integration,
-    %null sets and meager sets, and
-    %non-commuting limits?
+  What's the deal with
+    metric spaces,
+    convergence in function spaces,
+    (dis-)integration,
+    null sets and meager sets, and
+    non-commuting limits?
   %
   Aiming to see familiar ground in new ways, we approach freshman level content
   at senior level mathematical sophistication.  We assume point-set topology
   and a facility with the language of categories.
 
-  \samsection{Notions of Size}
+  \samsection{Metrics and Measures}
     \samsubsection{the reals}
       We take the view that the topological space of reals serves two roles:
       one covariant and algebraic, as a codomain for metrics and measures;
@@ -142,7 +137,7 @@
       focus on the covariant, algebraic view.
 
       Analysis abstracts physical notions of \emph{size}.  For example, the
-      next two definitions abstract \emph{distance} and \emph{density}.
+      next three definitions abstract \emph{distance} and \emph{density}.
       %
       A \textbf{generalized metric space} over $M$ is a category $C$
       and a map $\delta:\text{Mor}_C\to M$ that satisfies the nullary and
@@ -161,25 +156,38 @@
       $$
         \mu(\bot) = 0
         \quad\quad\quad
-        \mu(A\vee B) = \mu(A) + \mu(B) \text{~whenever~} A\wedge B=\bot
-        %\mu(A\vee B) + \mu(A\wedge B) = \mu(A) + \mu(B)
+        \mu(A\vee B) + \mu(A\wedge B) = \mu(A) + \mu(B)
       $$
-      %An \textbf{objective function} over $M$ is a topological space $X$
-      %and a lower-semicontinuous map $\ell:X\to M$:
-      %$$
-      %  \ell(\lim s_n) \leq \sup_{N:\Nn} \inf_{N\leq n}  
-      %$$
+      %
+      Likewise, a \textbf{generalized measure space} over $M$ is a lattice $P$
+      and a non-decreasing map $\mu:P\to M$ that satisfies nullary and binary
+      \textbf{additivity}:
+      $$
+        \mu(\bot) = 0
+        \quad\quad\quad
+        \mu(A\vee B) + \mu(A\wedge B) = \mu(A) + \mu(B)
+      $$
+      An \textbf{objective function} over $M$ is a lattice $P$
+      and a non-decreasing map $\mu:P\to M$ that satisfies nullary and binary
+      \textbf{additivity}:
+      $$
+        \mu(\bot) = 0
+        \quad\quad\quad
+        \mu(A\vee B) + \mu(A\wedge B) = \mu(A) + \mu(B)
+      $$
+
+
 
       In either case, $M$ sets the scale by which we measure size.  But what is
       $M$?  Well, to make sense of the mentioned operations, $M$ ought to be a
       \textbf{costoid}: a total order and an abelian monoid compatible in that:
       $$ 
-        0 \leq a
+        0\leq a
         \quad\quad\quad
-        a+c\leq b+d \text{~whenever~} a\leq b\text {~and~} c\leq d
+        a+c\leq b+d\text{~whenever~}a\leq b\text{~and~}c\leq d
       $$
       A map $\phi:M\to M^\prime$ of costoids is a non-decreasing function that
-      is also laxly additive:
+      is also laxly additive :
       $$
         \phi(0)\leq 0
         \quad\quad\quad
@@ -192,14 +200,14 @@
 
       %
       As mass has grams and temperature has kelvins, we consider only costoids
-      marked with a distinguished nonzero element and only maps that preserve
-      that element.
+      $M$ marked with a nonzero ``unit'' $u:M$ and only maps that preserve
+      these units.
       %
       The punchline?  There is a terminal marked costoid: the real interval
-      $[0,\infty]$ marked at $1$!  This is our universal choice of codomain for
+      $[0,\infty]$!  This is our universal choice of codomain for
       metrics and measures.
 
-    \samsubsection{structures of analysis}
+    \samsubsection{metric spaces}
       A \textbf{metric space} is a generalized metric space $(X^2,\delta)$ over
       $\Rr$ where $X^2$ is the category with object class $X$ and morphism class
       $X\times X$ and where $\delta$ vanishes only on the diagonal and 
@@ -209,6 +217,7 @@
       $$
       % TODO: infinity as input ??
       
+    \samsubsection{measure spaces}
       A \textbf{measure space} is a generalized measure space $(P,\mu)$ over
       $\Rr$ where $P$ is a sub-lattice of a powerset $\pP(X)$ closed under
       complement and countable union and where $\mu$ enjoys this continuity
@@ -218,21 +227,9 @@
         =
         \sup_{N:\Nn}\,\mu\!\left(\bigcup_{n<N} A_n\right)
       $$
-
-      %These two notions combine in several ways.
-      Perhaps the most celebrated wedding of these two notions is the concept
-      of the \textbf{Bourbaki spaces} $L^p(X)$.  For $1\leq p\leq \infty$ and
-      $(X,\mu)$ a measure space, $\tilde L^p(X)$ is the generalized metric
-      space of measurable real functions on $X$ defined by
-      $$
-        \delta(f,g)^p = \int\!d\mu \, |f-g|^p 
-      $$
-      We define $L^p(X)$ as the vector subspace of elements finitely far from
-      $0$, mod the vector subspace of elements zero far from $0$.  This makes
-      $L^p(X)$ a metric space with every distance finite.
+      % TODO: infinity as output ??
 
   \samsection{Convergence}
-    %Limits are thus like universal summaries.
     Write $\gamma_X:(X\sqcup 1)\to X^\star$ for $X$'s one-point
     compactification.  We say that a map $s:X\to Z$ \textbf{converges} to a
     point $z:X\to Z$ when $(s,z):(X\sqcup 1)\to Z$ factors through
@@ -249,26 +246,30 @@
     $$
     %
     So $s:O\to Z$ converges to $z$ if and only if $s\circ \iota_{O}:X\to Z$
-    converges to $z$.  Intuitively, convergence of depends only on tail
-    behavior, not on any finite (compact) prefix. 
+    converges to $z$.  Intuitively, convergence of depends only on
+    tail behavior, not on any finite (compact) prefix. 
+    %Limits are thus
+    %like universal summaries.
 
-    \samsubsection{pathologies of measure}
-    \samsubsection{metric pathologies}
+    %\samsubsection{Compactness and Hausdorffness}
+    %  Compactness is a topological finiteness condition;
+    %  second-countability is a dimension condition;
+    %  T4 is a separation condition.
 
-  \samsection{Continuity Theorems: Commuting Limits} % manipulating limits
-    \samsubsection{fatou-lesbegue}
-    \samsubsection{fubini}
-    \samsubsection{levy}
-    \samsubsection{moore-osgood}
- 
-  \samsection{Existence Theorems: Convergent Lineages} % exploiting limits
-    \samsubsection{ascoli} % haar, montel, ...?
-      How does the compact-open topology on $\cmop{Y}{Z}$ depend on $Y$'s
-      topology?  For instance, how does it differ from the product topology
+    %  In second-countable T4 spaces, compactness and sequential compactness
+    %  are equivalent.
+    %  %So if $Z$ is a compact second-countable T4 space, then any $s:\Nn\to Z$
+    %  %converges (to at least one $z$).  How about non-$N$? 
+
+    \samsubsection{ascoli}
+      %Say $Y$ is compact Hausdorff; $Z$, metrizable.  
+
+      How does the compact-open topology on $\cmop{Y}{Z}$ depend on $Y$'s topology?
+      For instance, how does it differ from the product topology
       $\cmop{|Y|}{Z}$?  (Here, $|\cdot|$ discretifies.)
       %
       For one thing, the canonical map $\iota:\cmop{Y}{Z}\to \cmop{|Y|}{Z}$
-      (continuous because points (in $Y$) are compact) has tiny image.  Indeed,
+      (continuous because points in $Y$ are compact) has tiny image.  Indeed,
       most elements of the codomain are, as functions from $Y$ to $Z$,
       discontinuous.  Moreover, $\iota$ isn't even typically open: when $Y$ is
       infinite, a typical compact-open generator isn't much smaller than any
@@ -277,41 +278,46 @@
       Both differences lead us to expect convergence to be rarer in
       $\cmop{Y}{Z}$ than in $\iota$'s image.
 
-      Still, when $Z$ is a metric space, we have a positive result: any
-      ``equicontinuous'' subspace $X\subseteq \cmop{Y}{Z}$ whose every
-      restriction to a $y:Y$ has compact closure itself has compact closure!
+      Still, when $Y,Z$ is compact hausdorff and $Z$ is compact metrizable, we
+      have a positive result: any equicontinuous subspace of $\cmop{Y}{Z}$ has
+      compact closure (and, being metrizable, also sequentially
+      compact closure!)!
 
-      What does \textbf{equicontinuous} mean?  It means that the metric induced
-      on $Y$ by uniform norm over $X$ is continuous.
+      What does \textbf{equicontinuous} mean?  It means that 
 
-      %CONNECT TO TYCHONOFF! 
-      CONNECT TO TYCHONOFF! 
+      %We find that limits are harder to come by? 
 
-    \samsubsection{baire} % negligibility also pertains to sard? 
-      A \textbf{countideal} on a poset $P$ is a downward-closed subset closed
-      under countable joins.  Each countideal on a powerset $\pP(X)$ gives a
-      notion of \emph{negligible subset}.  
-      %
-      For example, each infinite cardinal $\kappa$ determines a countideal
-      consisting of subsets of cardinality at most $\kappa$. 
-      %
-      More interestingly, each measure on $X$
-      determines a countideal consisting of subsets-of-sets-of-zero-measure
-      (\textbf{null sets}).  Likewise, each topology on $X$ determines a
-      countideal consisting of countable unions of
-      sets-whose-closures-have-empty-interiors (\textbf{meager sets}).  
+      %\textbf{Theorem (Ascoli)}.  Fix a subspace $s:X \hookrightarrow (Y\to Z)$. 
+      %Then $s$ is compact if and only if
+      %%
+      %the image of each $s(\cdot,y):X\to Z$ has compact closure AND 
+      %%
 
-    \samsubsection{banach} % fixed-point; picard and nash?
+      %%
 
-    \samsubsection{riesz} % representation theorem for distributions
+      %Endow hom-sets in $\mathtt{Top}$ with the compact-open topology.  We're
+      %interested in when a map $s:X\to (Y\to Z)$ converges.  First, we want
+      %each $s(x):Y\to Z$ to converge to $\ell(x)$ for a set-map
+      %$\ell:\mathtt{Set}(Y,Z)$.  This gives a set-map $(s,\ell):X^\star\to
+      %\mathtt{Set}(Y,Z)$.
 
-  \samsection{Fourier Theory}
-    To illustrate the above ideas ``in the wild'', we develop some fourier
-    theory.  The classical fourier transform $\fF:L^1(S^1) \to L^\infty(\Zz)$
-    is celebrated because it diagonalizes both differentiation and translation
-    on the Lie group $S^1$.  The differentiation story generalizes to the
-    harmonic theory of riemannian manifolds; the translation story generalizes
-    to the representation theory of compact groups.
+      %We say
+      %that a map $s: X\to (Y\to Z)$ is \textbf{equicontinuous} when its curried
+      %version, the function $\tilde s: Y \to (X\to Z)$, is continuous. 
+
+      %That is, around each $y:Y$ should be an open neighborhood within
+      %which $\tilde s$'s values 
+
+      %Whenever $Y$ is compact hausdorff and $Z$ is metric.
+      %$Z$ is , then $s$ converges to some $f:Y\to Z$. 
+
+    \samsubsection{}
+
+  \samsection{Negligibility}
+
+  \samsection{Distributions}
+
+  \samsection{When do Limits Commute?}
 
 \end{document}
 

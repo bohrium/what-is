@@ -1,0 +1,441 @@
+% author:   sam tenka
+% create:   2022-04
+% change:   2022-04
+
+%==============================================================================
+%=====  0.  DOCUMENT SETTINGS  ================================================
+%==============================================================================
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.0. About and Beyond this Exposition  ~~~~~~~~~~~~~~~~~~~~~~~~
+
+%---------------------  0.0.0. page geometry  ---------------------------------
+\documentclass[11pt]{article}
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+
+%---------------------  0.0.1. math packages  ---------------------------------
+\usepackage{amsmath, amssymb, amsthm, mathtools, bm, moresize, relsize}%, euler}
+
+%---------------------  0.0.2. graphics packages  -----------------------------
+\usepackage{graphicx, epsdice, xcolor, float, wrapfig, caption, hyperref}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.1. Header Formatting  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\definecolor{mred}{rgb}{0.90, 0.05, 0.05}
+\newcommand{\red}{\color{mred}}
+
+\definecolor{mblu}{rgb}{0.05, 0.35, 0.70}
+\newcommand{\blu}{\color{mblu}}
+
+\definecolor{mbre}{rgb}{0.30, 0.45, 0.60}
+\newcommand{\bre}{\color{mbre}}
+
+\definecolor{mgre}{rgb}{0.55, 0.55, 0.50}
+\newcommand{\gre}{\color{mgre}}
+
+%---------------------  0.1.0. tidbit headers  --------------------------------
+\newcommand{\samtitle} [1]{
+  \par\noindent{\Huge \sf \blu #1}
+  \vspace{0.4cm}
+}
+
+\newcommand{\samquote} [2]{
+    \par\noindent{\begin{flushright}\parbox{10cm}{
+    \begin{flushright}
+    \scriptsize \gre {\it #1} \\ --- #2
+    \end{flushright}
+    }\end{flushright}}
+}
+
+%---------------------  0.1.1. section headers  -------------------------------
+
+\newcommand{\samsection} [1]{
+  \vspace{0.5cm}
+  \par\noindent{\LARGE \sf \blu #1}
+  \vspace{0.1cm}\par
+}
+
+\newcommand{\samsubsection}[1]{
+  \vspace{0.3cm}
+  \par\noindent{\large \sf \bre #1}
+  \vspace{0.1cm}\par
+}
+
+\newcommand{\samsubsubsection}[1]{
+   \vspace{0.1cm}
+   \par\noindent{\hspace{-2cm}\normalsize \sc \gre #1} ---
+}
+
+\newcommand{\note}[1]{{\blu \textsf{#1}}}
+\newcommand{\attn}[1]{{\red \textsf{#1}}}
+
+%---------------------  0.1.2. clear the bibliography's header  ---------------
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.2. Math Symbols and Blocks  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%---------------------  0.2.0. math markers, delimiters, operators  -----------
+
+\newcommand{\pr}{\prime}
+
+\newcommand{\scirc}{\mathrel{\mathsmaller{\mathsmaller{\mathsmaller{\circ}}}}}
+\newcommand{\cmop}[2]{{(#1\!\to\!#2)}}
+
+%---------------------  0.2.1. math helpers  ----------------------------------
+
+%---------------------  0.2.2. probability symbols  ---------------------------
+
+\newcommand{\KL}{\text{KL}}
+\newcommand{\EN}{\text{H}}
+\newcommand{\MI}{\text{MI}}
+
+%---------------------  0.2.3. double-struck and caligraphic letters  ---------
+
+\newcommand{\Aa}{\mathbb{A}}\newcommand{\aA}{\mathcal{A}}
+\newcommand{\Bb}{\mathbb{B}}\newcommand{\bB}{\mathcal{B}}
+\newcommand{\Cc}{\mathbb{C}}\newcommand{\cC}{\mathcal{C}}
+\newcommand{\Dd}{\mathbb{D}}\newcommand{\dD}{\mathcal{D}}
+\newcommand{\Ee}{\mathbb{E}}\newcommand{\eE}{\mathcal{E}}
+\newcommand{\Ff}{\mathbb{F}}\newcommand{\fF}{\mathcal{F}}
+\newcommand{\Gg}{\mathbb{G}}\newcommand{\gG}{\mathcal{G}}
+\newcommand{\Hh}{\mathbb{H}}\newcommand{\hH}{\mathcal{H}}
+\newcommand{\Ii}{\mathbb{I}}\newcommand{\iI}{\mathcal{I}}
+\newcommand{\Jj}{\mathbb{J}}\newcommand{\jJ}{\mathcal{J}}
+\newcommand{\Kk}{\mathbb{K}}\newcommand{\kK}{\mathcal{K}}
+\newcommand{\Ll}{\mathbb{L}}\newcommand{\lL}{\mathcal{L}}
+\newcommand{\Mm}{\mathbb{M}}\newcommand{\mM}{\mathcal{M}}
+\newcommand{\Nn}{\mathbb{N}}\newcommand{\nN}{\mathcal{N}}
+\newcommand{\Oo}{\mathbb{O}}\newcommand{\oO}{\mathcal{O}}
+\newcommand{\Pp}{\mathbb{P}}\newcommand{\pP}{\mathcal{P}}
+\newcommand{\Qq}{\mathbb{Q}}\newcommand{\qQ}{\mathcal{Q}}
+\newcommand{\Rr}{\mathbb{R}}\newcommand{\rR}{\mathcal{R}}
+\newcommand{\Ss}{\mathbb{S}}\newcommand{\sS}{\mathcal{S}}
+\newcommand{\Tt}{\mathbb{T}}\newcommand{\tT}{\mathcal{T}}
+\newcommand{\Uu}{\mathbb{U}}\newcommand{\uU}{\mathcal{U}}
+\newcommand{\Vv}{\mathbb{V}}\newcommand{\vV}{\mathcal{V}}
+\newcommand{\Ww}{\mathbb{W}}\newcommand{\wW}{\mathcal{W}}
+\newcommand{\Xx}{\mathbb{X}}\newcommand{\xX}{\mathcal{X}}
+\newcommand{\Yy}{\mathbb{Y}}\newcommand{\yY}{\mathcal{Y}}
+\newcommand{\Zz}{\mathbb{Z}}\newcommand{\zZ}{\mathcal{Z}}
+
+%---------------------  0.2.2. math environments  -----------------------------
+\newtheorem*{qst}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+% ...
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%~~~~~~~~~~~~~  0.3. Section Headers  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+\begin{document}
+\samtitle{Diagonalization of Dependencies}
+  \samquote{
+    He had bought a large map representing the sea, \\
+    Without the least vestige of land: \\
+    And the crew were much pleased when they found it to be \\
+    A map they could all understand.
+  }{The Hunting of the Snark}
+
+  In deep learning, we implicit characterize a concept-to-be-learned by
+  specifying how it should behave in composition with other concepts.  That is,
+  \emph{we build our tools by using them}.  This Grothendieckian framework
+  sheds light on many global architectural themes of deep learning:
+  autoencoders, cycle consistency losses, attention layers, , siamese networks,
+  contrastive losses.  A key example is self-supervised representation
+  learning, wherein we learn to representing data by attempting to predict some
+  of its ``parts'' or ``aspects'' from others. 
+
+  In these notes we elaborate on this theme in the case of weak dependencies.
+  %methods of representating data based on such
+  %inter-part dependency information.
+
+  %\note{What is a revealing way to visualize or plot a joint distribution on
+  %two nearly independent categorical variables?}
+  In what sense is the left a better featurization of our data than the right? 
+
+  \samsection{Universal Features}
+    \samquote{
+      Independence is a heady draft...
+    }{Maya Angelou}
+
+    We summarize the (\href{https://arxiv.org/abs/1911.09105}{2019 theory}) of
+    Shao-Lun Huang, Anuran Makur, Gregory W.\ Wornell, and Lizhong Zheng. 
+
+    \samsubsection{MI between nearly joint-uniform variables}
+      Suppose $X,Z$ have uniform marginals and are nearly independent --- 
+      $$
+        p(x^\pr, z^\pr) = \frac{\exp(\epsilon \pi(x^\pr, z^\pr))}{|X\times Z|} 
+      $$
+      --- in that their mutual information $\MI(X;Z)$ is $\ll \epsilon^2$.
+      Here, $\pi(\cdot, \cdot) \ll 1$.
+      Write $M=|X\times Z|$.
+
+      \samsubsubsection{Bird's Eye Story}
+        We wish to featurize $X,Z$ into
+        $k$-dimensional variables $X^\pr, Z^\pr$ so as to preserve as much shared
+        information as possible:
+        $$
+          X^\pr - X - Z - Z^\pr
+          \quad\quad
+          \MI^\pr(X^\pr;Z^\pr) \lesssim \MI(X;Z)
+        $$
+
+        Now, our notion $\MI^\pr$ of shared information ought not literally be
+        mutual information; otherwise, for positive $k$ almost all embeddings of
+        $X,Z$ into $\Rr^k$ would trivially preserve information. 
+        %
+        Still, there is a sense in which some embeddings of $X,Z$ are ``more
+        aligned'' or ``more co-informative'' than others.  We'll focus on the
+        notion of \emph{accessible co-informativity}: that is, on a measure of
+        how related variables appear despite bounded computation to compare them.
+        %
+        Variational bounds provide a convenient way to model bounded computation:
+        $$
+          \MI(X,Z) = \sup_c\,
+          \Ee_{x,z \sim \mu_{X\times Z}} \left[
+            c(x,z)
+          \right]
+          -
+          \log
+          \Ee_{x,z \sim \mu_{X} \times \mu_{Z}} \left[
+          \exp
+            c(x,z)
+          \right]
+        $$
+        with the supremum achieved at $c_{x,z}=\log(p_{x,z}/(p_x p_z))=\epsilon \pi_{x,z}$.
+        Let's define $\MI^\pr$ to be the same thing except the function $c$ over
+        which we vary must be \textbf{bilinear}.
+ 
+        What does that $\MI$ objective look for $c$ near the unconstrained optimum
+        $c=\epsilon \pi$?  Well, for $c=\epsilon(\gamma+\pi)$
+        we have to second order in $\epsilon$ and terms constant in $\gamma$:
+        \begin{align*}
+          \cdots
+          &=
+          \sum_{x,z} \epsilon\gamma_{x,z} \cdot \exp(\epsilon\pi_{x,z})/M
+          -
+          \log\left(1 + \sum_{x,z} (\exp(\epsilon \gamma_{x,z})-1) \cdot \exp(\epsilon\pi_{x,z})/M\right)
+          \\
+          &\in
+          C-\frac{1}{2}
+          \sum_{x,z} (\epsilon\gamma_{x,z})^2 \cdot \exp(\epsilon\pi_{x,z})/M
+          +
+          \frac{1}{2}
+          \left(\sum_{x,z} \epsilon \gamma_{x,z} \cdot \exp(\epsilon\pi_{x,z})/M\right)^2
+          + o(\epsilon^2)
+          \\
+          &=
+          C-\frac{\epsilon^2}{2}
+            \text{Var}_{x,z\sim \mu_{X\times Z}} [\gamma_{x,z}] + o(\epsilon^2)
+        \end{align*}
+        Neither the true nor approximate $\MI$ objectives care whether we
+        translate $\gamma$ vertically.  So let's take $\gamma$ to have mean zero
+        with respect to the true joint.
+        %
+        The above says that for constrained $c$ (so long as the feasible set
+        gets very close to the true optimum), we want a constrained $c$ that
+        minimizes a least-squares error 
+        $\text{Var}_{x,z\sim \mu_{X\times Z}} [\epsilon\pi - c]$ --- wow!
+
+        Let's consider $c$ bilinear in $x^\pr,z^\pr$ (the latter featurized per $f,g$):
+        $$
+          c_{x,z} = \epsilon \sum_k f_x^k g_z^k 
+        $$
+        Momentarily neglecting centering and the difference between variance with
+        respect to joint vs independent marginals, we see that the SVD minimizes
+        that least-squares error!
+        \par\noindent
+        \textbf{Desired Result}: \emph{To leading order in $\epsilon$, the
+        optimal features $f,g$ are proportional to the top $k$ non-trivial
+        singular vectors of $\exp(\epsilon\pi)$ (when SVD and optimization are
+        uniquely soluble).} 
+
+      \samsubsubsection{Technical Details}
+        %\attn{We should be more careful, so we state
+        %the following conjecturally (TODO: also address that perturbative
+        %analysis of ill-conditioned and/or constrained optimization must be
+        %handled delicately)}
+        
+        This result justifies the truncation developed in HMWZ 2019 (\S IV.C).
+
+      \samsubsubsection{Comparison to HMWZ}
+        That paper characterizes its truncation as a solution to five
+        optimization problems (\S III.B; \S V.C thru \S V.F), each of which :
+        (\attn{TODO: verify!})
+        \begin{table}
+          \begin{tabular}{c|cccccc}
+                        &\S III.B       &\S V.C         &\S V.D         &\S V.E         &\S V.F         &   ours        \\ \hline
+            norm        &   Ky-fan      &               &               &               & nuclear       & information   \\
+            constraint  &               &               &               & feature noise &               & computation   \\
+                        &   Ky-fan      &               &               &               &               &                 
+          \end{tabular} 
+        \end{table}
+        \begin{itemize}
+          \item relies on a norm introduced manually rather than derived from $\KL$ (Ky-fan, nuclear, ) or
+          \item supposes, besides near-independence of $X,Z$, an asymptotically extreme feature noise
+        \end{itemize}
+        By contrast, in our analysis the universal features fall out from a
+        linearity constraint (having to do with pure linearity rather than
+        norms).
+
+      % TODO: compare to max correlation analysis in section 3
+      %max f, g \Ee(f(x) g(y))
+      % TODO: what questions does this bounded-computation viewpoint help answer? 
+      % --- analyze random features idea?
+      % TODO: 
+      % 
+
+      %Then, very explicitly, we have
+      %\begin{align*}
+      %  \MI^\pr
+      %  &=
+      %  \sup_{f,g}
+      %  \epsilon \sum_{x,z} \exp(\epsilon\pi_{x,z}) \sum_k f_x^k g_z^k/|X\times Z|
+      %  -
+      %  \log(\sum_{x,z} \exp(\epsilon \sum_k f_x^k g_z^k)/|X\times Z|)
+      %  \\
+      %  &\approx
+      %  \sup_{f,g}
+      %  \epsilon \sum_{x,z} \exp(\epsilon\pi_{x,z}) \sum_k f_x^k g_z^k/|X\times Z|
+      %  -
+      %  \log(\sum_{x,z} \exp(\epsilon \sum_k f_x^k g_z^k)/|X\times Z|)
+      %\end{align*}
+      %(Use compactness+continuity to pull $O(\epsilon^d)$ out of the $\sup$).
+
+    \samsubsection{adaptation to non-uniform marginals}
+    \samsubsection{principal components}
+      We review principal component analysis.
+      %\samsubsubsection{pythagoreas, grassmann, gauss}
+      \samsubsubsection{pythagoreas and gauss} 
+      \samsubsubsection{sidetrack: causal grassmanians}
+        Pearl's do-calculus --> fit a nilpotent matrix to data?!
+        % A--B--C--D--E--F
+        PCA:correlation :: ?:causation
+
+        \begin{verbatim}
+        (I + T) nxn
+        T^n = 0 
+         FED
+        (1... 
+        ( 1..
+        (  1.
+        (   1)
+        \end{verbatim}
+
+        \attn{TODO: in nearly markov case, notion of ``orthogonality'' is
+        different... offdiagonals ... perhaps a triangularization?? what does this look like?}
+
+      \samsubsubsection{}
+      \samsubsubsection{fischer metric}
+
+    \samsubsection{greg's analysis of weak pairwise dependencies}
+
+  \samsection{Nearly Markov}
+    \begin{verbatim}
+            x1'      y'
+             |       |
+            x1 - x2- y
+                 |
+                x2'
+    \end{verbatim}
+    In nearly markov structure, predict y based on x2;
+    and fine-tune based on x1 --- relate to self-supervised learning
+    for representation learning; pretrainig.  (Assume have two-point but not three-point
+    marginals).
+    %
+    \attn{PRIORIZZE THIS PARAGRAPH perturb in ``p(y|x2) vs p(y|x2,x1)''}
+    %
+    --- what is analogue of singular vectors/values here?
+    % ALSO CONSIDER:  
+
+  \samsection{Generalized Self-Supervised}
+  \samsection{Sample Complexity}
+
+\end{document}
+
+
+      %$c_{x,z}-c_{\tilde x, \tilde z} \in O(\epsilon)$ as well.  Say $c_{x,z} =
+      %\epsilon \gamma_{x,z}$.  Then to first order in $\epsilon$:
+      %\begin{align*}
+      %  1 + \epsilon \pi_{x,z}
+      %  \approx
+      %  (1 + \epsilon \gamma_{x,z})
+      %  \frac{|X\times Z|}
+      %    {\sum 1 + \epsilon \gamma_{\tilde x, \tilde z}}
+      %\end{align*}
+      %and $\gamma \approx \pi$ (remember that $\sum \pi = 0$ exactly). 
+      %We can expand to second order to see deviations from proportionality:
+      %\begin{align*}
+      %  \exp(\epsilon \pi_{x,z})
+      %  \approx
+      %  \exp(\epsilon \gamma_{x,z})
+      %  \frac{|X\times Z|}
+      %    {\sum 1 + \epsilon \gamma_{\tilde x,\tilde z} + \epsilon^2 \gamma_{\tilde x,\tilde z}^2/2}
+      %\end{align*}
+
+
+%      The $\MI$ objective's partial with respect to $c_{x,z}$ is:
+%      \begin{align*}
+%        p_{x,z}
+%        -
+%        p_{x} p_{z} \cdot
+%        \frac{\exp c_{x,z}}{\sum p_{\tilde x} p_{\tilde z}
+%        \exp c_{\tilde x,\tilde z}}
+%        = 0
+%      \end{align*}
+%      Using $p_{x,z} / \exp(\epsilon \pi_{x,z}) = p_{x} p_{z} = 1/|X\times Z|$, we have
+%      \begin{align*}
+%        \exp(\epsilon \pi_{x,z})
+%        =
+%        \exp(\epsilon \gamma_{x,z})
+%        \cdot
+%        \frac{|X\times Z|}
+%          {\sum 1 + \epsilon \gamma_{\tilde x,\tilde z} + \epsilon^2 \gamma_{\tilde x,\tilde z}^2/2 + \cdots}
+%      \end{align*}
+%      Thus, $\exp(\epsilon \pi_{x,z})$ and $\exp(\epsilon \gamma_{x,z})$
+%      are proportional and 
+%      {\color{red}
+%      (TODO: address that ill-conditioned constrained optimization
+%      can be untreatable by perturbation)} 
+%      $$
+%        \epsilon\gamma = \epsilon\pi +  
+%        \log\left(1 + \sum \frac{\exp(\epsilon\gamma_{\tilde x,\tilde z})-1}{|X\times Z|}\right)
+%      $$
+%      Now, assuming $\gamma - \pi \in O(\epsilon)$, that $\log$ term is
+%      $O(\epsilon^2)$ since $\sum \exp(\epsilon\pi)-1 = 0$ exactly.
+%      %
+%      This justifies a perturbative expansion:
+%      $$
+%        \gamma = \pi +
+%        \epsilon
+%        \sum \frac{\exp(\epsilon\pi_{\tilde x,\tilde z})-1}{|X\times Z|} + o(\epsilon) 
+%      $$
+%
+%
+%      Now, the objective's partial with respect to $f_x^k$ is:
+%      $$
+%        \epsilon \lambda_k = 
+%        \frac{\epsilon \sum_{\tilde z} g_{\tilde z}^k \exp(\epsilon \pi_{x,\tilde z})}
+%        {\sum_{\tilde x, \tilde z} 1} 
+%        -
+%        \frac{\epsilon \sum_{\tilde z} g_{\tilde z}^k \exp\left(\epsilon \sum_{\tilde k} f_{x}^{\tilde k} g_{\tilde z}^{\tilde k}\right)}
+%        {\sum_{\tilde x, \tilde z} \exp\left(\epsilon \sum_{\tilde k} f_{\tilde x}^{\tilde k} g_{\tilde z}^{\tilde k}\right)}
+%      $$
+%      We introduced a lagrange multiplier since
+%      we insist on the constraint that $\sum_x f_x^k = 0 = \sum_z g_z^k$,
+%      i.e., that the embeddings are centered.  This makes both denominators 
+%      above $1+O(\epsilon^2)$.  To leading order:
+%      $$
+%        \lambda_k = \epsilon \sum_{\tilde z} g_{\tilde z}^k (\pi_{x,\tilde z} - \sum_{\tilde k} f_{x}^{\tilde k} g_{\tilde z}^{\tilde k})
+%      $$
+%      We SUPPOSE THAT $\lambda=0$; then for each $x$, $g^k$ is orthogonal
+%      to the residual $\pi - c$.
+%      {\color{red}
+%
+%

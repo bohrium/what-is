@@ -1,0 +1,145 @@
+\documentclass[12pt]{article}
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+\usepackage{changepage, xcolor}
+\usepackage{amsmath, amssymb}
+
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\Mm}{\mathcal{M}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\Top}{\mathsf{Top}}
+
+\newcommand{\mootitle}[2]{
+  \begin{center}
+    \LARGE\sc#1\\
+    \Large\rm#2
+  \end{center}
+}
+
+\newcommand{\moosection}[1]{
+  \begin{center}\parbox{\textwidth}{\begin{center}
+    \hrule\vspace{0.25cm}
+    \Large\sc#1\vspace{0.25cm}
+    \hrule
+  \end{center}}\end{center}
+}
+
+\newcommand{\mooparagraph}[1]{
+  \begin{center}\parbox{8cm}{\begin{center}
+    \large\sc#1\vspace{-0.25cm}
+  \end{center}}\end{center}
+}
+
+\begin{document}
+  \pagecolor{yellow!10}
+
+  \mootitle{Basic Structures in Analysis}{sam tenka, 2021-06}
+    
+  \moosection{Size and Smoothness}
+    \mooparagraph{The Reals as a Co-domain}
+      As analysts, we measure size; formally, we map from a set $\Mm$ of
+      \emph{things measured} to a set $S$ of \emph{possible sizes}.
+      %
+      What properties do we demand of $S$?  We ought to be able to compare and
+      to add sizes, so we ask that $S$ be a totally ordered abelian group.  
+      %
+      Thinking of physical units such as Joules, we also ask that $S$ be
+      marked with an element $1$ that generates an unbounded subgroup.  Call
+      such $S$'s \textbf{scales}.
+
+      The category of scales has an initial object
+      $\ZZ$ (with the evident order, addition, and $1$).  It also has a
+      terminal object: the space $\RR$ of \textbf{real numbers}.\footnote{ 
+        Such characterizations of $\RR$ seem to have been known by Otto Holder.
+        It was Dean Young who taught me --- and emphasized the significance of
+        --- these characterizations.
+      }
+      That for any function $f:\Mm\to S$ there canonically corresponds a
+      function $f:\Mm\to \RR$ leads us to choose $\RR$ as our space of possible
+      sizes.
+
+    %\mooparagraph{Metric Spaces}
+      A \textbf{pre-metric space}
+      is a set $X$ together with a map
+      $d:X^2\to \RR_+$
+      with identity ($d(a,a)=0$) and composition ($d(a,c)\leq d(a,b)+d(b,c)$) 
+      laws.
+      Most such $X$s we will encounter also enjoy the
+      properties of separation ($d(a,b)=0$ only when $a=b$)
+      and symmetry ($d(a,b)=d(b,a)$); then $X$ is a
+      \textbf{metric space}.
+      %
+      Especially important are normed abelian groups:
+      abelian groups with translation-invariant metrics
+      that obey $d(0,n\cdot a) = n\cdot d(0, a)$.
+     
+    %\mooparagraph{Measure Spaces}
+      A \textbf{content} on a Boolean algebra $B$ is a map
+      $\mu:B\to \RR_+$ that preserves finitary disjoint sums, i.e.:
+      $\mu(0)=0$ and $\mu(a\vee b)=\mu(a)+\mu(b)$ when $a\wedge b=0$.
+      A \textbf{content space} is a set $X$ is equipped with a Boolean
+      sub-algebra $B$ of its power set and with a content $\mu$ on $B$.
+      Replacing `Boolean algebra' by `$\sigma$-algebra' and `finitary' by `countable'
+      yields the notion of a \textbf{measure space}.
+
+    \mooparagraph{The Reals as a Domain}
+      Analysis also has to do with smoothness, a strengthening of the notion of
+      continuity.  The additive and order structures aren't the key to
+      capturing smoothness: we also need multiplication!  Intuitively,
+      multiplication permits us to speak of maximal ideals and hence points in
+      a real-valued \emph{domain}.  Multiplication defines
+      how inputs and outputs ought to scale together and thus helps detect when
+      a function is differentiable.  But in this note we will be naughty and
+      avoid talking about multiplication explicitly.
+
+      The \emph{linear functions} on $\RR$ are the monotonic additive maps
+      $\RR\to\RR$.
+      A function $f:\RR\to\RR$ is differentiable at input $0$ if  
+
+      Let $V$ be an normed abelian group.  We consider the space $V^\star$
+      of continuous homomorphisms to $\RR$.
+      A function $f:V\to \RR$ has derivative $l\in V^\star$ at $v\in V$ if 
+      $g=(w \mapsto f(v+w)-f(v) - l(w))$ vanishes to first order, i.e. if
+      for all $\alpha>0$ there exists a neighborhood of $w=0$ so that
+      $g(w) < \alpha\cdot d(0,w)$.
+
+    %\mooparagraph{Taylor Series}
+      
+    %\mooparagraph{Manifolds}
+      A \textbf{smooth space} is a topological space together with a class of
+      continuous functions on the space deemed `smooth'.  This class must be
+      closed under post-composition with finitary smooth operators $:\RR^p\to
+      \RR$.  In particular, the class is an $\RR$-algebra.  We may thus speak
+      of the dimension at a point: the stalk at $x$ is a local ring; take
+      the dimension of the vector space $m/m^2$.  The space has dimension $k$ 
+      if at each point it has dimension $k$.
+
+      A maximal ideal is local when    
+      Local nullstellensatz: a smooth space of dimension $k$ is a $k$-\textbf{manifold}
+      provided that every local maximal ideal is represented by a point.
+
+  \moosection{Convergence}
+    \mooparagraph{Completeness}
+      Let $\epsilon:\NN\to \NN_\star$ be the discrete space $\NN$'s inclusion
+      into its one-point compactification.
+      We say that a sequence $\sigma:\NN\to X$ in a topological space
+      \textbf{converges} if $\sigma$ extends along $\epsilon$.
+      A sequence $\sigma:\NN\to X$ in a metric space
+      is \textbf{Cauchy} if $d \circ (\sigma \times \sigma)$
+      extends along $\epsilon\times \epsilon$.
+      The metric space $X$ is \textbf{complete} if every Cauchy sequence
+      converges.
+      
+    \mooparagraph{Ascoli's Theorem}
+      Consider a family $\pi:F\to \Top(X\to Y)$ of continuous maps to a metric space $Y$.
+      We have an evaluation map $F\to (X\to Y)$.
+      We say that $\pi$ is \textbf{equicontinuous} when
+      the curried evaluation map $\eta:X\to (F\to Y)$ to the metric space
+      $F\to Y$ is continuous.
+
+    \mooparagraph{Weierstrass's Theorem}
+    \mooparagraph{}
+  
+\end{document}
+
