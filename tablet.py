@@ -105,31 +105,31 @@ for K in range(0,len(words),18):
     print('  '.join(words[K:K+18]))
 print()
 
-#words, wfreqs = pair_with_probs(words, len_power=-2.0)
-#for _ in range(20):
-#    print(' '.join(sample(words, wfreqs) for _ in range(10)))
+words, wfreqs = pair_with_probs(words, len_power=-2.0)
+for _ in range(20):
+    print(' '.join(sample(words, wfreqs) for _ in range(10)))
+print()
+
+#print(lookup('cow'   , 'cow', 'verb'))
+#print(lookup('cow'   , 'cow', 'noun'))
+#print(lookup('cow'   , 'cow', 'adj' ))
+#print(lookup('cow'   , 'cow', 'prep'))
 #print()
-
-print(lookup('cow'   , 'cow', 'verb'))
-print(lookup('cow'   , 'cow', 'noun'))
-print(lookup('cow'   , 'cow', 'adj' ))
-print(lookup('cow'   , 'cow', 'prep'))
-print()
-
-print(lookup('after' , 'love' , 'verb'))
-print(lookup('before', 'love' , 'verb'))
-print(lookup('hate'  , 'love' , 'verb'))
-print(lookup('love'  , 'love' , 'verb'))
-print()
-
-print(lookup('farm'  , 'tool' , 'noun'))
-print(lookup('war'   , 'tool' , 'noun'))
-print(lookup('king'  , 'tool' , 'noun'))
-print(lookup('horse' , 'tool' , 'noun'))
-print()
-
-print(lookup('after' , 'soul' , 'noun'))
-print(lookup('before', 'soul' , 'noun'))
-print(lookup('after' , 'soul' , 'verb'))
-print(lookup('before', 'soul' , 'verb'))
-print()
+#
+#print(lookup('after' , 'love' , 'verb'))
+#print(lookup('before', 'love' , 'verb'))
+#print(lookup('hate'  , 'love' , 'verb'))
+#print(lookup('love'  , 'love' , 'verb'))
+#print()
+#
+#print(lookup('farm'  , 'tool' , 'noun'))
+#print(lookup('war'   , 'tool' , 'noun'))
+#print(lookup('king'  , 'tool' , 'noun'))
+#print(lookup('horse' , 'tool' , 'noun'))
+#print()
+#
+#print(lookup('after' , 'soul' , 'noun'))
+#print(lookup('before', 'soul' , 'noun'))
+#print(lookup('after' , 'soul' , 'verb'))
+#print(lookup('before', 'soul' , 'verb'))
+#print()
