@@ -18,20 +18,20 @@ class Writer:
         return random.choice((
             #'cow god sun fruit seed worm crab dance veil ship wind penalty'+
             'land thing totality knowledge secret flood journey peace stone'+
-            ' slab wall temple sanctuary copper threshold residence king'+
-            ' man foundation brick core kiln sage plan league city palm garden'+
+            ' slab wall temple sanctuary copper threshold residence king man'+
+            ' foundation brick core kiln sage plan league city palm garden'+
             ' lowland area tablet box lock bronze fastening opening'+
-            ' lapis-lazuli appearance hero bull front leader rear companion net protector'+
-            ' flood-wave offspring perfection cow pass well flank ocean sun'+
-            ' region name day birth god human model enclosure head rival weapon'+
-            ' order day night shepherd girl mother warrior bride complaint'+
-            ' heaven lord memorial match hand clay wilderness silence hair'+
-            ' garment gazelle watering-hole animal thirst water trapper fear'+
-            ' home heart face core father meteorite pit trap grasp round'+
-            ' harlot woman robe sex way post depth arm voluptuousness energy'+
+            ' lapis-lazuli appearance hero bull front leader companion'+
+            ' net protector flood-wave offspring perfection cow pass water-well'+
+            ' flank ocean sun region name day birth god human model enclosure'+
+            ' head rival weapon decree day night shepherd girl mother warrior'+
+            ' bride complaint heaven lord memorial match hand clay wilderness'+
+            ' silence hair garment gazelle watering-hole animal thirst water'+
+            ' trapper home heart face core father meteorite pit trap grasp'+
+            ' woman robe way post depth arm energy'+
             ' bosom charm knee ear oiwer favor friend finery lyre drum couch'+
-            ' sheet feeling youth thought mind dream start sky populace feet baby'+
-            ' comrade gate chamber axe adviser settled-living'+
+            ' sheet feeling youth thought mind dream start sky populace foot'+
+            ' baby comrade gate chamber axe adviser settled-living'+
             #
             ' country giant person year child common attendant lodging'+
             ' mountain end hundred lust wife cousin blood pity revenge'+
@@ -42,19 +42,21 @@ class Writer:
             ' man limb broach bird sight compassion death soul glutton club'+
             ' crown ground belly gut ribcage help comfort beach dagger head'+
             ' spear barbican number gown host worship morning battle'+
-            ' valley messenger emperor part slaughter town body'+
+            ' valley messenger emperor part slaughter town body prize'+
         '').split())
     def make_uncountable_noun(self):
         return random.choice((
             #'rain blood milk honey love hate battle grain prayer clay mourning lies skystuff mountainrock'+
-            'time exhaustion toils hardship strength life mankind grass'+
-            'spoils iron'+
+            'time exhaustion toil hardship strength life mankind grass fear'+
+            ' duty'+
+            #
+            ' iron'+
         '').split())
 
     def make_preposition(self):
         return random.choice('of from above below named-after beside inside'.split())
     def make_prepositional_adverb(self):
-        return random.choice('with like against born-from to on'.split())
+        return random.choice('with like against born-from for/to on'.split())
 
     def make_noun_modifier(self):
         return random.choice([
@@ -80,13 +82,14 @@ class Writer:
             'saw revealed taught granted discovered pushed built carved'+
             ' examined equaled grasped walked enclosed found opened undid'+
             ' read suffered gored walked trusted destroyed opened dug crossed'+
-            ' explored sought reached restored teemed was-compared-to prepared'+
-            ' raised stood left heard implored created found washed pinched threw'+
-            ' was-endowed-with billowed wore ate jostled-at slaked opposed'+
-            ' addressed planted filled released gave exposed drew-near-to'+
-            ' restrained took performed-for unclutched sated gazed-at'+
-            ' shouted led changed showed-off enlarged revealed lifted assembled'+
-            ' embraced laid-down saved collected possessed interpreted recounted'+
+            ' explored sought reached restored teemed was-compared-to'+
+            ' prepared raised stood left heard implored created found washed'+
+            ' pinched threw was-endowed-with billowed wore ate jostled-at'+
+            ' slaked opposed addressed planted filled released gave exposed'+
+            ' drew-near-to restrained took entertained unclutched sated'+
+            ' gazed-at shouted led changed showed-off enlarged lifted'+
+            ' embraced laid-down saved collected possessed interpreted'+
+            ' recounted'+
             #
             ' slayed devoured sustained destroyed led ravished rescued' +
             ' shrieked cried fulfilled brought understood commanded prepared'+
@@ -101,7 +104,9 @@ class Writer:
     def make_intrans_verb(self):
         return random.choice((
             #'arrived left died wept fell ripened waited rotted groaned slept danced awoke erupted'+
-            'gleamed raged teemed paled grew-up arrived groaned galloped strutted stood played slept budged thronged clustered appeared passed'+
+            'gleamed raged teemed paled grew-up arrived groaned galloped'+
+            ' strutted stood played slept budged assembled thronged clustered'+
+            ' appeared passed'+
             #
             ' rode departed waited sat spoke turned started kneeled arose'+
             ' fell'+

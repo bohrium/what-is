@@ -27,17 +27,11 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %~~~~~~~~~~~~~  0.1. Header Formatting  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-\definecolor{mred}{rgb}{0.90, 0.05, 0.05}
-\newcommand{\red}{\color{mred}}
-
-\definecolor{mblu}{rgb}{0.05, 0.35, 0.70}
-\newcommand{\blu}{\color{mblu}}
-
-\definecolor{mbre}{rgb}{0.30, 0.45, 0.60}
-\newcommand{\bre}{\color{mbre}}
-
-\definecolor{mgre}{rgb}{0.55, 0.55, 0.50}
-\newcommand{\gre}{\color{mgre}}
+\definecolor{mgrn}{rgb}{0.15, 0.65, 0.05} \newcommand{\grn}{\color{mgrn}}
+\definecolor{mred}{rgb}{0.90, 0.05, 0.05} \newcommand{\red}{\color{mred}}
+\definecolor{mblu}{rgb}{0.05, 0.35, 0.70} \newcommand{\blu}{\color{mblu}}
+\definecolor{mbre}{rgb}{0.30, 0.45, 0.60} \newcommand{\bre}{\color{mbre}}
+\definecolor{mgre}{rgb}{0.55, 0.55, 0.50} \newcommand{\gre}{\color{mgre}}
 
 %---------------------  0.1.0. tidbit headers  --------------------------------
 \newcommand{\samtitle} [1]{
@@ -45,15 +39,14 @@
   \vspace{0.1cm}
 }
 
-%\newcommand{\samquote} [2]{%
-%    %\vspace{-0.90cm}
-%    %\par\noindent
-%    {\begin{flushright}\parbox{ 8cm}{
-%    \begin{flushright}
-%    \scriptsize\gre {\it #1} \\ --- #2
-%    \end{flushright}
-%    }\end{flushright}}
-%}
+\newcommand{\doublerule}{
+  \vspace{0.5cm}
+  \hrule
+  \vspace{0.1cm}
+  \hrule
+  \vspace{0.1cm}
+}
+
 \newcommand{\samquote} [2]{
     \marginnote[-0.2cm]{\begin{flushright}
     \scriptsize
@@ -82,6 +75,7 @@
 
 \newcommand{\note}[1]{{\blu \textsf{#1}}}
 \newcommand{\attn}[1]{{\red \textsf{#1}}}
+\newcommand{\ques}[1]{{\grn \textsf{Q: #1}}}
 
 %---------------------  0.1.2. clear the bibliography's header  ---------------
 \usepackage{etoolbox}
@@ -155,6 +149,20 @@
   %     Nearly Markov
   %     Self Supervised Learning
 
+  The essence of deep learning is to implicitly characterize a
+  concept-to-be-learned by specifying how it should behave in composition with
+  other concepts.  Then to do gradient desceint.  That is, \emph{we build our
+  tools by using them}.  This Grothendieckian framework illuminates on many
+  global architectural themes of deep learning: autoencoders, cycle consistency
+  losses, attention layers, siamese networks, contrastive losses.  A key
+  example is self-supervised representation learning (e.g.\ Word2Vec), 
+  we learn to represent data by attempting to predict some of its ``parts'' or
+  ``aspects'' from others. 
+
+  In these notes we elaborate on this theme in the case of weak dependencies.
+  We begin in the first of four sections by understanding dependency structures
+  relevant to more than two variables.
+
   \samsection{Geometry of $n$-ary Mutual Information}
 
     \samsubsection{Interactions, Distributivity, Local-Global}%
@@ -163,8 +171,46 @@
          But I neither believe that it does, nor do I believe that it doesn't.
       }{Five Thousand B.C., Raymond Smullyan}
 
-
       \samsubsubsection{Inclusion-Exclusion}
+        Why do we love entropy $\EN(X)$ and mutual information $\MI(X;Y)$?
+        %
+        One reason is that they are asymptotically invariant under data
+        re-formatting: up to asymptotically negligible error, we can losslessly
+        translate a long stream $X=(x_t:0\leq t<T)$ to a stream
+        $X^\pr=(x_t^\prime:0\leq t<T)$ when the $\EN(X)\leq \EN(X^\pr)$.
+        By \emph{losslessly} I mean that $X^\pr$ should determine $X$.\marginnote{%
+          Another operational characterization of mutual information is how
+          much information Alice would have to send to Bob if Alice translates
+          $X$ to $X^\pr$ and then Bob translates $Y$ to $Y^\pr$ and they want
+          to minimize filesize.
+        }
+        %
+        Likewise, we can super-losslesly translate $(X,Y)$ to $(X^\pr,Y^\pr)$  
+        when $\EN(X)\leq \EN(X^\pr)$ and $\EN(Y)\leq \EN(Y^\pr)$ \emph{and} $\MI(X;Y)\leq \MI(X^\pr;Y^\pr)$.
+        By \emph{super-losslessly} I mean that $X^\pr$ should determine $X$ and
+        $Y^\pr$ should determine $Y$.
+        %
+        These entropic conditions (with equality rather than mere inequality)\marginnote{%
+          $\leftarrow$ I think of water sloshing around in a balloon animal.
+        }
+        are necessary and sufficient (up to negligible error) for
+        \emph{bi-directional} super-lossless translation.  We'll call such a
+        two-way translation an \emph{isomorphism} between same-sized tuples of
+        random variables.  For tuples of size $1$ and $2$, the ``richness''
+        functions $\EN(\cdot)$ and $\MI(\cdot;\cdot)$ suffice to characterize
+        isomorphism type.
+
+
+        \ques{What numbers characterize the isomorphism type of a tuple $(X,Y,Z)$?}
+        We will see that pairwise mutual information does not suffice and we
+        \attn{hypothesize} that even including triplet mutual information (in
+        the sense of Ting 1962) does not suffice.
+
+        %   2
+        % 2 2 2
+        %1 1 1
+        %  0
+
       \samsubsubsection{Venn Diagrams Mislead}
         I contend that $3$-ary mutual information is slippery to define
         to our satisfaction due to a failure of additivity (precisely,
@@ -191,8 +237,8 @@
         \end{align*}
         No!  That's what we would expect from a Venn diagram, but it is wrong.
         Venn models $\MI$ badly for analogous reasons.  
-        I think of $\MI(X;Y;Z)$ not as a real number (like the area of a Venn lune)
-        but as remembering rather more geometric structure (much
+        I think of $\MI(X;Y;Z)$ not as a mere real number (like the area of a Venn lune)
+        but as a geometric structure (much
         as a lattice of subspaces generated by sums and intersections of given
         subspaces carries more data than just the dimensions of the pure sums).
 
@@ -229,12 +275,22 @@
         $$
             A\cap C + B\cap C \subseteq (A+B)\cap C
         $$
-        but often not the other inclusion.  And for $A,B$ independent we have
+        but often not the other inclusion.  And for $A,B$ independent we have\marginnote{%
+          Without independence, it can go the other way: think of bits with
+          $A=B=C$.
+        }
         $$
             \MI(A \,;\, C) + \MI(B \,;\, C) \leq \MI(A,B \,;\, C) 
         $$
         but often not the other inequality (think of bits with $A+B+C=0$).
-        Here's a proof:
+        Indeed\marginnote{%
+          \attn{Can we use the variational formulation instead?
+          We'd take $f_{A;C}, f_{B;C}$ witnesses
+          (up to $\epsilon$ error) to $\MI(A;C),
+          \MI(B;C)$'s values.  We'd set $f_{A,B;C}((a,b),c)$ to be their sum or something
+          to get a lower
+          bound on $\MI(A,B;C)$:}
+        }:
         \begin{align*}
             [(A)+(B)+(C)-(ABC)]
             &- [(A)+(C)-(AC)]-[(B)+(C)-(BC)]
@@ -251,121 +307,32 @@
             (C|A)+(C|B)-(C|)-(C|)
                \geq 0
         \end{align*}
-        Above, $(\cdots|\cdots)$ is shorthand for for the conditional entropy
-        between the mentioned tuples of variables; and $(\cdots)=(\cdots|)$ for
+        Above, $(\cdots|\cdots)$ is shorthand for the conditional entropy
+        between the tuples $\cdots$ and $\cdots$ of variables; $(\cdots)=(\cdots|)$, for
         the unconditional entropy.
-        (Without independence, it can go the other way: think of bits with
-        $A=B=C$.)
-        %To see that inequality, recall the variational bound
-        %$
-        %  \MI(X\,;\,Z) = \sup_f\,
-        %  \Ee_{x,z \sim \mu_{X\times Z}} \left[
-        %    f(x,z)
-        %  \right]
-        %  -
-        %  \log
-        %  \Ee_{x,z \sim \mu_{X} \times \mu_{Z}} \left[
-        %  \exp
-        %    f(x,z)
-        %  \right]
-        %$.
-        %Take $f_{A;C}, f_{B;C}$ that respectively witness (up to arbitrarily
-        %small additive error) the values of $\MI(A;C), \MI(B;C)$.  Let
-        %$f_{A,B;C}((a,b),c) = f_{A;C}(a,c)+f_{B;C}(b,c)$ to get a lower bound
-        %on $\MI(A,B;C)$:
-        %$$
-        %  \MI(A,B;C)-\MI(A;C)-\MI(B,C) \geq \log\frac{\Ee[\exp(f(a,b,c))]}{\Ee[\exp(f(a,c))]\Ee[\exp(f(b,c))]} 
-        %$$
 
-      \samsubsubsection{Geometry}
+      \samsubsubsection{Cohomology}
+        Cohomology is a scary word for the study of how local data patches
+        together to make global data.
+        %
+        A classical example is that we can make a sphere from two hemispheres,
+        either of which doesn't have a ``hole''; but the sphere has a hole.
+        %
+        We summarize the (\href{https://www.mdpi.com/1099-4300/17/5/3253/pdf?version=1431515279}{2015 theory})
+        of Pierre Baudot and Daniel Bennequin. 
 
-    \samsubsection{Intersections, Complements, Cohomology}
-      \samquote{
-        He had bought a large map representing the sea, \\
-        Without the least vestige of land: \\
-        And the crew were much pleased when they found it to be \\
-        A map they could all understand.
-      }{The Hunting of the Snark, Charles Dodgson}
+    \samsubsection{Information Lattice Geometry}%Intersections, Complements, Cohomology}
+      \samquote{%
+          One beginning and one ending for a book was a thing I did not agree
+          with. A good book may have three openings entirely dissimilar and
+          inter-related only in the prescience of the author, or for that
+          matter one hundred times as many endings
+      }{At Swim-Two-Birds, Brian O'Nolan}
 
-\vspace{0.5cm}
-\hrule
-\vspace{0.1cm}
-\hrule
-\vspace{0.1cm}
-
-    \begin{verbatim}
-            x1'    x2'    y'
-             |     |      |
-            x1-----x2-----y
-                   |
-                  x2'
-    \end{verbatim}
-    We're studying a perturbation of a system exactly described by a markov
-    structure (shoe horizontal edges far from nearly-independent).  One
-    interesting task in this setting is to predict y based on x2, then
-    fine-tune based on x1.  This relates to self-supervised learning for
-    representation learning; pretraining.  
-    %
-    We want to perturb in ``p(y|x2) vs p(y|x2,x1)''; perhaps the right analogue
-    to the original story is for us to assume access to two-point but not
-    three-point marginals.
-
-    Start with understanding for one simple SVD in nearly markov how to
-    interpret that SVD.
-
-    Now, \emph{what are analogues of the original story's singular vectors?}
-    %
-    The bounded-computation framework suggests that we maximize something like
-    $$
-        \MI^\pr(x1^\pr;y^\pr \,|\, x2)
-        \quad
-        \quad
-        \text{or maybe}
-        \quad
-        \quad
-        \MI^\pr(x1^\pr;y^\pr \,|\, x2^\pr)
-    $$
-    The thing to do, though, is to define $\MI^\pr$!
-    For instance, might we condition on a ``mediating'' variable just by taking
-    an expectation over the $\MI^\pr$s of its conditionals, as follows?
-    $$
-      \MI^\pr(X;Z\,|\,M) = \Ee_{m\sim \mu_{M}} \sup_{c~\text{bilinear}}\,
-      \Ee_{x,z \sim \mu_{X\times Z|M}(\cdot|m)} \left[
-        c(x,z)
-      \right]
-      -
-      \log
-      \Ee_{x,z \sim \mu_{X|M}(\cdot|m) \times \mu_{Z|M}(\cdot|m)} \left[
-      \exp
-        c(x,z)
-      \right]
-    $$
-    Or should $c$ instead somehow know about $m$ as well?
-
-    Relatedly, if we condition on $x2^\pr$ then is there a way we would
-    like to incorporate $x2^\pr$'s linear structure?
-    And if we condition instead on $x2$, is there a decomposition theorem reducing to old work.
+      %\samsubsubsection{Geometry}
 
 
-\vspace{0.1cm}
-\hrule
-\vspace{0.1cm}
-\hrule
-\vspace{0.5cm}
 
-
-  In deep learning, we implicitly characterize a concept-to-be-learned by
-  specifying how it should behave in composition with other concepts.  That is,
-  \emph{we build our tools by using them}.  This Grothendieckian framework
-  sheds light on many global architectural themes of deep learning:
-  autoencoders, cycle consistency losses, attention layers, , siamese networks,
-  contrastive losses.  A key example is self-supervised representation
-  learning, wherein we learn to represent data by attempting to predict some
-  of its ``parts'' or ``aspects'' from others. 
-
-  In these notes we elaborate on this theme in the case of weak dependencies.
-  %methods of representating data based on such
-  %inter-part dependency information.
 
   %\note{What is a revealing way to visualize or plot a joint distribution on
   %two nearly independent categorical variables?}
@@ -376,7 +343,7 @@
       Independence is a heady draft...
     }{Mom \& Me \& Mom, Maya Angelou}
 
-        We summarize the (\href{https://arxiv.org/abs/1911.09105}{2019 theory}) of
+    We summarize the (\href{https://arxiv.org/abs/1911.09105}{2019 theory}) of
     Shao-Lun Huang, Anuran Makur, Gregory W.\ Wornell, and Lizhong Zheng. 
 
     \samsubsection{MI between nearly joint-uniform variables}
@@ -522,6 +489,13 @@
       %(Use compactness+continuity to pull $O(\epsilon^d)$ out of the $\sup$).
 
     \samsubsection{adaptation to non-uniform marginals}
+      \samquote{
+        He had bought a large map representing the sea, \\
+        Without the least vestige of land: \\
+        And the crew were much pleased when they found it to be \\
+        A map they could all understand.
+      }{The Hunting of the Snark, Charles Dodgson}
+
     \samsubsection{principal components}
       We review principal component analysis.
       %\samsubsubsection{pythagoreas, grassmann, gauss}
@@ -556,32 +530,72 @@
     }{Hitchhiker's Guide to the Galaxy, Douglas Adams}
 
     \begin{verbatim}
-            x1'      y'
-             |       |
-            x1 - x2- y
-                 |
-                x2'
+            x1'    x2'    y'
+             |     |      |
+            x1-----x2-----y
+                   |
+                  x2'
     \end{verbatim}
-    In nearly markov structure, predict y based on x2;
-    and fine-tune based on x1 --- relate to self-supervised learning
-    for representation learning; pretrainig.  (Assume have two-point but not three-point
-    marginals).
+    We're studying a perturbation of a system exactly described by a markov
+    structure (shoe horizontal edges far from nearly-independent).  One
+    interesting task in this setting is to predict y based on x2, then
+    fine-tune based on x1.  This relates to self-supervised learning for
+    representation learning; pretraining.  
     %
-    \attn{PRIORIZZE THIS PARAGRAPH perturb in ``p(y|x2) vs p(y|x2,x1)''}
+    We want to perturb in ``p(y|x2) vs p(y|x2,x1)''; perhaps the right analogue
+    to the original story is for us to assume access to two-point but not
+    three-point marginals.
+
+    Start with understanding for one simple SVD in nearly markov how to
+    interpret that SVD.
+
+    Now, \emph{what are analogues of the original story's singular vectors?}
     %
-    --- what is analogue of singular vectors/values here?
-    % ALSO CONSIDER:  
+    The bounded-computation framework suggests that we maximize something like
+    $$
+        \MI^\pr(x1^\pr;y^\pr \,|\, x2)
+        \quad
+        \quad
+        \text{or maybe}
+        \quad
+        \quad
+        \MI^\pr(x1^\pr;y^\pr \,|\, x2^\pr)
+    $$
+    The thing to do, though, is to define $\MI^\pr$!
+    For instance, might we condition on a ``mediating'' variable just by taking
+    an expectation over the $\MI^\pr$s of its conditionals, as follows?
+    $$
+      \MI^\pr(X;Z\,|\,M) = \Ee_{m\sim \mu_{M}} \sup_{c~\text{bilinear}}\,
+      \Ee_{x,z \sim \mu_{X\times Z|M}(\cdot|m)} \left[
+        c(x,z)
+      \right]
+      -
+      \log
+      \Ee_{x,z \sim \mu_{X|M}(\cdot|m) \times \mu_{Z|M}(\cdot|m)} \left[
+      \exp
+        c(x,z)
+      \right]
+    $$
+    Or should $c$ instead somehow know about $m$ as well?
+
+    Relatedly, if we condition on $x2^\pr$ then is there a way we would
+    like to incorporate $x2^\pr$'s linear structure?
+    And if we condition instead on $x2$, is there a decomposition theorem reducing to old work.
+
+
 
   \samsection{Self-Supervised Learning}
+    %\samquote{I am so clever that sometimes I don't understand a single word of what I am saying.}{Oscar Wilde}
+    %\samquote{Be a pattern to others and then all will go well.}{Marcus Cicero}
 
-    \samquote{
-      Possession of anything new or expensive only reflected a person's lack of
-      theology and geometry; it could even cast doubts upon one's soul.
-    }{A Confederacy of Dunces, John Toole}
-    \samquote{
-        Meaning is not only about things ... but also involves felt experiencing. ....
-        We are most aware of this second ... dimension of meaning in those cases where the symbols do not adequately symbolize the meaning we experience.
-    }{Experiencing, Eugene Gendlin}
+    %\samquote{
+    %  Possession of anything new or expensive only reflected a person's lack of
+    %  theology and geometry; it could even cast doubts upon one's soul.
+    %}{A Confederacy of Dunces, John Toole}
+    %\samquote{
+    %    Meaning is not only about things ... but also involves felt experiencing. ....
+    %    We are most aware of this second ... dimension of meaning in those cases where the symbols do not adequately symbolize the meaning we experience.
+    %}{Experiencing, Eugene Gendlin}
 
 
 \end{document}

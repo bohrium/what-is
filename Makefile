@@ -1,3 +1,7 @@
+mlentary:
+	pdflatex mlentary.tex
+	evince 	 mlentary.pdf
+
 local-features:
 	pdflatex local-features.tex
 	evince 	 local-features.pdf
