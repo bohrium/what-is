@@ -90,10 +90,10 @@
 \newcommand{\cmop}[2]{{(#1\!\to\!#2)}}
 
 % losses averaged in various ways: 
-\newcommand{\Ein}  {\text{trn}_{\Ss}}
-\newcommand{\Einb} {\text{trn}_{\check\Ss}}
-\newcommand{\Einc} {\text{trn}_{\Ss\sqcup \check\Ss}}
-\newcommand{\Egap} {\text{gap}_{\Ss}}
+\newcommand{\Ein}  {\text{trn}_{\sS}}
+\newcommand{\Einb} {\text{trn}_{\check\sS}}
+\newcommand{\Einc} {\text{trn}_{\sS\sqcup \check\sS}}
+\newcommand{\Egap} {\text{gap}_{\sS}}
 \newcommand{\Eout} {\text{tst}}
 
 
@@ -169,167 +169,202 @@
 
 
 \begin{document}
-\samtitle{mlentary (6.86x)}
+\samtitle{mlentary (optional 6.86x notes)}
 
-  \marginnote[-0.05cm]{%
-    \textsc{Table of Contents}
-    \begin{description}
-      %\item[] \vphantom{.} 
-      %  \begin{description}
-      %  \end{description}
-      \item[prologue] \phdot 
-        \begin{description}
-          \item[bird's eye framework] \phdot
-          \item[flooding plains] \phdot
-          \item[pairing flavors] \phdot
-          \item[ancient tablets] \phdot
-        \end{description}
-      \item[linear classification] \phdot
-        \begin{description}
-          \item[linear approximations] \phdot % hypothesis class; briefly mention regression
-          \item[iterative optimization] \phdot % perceptron, logistic
-          \item[generalization bounds] \phdot % generalization bounds
-          \item[model selection] \phdot % validation, featurization from domain knowledge, which objective func?
-          \item[priors and generalization] \phdot % priors and regularization
-          \item[continuous optimization] \phdot % convex optimization; implicit regularization
-          \item[kernels enrich approximations] \phdot
-        \end{description}
-      \item[nonlinearities] \phdot
-        \begin{description}
-          \item[fixed featurization] \phdot % classic nonlinearities: discrete-continuous (softmax; embedding); normalization; binning 
-          \item[learned featurizations] \phdot
-          \item[differentiation] \phdot % smoothness assumption, backprop as dynaprog, autodiff
-          \item[architecture and symmetry] \phdot % CNNs, RNNs
-          \item[feature hierarchies] \phdot % 
-          \item[stochastic gradient descent] \phdot % learning rates as riemannian metrics; conditioning; annealing
-          \item[loss landscape shape] \phdot % thinking about minima etc
-        \end{description}
-      \item[structured inference] \phdot
-        \begin{description}
-          \item[graphical generative models] \phdot % directed models
-          \item[inferring conditional marginals] \phdot
-          \item[learning parameters] \phdot % spectre of marginal likelihood; EM, other variational methods, MCMC
-          \item[hierarchy and mixtures] \phdot
-          \item[hierarchy and transfer] \phdot
-          \item[variational and sampling methods] \phdot % - tie in with deep learning 
-          \item[amortized inference] \phdot % - tie in with deep learning 
-        \end{description}
-      \item[reductions to supervision] \phdot
-        \begin{description}
-          \item[to build a tool, use it] \phdot
-          \item[distributions as maps] \phdot
-          \item[self-supervised: ] \phdot
-          \item[self-supervised: ] \phdot
-          \item[reinforcement: ] \phdot
-          \item[reinforcement: ] \phdot
-              % another paradigm: learning-from-instruction
-          \item[beyond i.i.d.] \phdot
-        \end{description}
-      \item[appendices] \phdot 
-        \begin{description}
-          \item[python refresher] \phdot
-          \item[math refresher] \phdot
-          \item[notes on high dimensions] \phdot
-          \item[notes on bayes' law] \phdot
-        \end{description}
-    \end{description}
-  }
-   
-  \samsection{a prologue} %in three examples}
+      What tools can we use to automatically extract,
+      extrapolate, and explain patterns in data?
+      %
+      These notes review the main tools we develop in 6.86x.  As binocular
+      vision deepens and disambiguates, the differences between how our
+      lectures and how these notes organize concepts may also enrich
+      understanding.
+      \begin{marginfigure}
+        \vspace{+0.5cm}
+        \includegraphics[width=1.0\textwidth]{necker}
+        %\includegraphics[width=0.3\textwidth]{face-vase}
+      \end{marginfigure}
+      %
+      \attn{You do not need to read these notes at all} to get an A
+      in this course; conversely, \attn{you may not cite these notes} when
+      justifying work in homework or exams.
+      %
+      %You might enjoy skimming the appendice's three examples. 
 
-    \samsubsection{bird's eye framework}% data flow and goals 
-    What tools can we use to automatically extract, extrapolate, and explain
-    patterns in data?
+  \samsection{prologue} %in three examples}
 
-    \newpage
-    Now comes a hurried tour of the sorts of analysis we'll do.  \attn{Please
-    skim} the remainder of this prologue without trying to understand each
-    step.
-
-    \samsubsection{flooding plains}
-
-    \begin{marginfigure}
-        \includegraphics[width=1.0\textwidth]{seven-days}
-        \caption{%
-          Machine learning continues our human tradition toward the systematic and automatic.
+    %\samsubsection{bird's eye framework}% data flow and goals 
+    \samsubsubsection{types of learning}
+      How do we communicate
+      patterns of desired behavior?
+      %new skills?
+      %to other humans?  
+      %
+      %From most to least explicit,
+      We can teach:\marginnote[-1cm]{%
+          \attn{TODO: five labeled pictures of mushrooms and poison levels
+          (say, ``safe'', ``stomach upsetting'', ``very dangerous'').  A sixth,
+          un-labeled picture with a question mark for its label. 
           %
-          What for one generation is a luckily discovered idea or recipe
-          (bottom tip of red), the next generation refines by
-          careful human thought (green). 
-          %
-          What to one generation is a task (green) requiring human thought
-          is to a future generation merely a routine parameterized by some
-          newly discovered recipe (bottom tip of blue).
-          %
-          And the cycle repeats.
-          %
-          %%\textbf{Left} column: assumed given.
-          %%\textbf{Middle} column: activities in the past done by humans and in the future done by machine.
-          %%\textbf{Right} column: artifacts valuable either directly (top right corner) or because they help (via diagonal arrows) achieve more direct goals. 
-        }
-    \end{marginfigure}
+          Make explicit that we view mushrooms are prompts/inputs and poison
+          levels as answers/outputs.
+          }
+      }
+      \begin{description}
+        \item[\textbf{by instruction}:  ]  ``to tell whether a mushroom is poisonous, first look at its gills...'' 
+        \item[\textbf{by example}:      ]  ``here are six poisonous fungi; here, six safe ones.  see a pattern?''
+        \item[\textbf{by reinforcement}:]  ``eat foraged mushrooms for a month; learn from getting sick.''
+      \end{description}
+      %
+      Machine learning is the art of programming computers to learn from such
+      sources.  
+      We'll focus on the most important case: learning from examples.\marginnote{%
+        $\leftarrow$ We'll see in \S E that learning by example is
+        key to the other modes of learning.
+      }
+      %
+      Given a list of $N$ examples of properly answered prompts, we
+      seek a pattern: a map from prompts in $\xX$ to answers in $\yY$.\marginnote{%
+        $\leftarrow$ Actually, we'll soon account for uncertainty by letting
+        patterns map to \emph{probability distributions over} answers; then a
+        program that learns from examples has type
+        $$
+          \lL : (\xX\times \yY)^N \to (\xX\to \text{DistributionsOn}(\yY))
+        $$
+        %
+        Sometimes, the prompt is always the same --- say,
+        ``produce a beautiful melody'' --- and we seek (e.g.) to generate
+        many answers. % and to learn a complicated distribution over the answers.
+        %
+        When we thusly focus on the output's structure, we're doing
+        \textbf{unsupervised learning}; when our focus is on input-output
+        relation, we're doing \textbf{supervised learning}.
+        %
+        %We won't take this probabilistic view until page 2. 
+      }
+      %
+      %In symbols,
+      So a program that learns from examples has type
+      $$
+        \lL : (\xX\times \yY)^N \to (\xX\to \yY)
+      $$
+      %
 
-    \samsubsubsection{a whimsical story about automation}
-      We automate when we re-cast the previous generation's \emph{methods} as
-      mere \emph{data} to generate and manipulate. 
+    \samsubsubsection{learning error}
+      For $\sS : (\xX\times \yY)^N$ a
+      list of examples drawn from nature's distribution $\dD$ on $\xX\times
+      \yY$, 
+      a pattern $f:\xX\to \yY$
+      has a \textbf{training error}
+      $
+         \Ein(f) = \Pp_{(x,y)\sim \sS}[f(x)\neq y] 
+      $,
+      an average over examples;
+      and a \textbf{testing error}
+      $
+         \Eout(f) = \Pp_{(x,y)\sim \dD}[f(x)\neq y] 
+      $,
+      an average over nature.
+      %
+      We want $\lL$ to map $\sS$ to an $f$ with low $\Eout(f)$.\marginnote{%
+        %  TODO: mention extereme class-imbalance and bayesian *decision* theory 
+      }
+      We often define $\lL$ to roughly minimize $\Ein$ over a
+      set $\hH \subseteq (\xX\to \yY)$ of candidates.  Then $\Eout$
+      decomposes into the failures
+      of $\Ein$ to estimate $\Eout$, % (generalization),
+      of $\lL$ to minimize $\Ein$, and % (optimization), and 
+      of $\hH$ to contain nature's truth: %(approximation): 
+      \newcommand{\minf}[1]{{\inf}_{\hH}}
+      \begin{align*}
+          \Eout(\lL(\sS)) 
+          =~&\Eout(\lL(\sS))      &-\,\,\,&      \Ein(\lL(\sS)) &~\}~& \text{generalization error} \\
+          +~&\Ein(\lL(\sS))       &-\,\,\,& \minf{\hH}(\Ein(f)) &~\}~& \text{optimization error} \\
+          +~&\minf{\hH}(\Ein(f))  &       &                     &~\}~& \text{approximation error}  
+      \end{align*}
+      These terms are in tension.  For example, as $\hH$ grows, the
+      approximation error may decrease while the generalization error may
+      increase (``bias-variance'').
 
-      We once sought safety from floods.  Long ago, if we lived near safe
-      riverbanks it was by luck; we then found we could make unsafe rivers safe
-      by erecting floodwalls.  This was dangerous work, so we built brick
-      laying robots to do the hard part.  The machines needed as input some
-      flood-risk estimates: the location and mud-softnesses of the river banks to
-      work on.
+      %In this page's final $2.5$cm we give a full example.
+      \begin{marginfigure}
+          \par \attn{Six labeled MNIST $(x,y)$ pairs.                          }\vspace{1.5cm}
+          \par \attn{
+            MENTION $N=24$!
+            Left: scatterplot of $N=24$ TRAINING set in width-darkness plane,
+              with six above labeled pairs marked and
+              with decision line for specific (suboptimal) $(a,b)$ pair drawn and
+              with decision line for              optimal  $(a,b)$ pair drawn. 
+            Right: grid of all $(a,b)$ pairs, colored by TRAINING error, 
+              with same two $(a,b)$ pairs marked.
+          }\vspace{1.5cm}
+          \par \attn{
+            Left: scatterplot of size-96 TESTING set in width-darkness plane,
+              with decision line for     training-optimal  $(a,b)$ pair drawn and 
+              with decision line for     testing- optimal  $(a,b)$ pair drawn. 
+            Right: grid of all $(a,b)$ pairs, colored by TESTING error,
+              with same two $(a,b)$ pairs marked. 
+          }\vspace{1.5cm}
+      \end{marginfigure}
+    \samsubsubsection{tiny example}
+      $\xX = \{\text{grayscale~}28\!\times\!28\text{-pixel images}\}$; $\yY=\{0,1\}$. %,\cdots,9\}$.
+      %Samples %$(x,y)$ from
+      $\dD$'s samples are photos $x$ of handwriting of digit $y$. 
+      %To sample from $\dD$, we ask a human to write digit $y\in \yY$, ask a human to write
+      %that digit, and then photograph their writing.
+      %
+      Each $x$ has a
+      width (number of inked columns)
+      and
+      darkness (average ink per column).
+      %
+      $\hH$ contains all $f_{a,b}$ %:\xX\to\yY$ defined by
+      defined by:
+      $$
+        f_{a,b}(x) = ~0 \text{~~if~~} a\cdot \text{width}(x) + b\cdot\text{darkness}(x) < 0 \text{~~else~~} 1 
+      $$ 
+      Our program $\lL$ loops over all integer pairs $(a,b)$ in $[-99,+99]$
+      to minimize $\Ein$.
+      %
+      %
+      $\lL$ gives $(a,b)=(??,??)$; $\Ein = ??\%$ but $\Eout = ??\%$, so we see
+      gen.\ error.  Our brute-force loop sets opt.\ error to $\approx 0$.
+      Width and darkness lose important information; and straight lines badly
+      approximate the boundary between digits; hence our large approx.\ error
+      ($\approx ??\%$). 
+      %
+      In 6.86x we'll address all three issues.
 
-      So we sought flood-risk estimates.  At first, if our city's flood-risk
-      estimates were correct it was by luck; we then found we could translate
-      topographic maps to flood-risk estimates by applying geology ideas.  This
-      was tedious work, so we built computers to do the hard part.  The
-      computers needed as input a risk-estimation \emph{algorithm}: a recipe of
-      the geology rules to calculate through.
+      %from prompts or scenarios
+      %to proper answers or actions;
+      %%For example, a compiler is a program that sends source
+      %%code text to .
+      %%A degenerate case  
+      %producing in a flash,  
+      %Thinking more 
+      %We frame learning from examples as 
+      %
 
-      We thus sought risk-estimation algorithms.  At first, if our research
-      center's risk-estimation algorithms were robust to new landscapes it was
-      by luck; we then found we could calibrate our algorithms to historical
-      flood data from many cities.  To find the better of two candidate
-      algorithms, we had to aggregate all their many small success and errors.
-      This was subtle work, so we developed statistical theories to do the hard
-      part.  The theories needed as input a machine learning model: a class of
-      candidates.
+      %Let us explicitly frame a simple case of the problem.
+      %Say that $\Xx$ is a space of images, $\{\pm 1\} =
+      %\{\text{Cow}, \text{Dog}\}$ is a set of labels, and we seek a
+      %classifier $f: \Xx\to\{\pm 1\}$ that accords with nature.  More
+      %precisely, we model nature as a probability distribution $\Dd$ over the
+      %space $\{\pm 1\}\times\Xx$ of labeled images and we fix a set $\Hh
+      %\subseteq \{\pm 1\}^\Xx$ of candidate classifiers.  With $\Ss \sim
+      %\Dd^N$ denoting $N$ samples drawn i.i.d.\ from $\Dd$, the
+      %\textbf{training error} of $f\in \Hh$ averages over the empirical
+      %distribution $\Ss$:
+      %
+      %
+      %$$
+      %    \Ein(f) = \Pp_{(y,x)\sim \Ss}[f(x)\neq y] 
+      %$$
+      %and the \textbf{testing error} averages over $\Dd$:
+      %$$
+      %    \Eout(f) = \Pp_{(y,x)\sim \Dd}[f(x)\neq y] 
+      %$$
 
-      We thus sought machine learning models.  At first, if our machine
-      learning models were highly predictive it was by luck; we then found
-      general principles to guide model design and selection from domain
-      knowledge.
-
-      It is these principles that we study in 6.86x.
-
-      Looking back, these are principles that produce machine learning models
-      that produce risk-estimation algorithms that produce flood-risk estimates
-      that guide the building of floodwalls. 
-
-    %%values have expanded from
-    %%\emph{lucky} such as the dryness of not being flooded, to 
-    %%\emph{chores} such as installing floodwalls along a river, to
-    %%\emph{data} that informs those chores, such as where along the river floods the worst, and on to 
-    %%\emph{algorithms} that transform data (say, a topographical map) to more useful forms (say, flood risk zones).
-    %%People working in insurance and law and have for centuries written such algorithms by hand.
-    %%\emph{algorithms that output algorithms}.
-    %%%
-    %%In the beginning, we had concrete \emph{chores} such as the milling of
-    %%wheat.
-    %%%
-    %%Then there was \emph{data}, which helped a person to accomplish chores by 
-    %%teaching them methods and alerting them to relevant aspects of the environment.
-    %%Discovering and recording such data was so useful that some folk did that as
-    %%their full time job.
-    %%%
-    %%Then we invented computer \emph{programs} to transform data to more useful
-    %%forms.  
-    %%%
-    %%Then came \emph{programs} that write programs.  
-    %%%
-    %%What will we continue on to create?
-
+  \newpage
   \samsection{linear models}
     \samsubsection{linear approximations} 
     \samsubsection{iterative optimization} 
@@ -339,7 +374,9 @@
     \samsubsection{continuous optimization} 
     \samsubsection{kernels enrich approximations} 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+  \newpage
   \samsection{nonlinearities}
     \samsubsection{fixed featurization} 
     \samsubsection{learned featurizations} 
@@ -349,7 +386,9 @@
     \samsubsection{stochastic gradient descent} 
     \samsubsection{loss landscape shape} 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+  \newpage
   \samsection{structured inference}
     \samsubsection{graphical generative models} 
     \samsubsection{inferring conditional marginals} 
@@ -359,19 +398,115 @@
     \samsubsection{variational and sampling methods} 
     \samsubsection{amortized inference} 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \newpage
   \samsection{reductions to supervision}
     \samsubsection{beyond the i.i.d.\ hypothesis}
     \samsubsection{to build a tool, use it} 
     \samsubsection{distributions as maps} 
-    \samsubsection{self-supervised: } 
-    \samsubsection{self-supervised: } 
-    \samsubsection{reinforcement: } 
-    \samsubsection{reinforcement: } 
-
+    \samsubsection{self-supervised: downstream tasks} 
+    \samsubsection{self-supervised: autoregression} 
+    \samsubsection{reinforcement: $q$-values} 
+    \samsubsection{reinforcement: exploration-exploitation} 
       \samsubsubsection{out-of-distribution tests}
       \samsubsubsection{dependent samples}
       \samsubsubsection{causality}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \newpage
+  \samsection{three brief example projects}
+      Now comes a hurried tour of the sorts of analysis these notes discuss.  I
+      recommend that you \attn{skim} these three example projects without
+      trying to understand each step.
+
+    \samsubsection{flooding plains}
+
+      \samsubsubsection{visualization  } % featurization
+      \samsubsubsection{fitting        } % featurization
+      \samsubsubsection{model selection} % featurization
+      \samsubsubsection{prediction}
+      \samsubsubsection{overfitting}
+
+      \samsubsubsection{a whimsical story about automation}
+        We automate when we re-cast the previous generation's \emph{methods} as
+        mere \emph{data} to produce and manipulate. 
+
+        \begin{marginfigure}
+            \includegraphics[width=1.0\textwidth]{seven-days}
+            \caption{%
+              Machine learning continues our human tradition toward the systematic and automatic.
+              %
+              What for one generation is a luckily discovered idea or recipe
+              (bottom tip of red), the next generation refines by
+              careful human thought (green). 
+              %
+              What to one generation is a task (green) requiring human thought
+              is to a future generation merely a routine parameterized by some
+              newly discovered recipe (bottom tip of blue).
+              %
+              And the cycle repeats.
+              %
+              %%\textbf{Left} column: assumed given.
+              %%\textbf{Middle} column: activities in the past done by humans and in the future done by machine.
+              %%\textbf{Right} column: artifacts valuable either directly (top right corner) or because they help (via diagonal arrows) achieve more direct goals. 
+            }
+        \end{marginfigure}
+
+        We once sought safety from floods.  Long ago, if we lived near safe
+        riverbanks it was by luck; we then found we could make unsafe rivers safe
+        by erecting floodwalls.  This was dangerous work, so we built brick
+        laying robots to do the hard part.  The machines needed as input some
+        flood-risk estimates: the location and mud-softnesses of the river banks to
+        work on.
+
+        So we sought flood-risk estimates.  At first, if our city's flood-risk
+        estimates were correct it was by luck; we then found we could translate
+        topographic maps to flood-risk estimates by applying geology ideas.  This
+        was tedious work, so we built computers to do the hard part.  The
+        computers needed as input a risk-estimation \emph{algorithm}: a recipe of
+        the geology rules to calculate through.
+
+        We thus sought risk-estimation algorithms.  At first, if our research
+        center's risk-estimation algorithms were robust to new landscapes it
+        was by luck; we then found we could calibrate our algorithms to
+        historical flood data from many cities.  To find the better of two
+        candidate algorithms, we had to aggregate all their many small success
+        and errors.  This was subtle work, so we developed statistical theories
+        to do the hard part.  The theories needed as input a machine learning
+        model: a computationally tractable class of candidate algorithms.
+
+        We thus sought machine learning models.  At first, if our machine
+        learning models were highly predictive it was by luck; we then found
+        general principles to guide model design and selection from domain
+        knowledge. % what will we continue to vreate?
+
+        It is these principles that we study in 6.86x.
+
+        Looking back, these are principles that produce machine learning models
+        that produce risk-estimation algorithms that produce flood-risk estimates
+        that guide the building of floodwalls. 
+
+    \samsubsection{ancient tablets}
+      \samsubsubsection{visualization}
+      \samsubsubsection{transcription}
+      \samsubsubsection{cleaning and imputation}
+      \samsubsubsection{modeling and fitting}
+      \samsubsubsection{generation}
+      \samsubsubsection{a whimsical story about modeling}
+
+    \samsubsection{pairing flavors}
+      \samsubsubsection{visualization}
+      \samsubsubsection{modeling and fitting}
+      \samsubsubsection{regularization}
+      \samsubsubsection{explanation}
+      \samsubsubsection{domain adaptation}
+      \samsubsubsection{a whimsical story about induction}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \newpage
   \samsection{appendices}
     Here are ``refreshers'' on programming and on math, especially on the
     math of high dimensions and of bayes' law.
@@ -667,25 +802,76 @@
 
       Let's now consider the case where $\hH$ is a small and finite.  We
 
-      
+  \newpage
+  \marginnote[-0.05cm]{%
+    \textsc{Table of Contents}
+    \begin{description}
+      %\item[] \vphantom{.} 
+      %  \begin{description}
+      %  \end{description}
+      \item[A. prologue] \phdot 
+        %\begin{description}
+        %  \item[bird's eye framework] \phdot
+        %\end{description}
+      \item[B. linear classification] \phdot
+        \begin{description}
+          \item[linear approximations] \phdot % hypothesis class; briefly mention regression
+          \item[iterative optimization] \phdot % perceptron, logistic
+          \item[generalization bounds] \phdot % generalization bounds
+          \item[model selection] \phdot % validation, featurization from domain knowledge, which objective func?
+          \item[priors and generalization] \phdot % priors and regularization
+          \item[continuous optimization] \phdot % convex optimization; implicit regularization
+          \item[kernels enrich approximations] \phdot
+        \end{description}
+      \item[C. nonlinearities] \phdot
+        \begin{description}
+          \item[fixed featurization] \phdot % classic nonlinearities: discrete-continuous (softmax; embedding); normalization; binning 
+          \item[learned featurizations] \phdot
+          \item[differentiation] \phdot % smoothness assumption, backprop as dynaprog, autodiff
+          \item[architecture and symmetry] \phdot % CNNs, RNNs
+          \item[feature hierarchies] \phdot % 
+          \item[stochastic gradient descent] \phdot % learning rates as riemannian metrics; conditioning; annealing
+          \item[loss landscape shape] \phdot % thinking about minima etc
+        \end{description}
+      \item[D. structured inference] \phdot
+        \begin{description}
+          \item[graphical generative models] \phdot % directed models
+          \item[inferring conditional marginals] \phdot
+          \item[learning parameters] \phdot % spectre of marginal likelihood; EM, other variational methods, MCMC
+          \item[hierarchy and mixtures] \phdot
+          \item[hierarchy and transfer] \phdot
+          \item[variational and sampling methods] \phdot % - tie in with deep learning 
+          \item[amortized inference] \phdot % - tie in with deep learning 
+        \end{description}
+      \item[E. reductions to supervision] \phdot
+        \begin{description}
+          \item[to build a tool, use it] \phdot
+          \item[distributions as maps] \phdot
+          \item[self-supervised: downstream tasks] \phdot
+          \item[self-supervised: autoregression] \phdot
+          \item[reinforcement: exploration-exploitation] \phdot
+          \item[reinforcement: states and $q$-values] \phdot
+              % another paradigm: learning-from-instruction
+          \item[beyond i.i.d.] \phdot
+        \end{description}
+      \item[F. three brief example projects]   \phdot 
+        \begin{description}
+          \item[example: flooding plains] \phdot
+          \item[example: ancient tablets] \phdot
+          \item[example: pairing flavors] \phdot
+        \end{description}
+      \item[G. appendices] \phdot 
+        \begin{description}
+          \item[python refresher] \phdot
+          \item[math refresher] \phdot
+          \item[notes on high dimensions] \phdot
+          \item[notes on bayes' law] \phdot
+              %
+        \end{description}
+    \end{description}
+  }
+
 
 
 \end{document}
-%
-%      \item[Statistics] .
-%        \begin{description}
-%          \item[bayesian inference] .
-%          \item[hypothesis testing] .
-%          \item[covariance] .
-%          \item[gradient descent] .
-%        \end{description}
-%      \item[High Dimensions] .
-%        \begin{description}
-%          \item[geometry] .
-%          \item[clusters and classes] .
-%          \item[graphical models] .
-%          \item[boosted trees] .
-%        \end{description}
-          %\item[contaminated faucets] .
-          %\item[contaminated faucets] .
 
